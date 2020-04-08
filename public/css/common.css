@@ -20625,3 +20625,7 @@ html[lang="ar"] .get-start-wrap:nth-child(even) .get-start-info:before {
     right: auto;
   }
 }
+
+.bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+  line-height: 18px;
+}
