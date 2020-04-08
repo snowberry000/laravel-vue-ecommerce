@@ -115,7 +115,9 @@ $view_device='mobile';
                     <option disabled="disabled" value="">{{trans('messages.store_dashboard.select')}}</option>
                     @foreach(date_data() as $key=>$data)
 
-                    <option value="{{$key}}" {{ ($key == session('schedule_data')['date']) ? 'selected' : '' }}>{{date('Y', strtotime($data)).', '.trans('messages.driver.'.date('M', strtotime($data))).' '.date('d', strtotime($data))}}</option>
+                    <option value="{{$key}}" {{ ($key == session('schedule_data')['date']) ? 'selected' : '' }}>
+                      {{date('d', strtotime($data)).'/'.date('m', strtotime($data)).'/'.date('Y', strtotime($data))}}
+                    </option>
                     @endforeach
                   </select>
                 </div>
