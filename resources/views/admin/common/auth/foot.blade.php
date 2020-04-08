@@ -7,7 +7,7 @@
 <script src="{{asset('admin_assets/js/bootstrap-material-design.js')}}">
 </script>
 <!--  Google Maps Plugin  -->
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key={{site_setting('google_api_key')}}&libraries=places&sensor=false"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{site_setting('google_api_key')}}&libraries=places&sensor=false"></script>
 
 
 <!--  Angular js plaugin  -->
