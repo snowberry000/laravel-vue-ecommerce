@@ -678,111 +678,113 @@ app.controller('home_page', ['$scope', '$http', '$timeout', function ($scope, $h
     }
 
     function fillInAddress() {
+      $('.home-banner-content .search_form_home .error-msg').removeClass('show');
       fetchMapAddress(autocomplete.getPlace());
     }
 
     function fetchMapAddress(data) {
-     var componentForm = {
-      street_number: 'short_name',
-      route: 'long_name',
-      sublocality_level_1: 'long_name',
-      sublocality_level_2: 'long_name',
-      sublocality_level_3: 'long_name',
-      sublocality: 'long_name',
-      locality: 'long_name',
-      administrative_area_level_1: 'long_name',
-      country: 'short_name',
-      postal_code: 'short_name'
-    };
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        sublocality_level_1: 'long_name',
+        sublocality_level_2: 'long_name',
+        sublocality_level_3: 'long_name',
+        sublocality: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'long_name',
+        country: 'short_name',
+        postal_code: 'short_name'
+      };
 
-    $scope.postal_code = '';
-    $scope.city = '';
-    $scope.latitude = '';
-    $scope.longitude = '';
-    $scope.street_address = '';
-    $scope.locality = '';
+      $scope.postal_code = '';
+      $scope.city = '';
+      $scope.latitude = '';
+      $scope.longitude = '';
+      $scope.street_address = '';
+      $scope.locality = '';
 
-    var place = data;
-    for (var i = 0; i < place.address_components.length; i++) {
-      var addressType = place.address_components[i].types[0];
-      if (componentForm[addressType]) {
-        var val = place.address_components[i][componentForm[addressType]];
-        if (addressType == 'postal_code') $scope.postal_code = val;
-        if (addressType == 'locality') $scope.city = val;
+      var place = data;
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        if (componentForm[addressType]) {
+          var val = place.address_components[i][componentForm[addressType]];
+          if (addressType == 'postal_code') $scope.postal_code = val;
+          if (addressType == 'locality') $scope.city = val;
 
-        if (addressType == 'sublocality_level_1' && $scope.locality == '') 
-          $scope.locality = val;
-        else if (addressType == 'sublocality' && $scope.locality == '') 
-          $scope.locality = val;
-        else if (addressType == 'locality' && $scope.locality == '') 
-          $scope.locality = val;
-        else if(addressType == 'administrative_area_level_1' && $scope.locality == '') 
-          $scope.locality = val;
-        else if(addressType  == 'country' && $scope.locality == '') 
-          $scope.locality = place.address_components[i]['long_name'];
+          if (addressType == 'sublocality_level_1' && $scope.locality == '') 
+            $scope.locality = val;
+          else if (addressType == 'sublocality' && $scope.locality == '') 
+            $scope.locality = val;
+          else if (addressType == 'locality' && $scope.locality == '') 
+            $scope.locality = val;
+          else if(addressType == 'administrative_area_level_1' && $scope.locality == '') 
+            $scope.locality = val;
+          else if(addressType  == 'country' && $scope.locality == '') 
+            $scope.locality = place.address_components[i]['long_name'];
 
-        if(addressType       == 'street_number')
-          $scope.street_address = val;
-        if(addressType       == 'route')
-          $scope.street_address = $scope.street_address+' '+val;
-        if(addressType       == 'country')
-          $scope.country = val;
-        if(addressType       == 'administrative_area_level_1')
-          $scope.state = val;
+          if(addressType       == 'street_number')
+            $scope.street_address = val;
+          if(addressType       == 'route')
+            $scope.street_address = $scope.street_address+' '+val;
+          if(addressType       == 'country')
+            $scope.country = val;
+          if(addressType       == 'administrative_area_level_1')
+            $scope.state = val;
+        }
       }
+
+      $scope.latitude = place.geometry.location.lat();
+      $scope.longitude = place.geometry.location.lng();
+      $scope.is_auto_complete = 1;
+
+      //store session data
+      var url_search = getUrls('store_location');
+      var location_val = $('#head_location_val').val();
+      $scope.street_address = ($scope.street_address)?$scope.street_address:$scope.city;
+      $http.post(url_search,{
+        postal_code: $scope.postal_code,
+        city: $scope.city,
+        address: $scope.street_address,
+        latitude: $scope.latitude,
+        longitude: $scope.longitude,
+        state : $scope.state,
+        country : $scope.country,
+        location: location_val,
+        locality: $scope.locality,
+      }).then(function(response){
+        window.location = ajax_url_list['search'];
+      });
     }
 
-    $scope.latitude = place.geometry.location.lat();
-    $scope.longitude = place.geometry.location.lng();
-    $scope.is_auto_complete = 1;
-
-        //store session data
-        var url_search = getUrls('store_location');
-        var location_val = $('#head_location_val').val();
-        $scope.street_address = ($scope.street_address)?$scope.street_address:$scope.city;
-        $http.post(url_search,{
-          postal_code: $scope.postal_code,
-          city: $scope.city,
-          address: $scope.street_address,
-          latitude: $scope.latitude,
-          longitude: $scope.longitude,
-          state : $scope.state,
-          country : $scope.country,
-          location: location_val,
-          locality: $scope.locality,
-        }).then(function(response){
-         window.location = ajax_url_list['search'];
-       });
-      }
-
-      $('#head_location_val').keyup(function () {
-        $scope.is_auto_complete = '';
-      });
+    $('#head_location_val').keyup(function () {      
+      $scope.is_auto_complete = '';
+      $('.home-banner-content .search_form_home .error-msg').addClass('show');
+      $('.home-banner-content .search_form_home .error-msg').text(' Please select a valid address');
+    });
 
     // find food button
 
     $('#find_food').click(function () {
-     return false;
-     var location = $('#head_location_val').val();
-     if (location == ''){
-       return false;
-     }
-     else{
-          //console.log($scope.latitude,$scope.longitude);
-          var locations = location.replace(/\s/g, '+');
-          // var url = getUrl('search', { 'location': locations });
+      if (!($scope.is_auto_complete) || $scope.is_auto_complete === '') {
+        $('.home-banner-content .search_form_home .error-msg').addClass('show');
+        $('.home-banner-content .search_form_home .error-msg').text(' Please enter a postcode');
+      }            
 
-
-
-          //search page redirect
-
-          var url = getUrls('search');
-          //window.location.href = url + '?postal_code=' + $scope.postal_code + '&city=' + $scope.city + '&latitude=' + $scope.latitude + '&longitude=' + $scope.longitude;
-          window.location.href = url ;
-
-
-        }
-      });
+      return false;
+      var location = $('#head_location_val').val();
+      if (location == ''){
+        return false;
+      }
+      else{
+        //console.log($scope.latitude,$scope.longitude);
+        var locations = location.replace(/\s/g, '+');
+        // var url = getUrl('search', { 'location': locations });
+        //search page redirect
+        var url = getUrls('search');
+        //window.location.href = url + '?postal_code=' + $scope.postal_code + '&city=' + $scope.city + '&latitude=' + $scope.latitude + '&longitude=' + $scope.longitude;
+        window.location.href = url ;
+      }
+    });
 
     //signup submit form
 

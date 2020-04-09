@@ -12456,6 +12456,15 @@ header.show-header-search .header-search form {
   font-size: 20px;
 }
 
+.home-banner-content .search_form_home .error-msg {  
+  color: #dc3545;
+  display: none;
+}
+
+.home-banner-content .search_form_home .error-msg.show {
+  display: block;
+}
+
 .banner-img {
   position: relative;
   height: 700px;

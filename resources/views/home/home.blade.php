@@ -21,6 +21,10 @@
 						<input type="hidden" name="city" ng-model="city" id="city"/>
 						<input type="hidden" name="latitude" ng-model="latitude" id="latitude"/>
 						<input type="hidden" name="longitude" ng-model="longitude" id="longitude"/>
+						<p class="error-msg text-left">
+							<img class="chevron-down" src="{{url('/')}}/images/icon-error--red.svg">
+							Please enter a postcode
+						</p>						
 					</div>
 					<button class="btn btn-theme w-100" type="submit" id="find_food">{{trans('messages.find_item')}}</button>
 				</form>
