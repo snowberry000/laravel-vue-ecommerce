@@ -3,6 +3,20 @@ $('#choose_files').click(function(){
 $('#document').trigger('click');
 });
 
+$( document ).ready(function() {
+  $('.accordion-section .collapse').on('show.bs.collapse', function (e) {    
+    var clicked = $(document).find("[href='#" + $(e.target).attr('id') + "']")
+    var chrovenElement = clicked[0].parentNode.getElementsByClassName('chevron-down');
+    $(chrovenElement[0]).addClass('up');
+  });
+
+  $('.accordion-section .collapse').on('hide.bs.collapse', function (e) {    
+    var clicked = $(document).find("[href='#" + $(e.target).attr('id') + "']")
+    var chrovenElement = clicked[0].parentNode.getElementsByClassName('chevron-down');
+    $(chrovenElement[0]).removeClass('up');
+  });
+});
+
   var store_valitAate = $("#signup_form").validate({
     ignore: ':hidden:not(.do-not-ignore)',
     rules: {
@@ -368,140 +382,137 @@ $('#document').trigger('click');
 app.controller('store_signup', ['$scope','$http','$timeout', function($scope,$http,$timeout) {
 
 
-$('#signup_form').submit(function(){
+  $('#signup_form').submit(function(){
 
-      if ($('#country_code').val()=='' && $('#location_val').val()!='') {
-        $('.location_error').text(Lang.get('js_messages.store.please_select_from_google_autocomplete'));
-          return false;
-      }
-      $('.location_error').text('');
-})
+        if ($('#country_code').val()=='' && $('#location_val').val()!='') {
+          $('.location_error').text(Lang.get('js_messages.store.please_select_from_google_autocomplete'));
+            return false;
+        }
+        $('.location_error').text('');
+  })
 
 
-//Google Place Autocomplete Code
-var autocomplete;
-initAutocomplete();
-// $scope.is_auto_complete  = '';
-function initAutocomplete()
-{
-    autocomplete = new google.maps.places.Autocomplete(document.getElementById('location_val'),{types: ['geocode']});
-    autocomplete.addListener('place_changed', fillInAddress);
-}
+  //Google Place Autocomplete Code
+  var autocomplete;
+  initAutocomplete();
+  // $scope.is_auto_complete  = '';
+  function initAutocomplete()
+  {
+      autocomplete = new google.maps.places.Autocomplete(document.getElementById('location_val'),{types: ['geocode']});
+      autocomplete.addListener('place_changed', fillInAddress);
+  }
 
-function fillInAddress() 
-{
-    fetchMapAddress(autocomplete.getPlace());
-}
+  function fillInAddress() 
+  {
+      fetchMapAddress(autocomplete.getPlace());
+  }
 
-function fetchMapAddress(data)
-{ 
+  function fetchMapAddress(data)
+  { 
 
-  var componentForm = {
-      street_number: 'short_name',
-      route: 'long_name',
-      sublocality_level_1: 'long_name',
-      sublocality: 'long_name',
-      locality: 'long_name',
-      administrative_area_level_1: 'long_name',
-      country: 'short_name',
-      postal_code: 'short_name',
-       administrative_area_level_1: 'long_name',
-  };
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        sublocality_level_1: 'long_name',
+        sublocality: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'long_name',
+        country: 'short_name',
+        postal_code: 'short_name',
+        administrative_area_level_1: 'long_name',
+    };
 
-    $('#postal_code').val('');
-    $('#city').val('');
-    $('#latitude').val('');
-    $('#longitude').val('');
-    $('#country_code').val('');
-    
+      $('#postal_code').val('');
+      $('#city').val('');
+      $('#latitude').val('');
+      $('#longitude').val('');
+      $('#country_code').val('');
+      
 
-    var place = data;
-    var street_number ='';
-    for (var i = 0; i < place.address_components.length; i++) 
-    {
-      var addressType = place.address_components[i].types[0];
-
-      if (componentForm[addressType]) 
+      var place = data;
+      var street_number ='';
+      for (var i = 0; i < place.address_components.length; i++) 
       {
-        var val = place.address_components[i][componentForm[addressType]];
-        if (addressType == 'street_number')
-            street_number = val;
-        if (addressType == 'route')
-          $scope.address_line_1 = street_number + ' ' + val;
-        if (addressType == 'postal_code')
-          $scope.postal_code = val;
-        if (addressType == 'locality')
-          $scope.city = val;  
-        if (addressType == 'administrative_area_level_1')
-          $scope.state = val;   
-        if (addressType == 'country')
-          $scope.country_code = val;
-       
+        var addressType = place.address_components[i].types[0];
+
+        if (componentForm[addressType]) 
+        {
+          var val = place.address_components[i][componentForm[addressType]];
+          if (addressType == 'street_number')
+              street_number = val;
+          if (addressType == 'route')
+            $scope.address_line_1 = street_number + ' ' + val;
+          if (addressType == 'postal_code')
+            $scope.postal_code = val;
+          if (addressType == 'locality')
+            $scope.city = val;  
+          if (addressType == 'administrative_area_level_1')
+            $scope.state = val;   
+          if (addressType == 'country')
+            $scope.country_code = val;
+        
+        }
       }
+
+      $scope.latitude  = place.geometry.location.lat();
+      $scope.longitude = place.geometry.location.lng();
+      $('#country_code').val($scope.country_code);
+      $('#postal_code').val($scope.postal_code);
+      $('#city').val($scope.city);
+      $('#state').val($scope.state);
+      $('#address_line_1').val($scope.address_line_1);
+      $('#latitude').val($scope.latitude) ;
+      $('#longitude').val($scope.longitude) ;
+      $scope.is_auto_complete = 1;
+      $scope.$apply();
+
+      if($scope.country_code!='')
+      $('.location_error').text('');
+  }   
+
+  $('#location_val').keyup(function(){
+    $scope.is_auto_complete = '';
+  });
+
+  //min and max preparation time validation
+
+  $('#min_time').change(function(){
+
+    var min_time = $('#min_time').val();
+    var max_time = $('#max_time').val();
+
+    //console.log(min_time,max_time,min_time>=max_time);
+    if(min_time>=max_time){
+      $('#min_error').css('display','block');
+      $('#profile_save').attr('disabled','disabled');
+    }
+    else{
+      $('#min_error').css('display','none');
+      $('#profile_save').removeAttr('disabled');
     }
 
-    $scope.latitude  = place.geometry.location.lat();
-    $scope.longitude = place.geometry.location.lng();
-    $('#country_code').val($scope.country_code);
-    $('#postal_code').val($scope.postal_code);
-    $('#city').val($scope.city);
-    $('#state').val($scope.state);
-    $('#address_line_1').val($scope.address_line_1);
-    $('#latitude').val($scope.latitude) ;
-    $('#longitude').val($scope.longitude) ;
-    $scope.is_auto_complete = 1;
-    $scope.$apply();
-
-    if($scope.country_code!='')
-     $('.location_error').text('');
-}   
-
-$('#location_val').keyup(function(){
-  $scope.is_auto_complete = '';
-});
-
-//min and max preparation time validation
-
-$('#min_time').change(function(){
-
-  var min_time = $('#min_time').val();
-  var max_time = $('#max_time').val();
-
-  //console.log(min_time,max_time,min_time>=max_time);
-  if(min_time>=max_time){
-    $('#min_error').css('display','block');
-    $('#profile_save').attr('disabled','disabled');
-  }
-  else{
-    $('#min_error').css('display','none');
-    $('#profile_save').removeAttr('disabled');
-  }
-
-});
+  });
 
 
-$('#max_time').change(function(){
+  $('#max_time').change(function(){
 
-  var min_time = $('#min_time').val();
-  var max_time = $('#max_time').val();
+    var min_time = $('#min_time').val();
+    var max_time = $('#max_time').val();
 
-  //console.log(min_time,max_time,min_time>=max_time);
-  if(min_time>=max_time){
-    $('#max_error').css('display','block');
-    $('#profile_save').attr('disabled','disabled');
-  }
-  else{
-    $('#max_error').css('display','none');
-    $('#profile_save').removeAttr('disabled');
-  }
+    //console.log(min_time,max_time,min_time>=max_time);
+    if(min_time>=max_time){
+      $('#max_error').css('display','block');
+      $('#profile_save').attr('disabled','disabled');
+    }
+    else{
+      $('#max_error').css('display','none');
+      $('#profile_save').removeAttr('disabled');
+    }
 
-})
+  })
 
 
 }]);
-
-
-
 
 app.controller('menu_editor', ['$scope','$http','$timeout','$filter','fileUploadService',function($scope,$http,$timeout,$filter,fileUploadService) {
 

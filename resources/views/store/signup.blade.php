@@ -175,79 +175,81 @@
 		</div>
 
 		<section class="accordion-section clearfix mt-3" aria-label="Question Accordions">
-  <div class="container">
+  			<div class="container">
+				<h2 class="text-center mb-3">Frequently Asked Questions </h2>
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-default">
+						<div class="panel-heading pr-3 pl-3" role="tab" id="heading0">
+							<h3 class="panel-title text-center">
+								<a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="true" aria-controls="collapse0">
+									How much will it cost to join and how much commission will I pay?
+								</a>
+								<img class="chevron-down" src="{{url('/')}}/images/chrvron-down.svg">
+							</h3>
+						</div>
+						<div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
+							<div class="panel-body px-3 mt-3 mb-4 text-center">
+								<p>There’s a one-off joining fee of £500 (excluding VAT) and our commission is 4% (excluding VAT) on every Quickshopper order you take. So if you get an order worth £20, for example, our commission would be £0.96 (that’s £0.80 commission plus 16p VAT).</p>
+								<p> This covers: </p>
+								<ul>
+									<li>A Tablet to accept Online Orders</li>
+									<li>Initial marketing materials </li>
+									<li>Help and Support with sign up and onboarding</li>
+								</ul>
+							</div>
+						</div>
+					</div>
 
-	  <h2>Frequently Asked Questions </h2>
-	  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-		<div class="panel panel-default">
-		  <div class="panel-heading p-3 mb-3" role="tab" id="heading0">
-			<h3 class="panel-title">
-			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="true" aria-controls="collapse0">
-					How much will it cost to join and how much commission will I pay?
-			  </a>
-			</h3>
-		  </div>
-		  <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
-			<div class="panel-body px-3 mb-4">
-			  <p>There’s a one-off joining fee of £500 (excluding VAT) and our commission is 4% (excluding VAT) on every Quickshopper order you take. So if you get an order worth £20, for example, our commission would be £0.96 (that’s £0.80 commission plus 16p VAT).</p>
-				<p> This covers: </p>
-				<ul>
-				<li>A Tablet to accept Online Orders</li>
-				<li>Initial marketing materials </li>
-				<li>Help and Support with sign up and onboarding</li>
-			  </ul>
+					<div class="panel panel-default">
+						<div class="panel-heading pr-3 pl-3" role="tab" id="heading1">
+							<h3 class="panel-title text-center">
+								<a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+									How long will it take me from sign up to getting online
+								</a>
+								<img class="chevron-down" src="{{url('/')}}/images/chrvron-down.svg">
+							</h3>
+						</div>
+						<div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
+							<div class="panel-body px-3 mt-3 mb-4 text-center">
+								<p>Generally we would say it would take 7 days.  There will be some security and verification checks along the way.  You will need to provide us some details.  i.e Proof of Business & Business Address. </p>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading pr-3 pl-3" role="tab" id="heading2">
+							<h3 class="panel-title text-center">
+								<a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+									Can you provide drivers?
+								</a>
+								<img class="chevron-down" src="{{url('/')}}/images/chrvron-down.svg">
+							</h3>
+						</div>
+						<div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+							<div class="panel-body px-3 mt-3 mb-4 text-center">
+								<p>We have a driver sign up program, each store can opt to allow own drivers or additional drivers (depending where you are in the UK)</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading pr-3 pl-3" role="tab" id="heading3">
+							<h3 class="panel-title text-center">
+								<a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
+									How are the drivers paid?
+								</a>
+								<img class="chevron-down" src="{{url('/')}}/images/chrvron-down.svg">
+							</h3>
+						</div>
+						<div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3">
+							<div class="panel-body px-3 mt-3 mb-4 text-center">
+								<p>All the money from the delivery driver section is paid directly to the driver to cover the cost of fuel and other out going expenses</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		  </div>
-		</div>
-
-		<div class="panel panel-default">
-		  <div class="panel-heading p-3 mb-3" role="tab" id="heading1">
-			<h3 class="panel-title">
-			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="true" aria-controls="collapse1">
-				How long will it take me from sign up to getting online
-			  </a>
-			</h3>
-		  </div>
-		  <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading1">
-			<div class="panel-body px-3 mb-4">
-			  <p>Generally we would say it would take 7 days.  There will be some security and verification checks along the way.  You will need to provide us some details.  i.e Proof of Business & Business Address. </p>
-			</div>
-		  </div>
-		</div>
-
-		<div class="panel panel-default">
-		  <div class="panel-heading p-3 mb-3" role="tab" id="heading2">
-			<h3 class="panel-title">
-			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
-				Can you provide drivers?
-			  </a>
-			</h3>
-		  </div>
-		  <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
-			<div class="panel-body px-3 mb-4">
-			  <p>We have a driver sign up program, each store can opt to allow own drivers or additional drivers (depending where you are in the UK)</p>
-			</div>
-		  </div>
-		</div>
-
-		<div class="panel panel-default">
-		  <div class="panel-heading p-3 mb-3" role="tab" id="heading3">
-			<h3 class="panel-title">
-			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
-				How are the drivers paid?
-			  </a>
-			</h3>
-		  </div>
-		  <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3">
-			<div class="panel-body px-3 mb-4">
-			  <p>All the money from the delivery driver section is paid directly to the driver to cover the cost of fuel and other out going expenses</p>
-			</div>
-		  </div>
-		</div>
-	  </div>
-
-  </div>
-</section>
+		</section>
 
 <!-- <div class="slider-wrap">
 	<h2 align="center" style="padding-bottom: 20px;">How it works?</h2>
