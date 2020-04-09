@@ -11366,7 +11366,11 @@ select.selectpicker {
 }
 
 .icon-shopping-bag-1:before {
-  content: "u";
+  content: "";
+  background: url(../images/shopping-cart.svg) no-repeat;
+  background-size: 100% auto;
+  width: 20px;
+  height: 20px;
 }
 
 .icon-tree-leaf:before {
@@ -12262,16 +12266,16 @@ custom-close:before,
 }
 
 .main-menu .icon-shopping-bag-1.active {
-  background: #f68202;
-  color: #fff;
+  background: #f68202;  
   border-radius: 50%;
   padding: 10px;
   line-height: 19px;
+  background: url(../images/shopping-cart-white.svg) no-repeat;
 }
 
 .main-menu .icon-shopping-bag-1.active + .cart-count {
-  display: inline-block !important;
-  color: #f68202;
+  display: inline-block !important;  
+  background: url(../images/shopping-cart-orange.svg) no-repeat;
 }
 
 .light-color {
