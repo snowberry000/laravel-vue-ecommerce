@@ -24,7 +24,7 @@
 						<label>{{trans('messages.profile.enter_your_phone_number')}} <span>({{trans('messages.profile.required')}})</span></label>
 						<div class="d-flex w-100">
 							<div class="select mob-select col-md-3">
-								<span class="phone_code">+1</span>
+								<span class="phone_code">+{{ @session::get('phone_code') }}</span>
 								<select id="phone_code" name="country" class="form-control">
 									@foreach ($country as $key => $country)
 									<option value="{{ $country->phone_code }}" {{ $country->phone_code == 1 ? 'selected' : '' }} >{{ $country->name }}</option>
