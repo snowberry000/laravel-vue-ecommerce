@@ -10,8 +10,10 @@
 	<link href="{{asset('css/bootstrap-toggle.min.css')}}" rel="stylesheet">
 	<link href="{{asset('css/bootstrap-select.css')}}" rel="stylesheet">
 	<link href="{{asset('css/common.css')}}" rel="stylesheet">
-	<script src=" {{url('js/jquery-3.3.1.min.js')}}" type="text/javascript"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+	
 	<style type="text/css">
 		main {
 			opacity: 0;

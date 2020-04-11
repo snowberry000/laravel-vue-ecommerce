@@ -18,7 +18,7 @@
 <script src="{{asset('js/store_detail.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/driver.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/store.js')}}" type="text/javascript"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="{{asset('js/common.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/locationpicker.jquery.js')}}?dasd" type="text/javascript"></script>
 
