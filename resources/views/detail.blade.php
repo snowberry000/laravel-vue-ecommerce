@@ -106,12 +106,18 @@
 					@if($menu_category1->menu_category)
 					@foreach($menu_category1->menu_category as $category_row)
 					<div class="popular mb-4 mb-md-5" id="{{$category_row->id}}">
+						
 						<h1>{{$category_row->name}}</h1>
 						<div class="pro-row clearfix">
 							@if($category_row->menu_item)
 							@foreach($category_row->menu_item as $menu_row)
 							@if($menu_row->status==1)
-							<div class="pro-item d-flex" data-id="{{$menu_row->id}}" data-name="{{$menu_row->name}}" data-price="{{ ($menu_row->offer_price!=0) ? $menu_row->offer_price : $menu_row->price }}">
+							<div 
+								class="pro-item" 
+								data-id="{{$menu_row->id}}" 
+								data-name="{{$menu_row->name}}" 
+								data-price="{{ ($menu_row->offer_price!=0) ? $menu_row->offer_price : $menu_row->price }}"
+							>
 								@if($store_time_data==0)
 								<label class="sold-out">{{ trans('messages.store.closed') }}</label>
 								@elseif($menu_row->is_visible==0)
@@ -129,6 +135,7 @@
 									@endif
 								</label>
 								@endif
+								<div class="pro-img" style="background-image: url('{{$menu_row->menu_item_image}}');"></div>
 								<div class="pro-info">
 									<h2 class="text-truncate">{{$menu_row->name}}</h2>
 									<p><span>{!! $store->currency->code !!}</span>
@@ -139,7 +146,22 @@
 										@endif
 									</p>
 								</div>
-								<div class="pro-img" style="background-image: url('{{$menu_row->menu_item_image}}');">
+								<div class="quantity d-flex align-items-center mb-md-0">
+									<span class="count_item w-100" ng-bind="getProductCount({{$menu_row->id}})"></span>
+									
+									<button ng-if="checkIsInCart({{$menu_row->id}})" class="value-changer" data-val="remove">
+										<i class="icon icon-remove"></i>
+									</button>
+									<button ng-if="checkIsInCart({{$menu_row->id}})"  class="value-changer" data-val="add">
+										<i class="icon icon-add"></i>
+									</button>				
+
+									<button 
+										class="btn btn-theme btn-add-cart w-100"
+										ng-if="!checkIsInCart({{$menu_row->id}})" 
+									>
+										{{ trans('admin_messages.add') }} 
+									</button>
 								</div>
 							</div>
 							@endif
@@ -155,17 +177,26 @@
 					{{--end of menu item list--}}
 				</div>
 
-				<div class="checkout mb-5 position-sticky col-12 col-md-5 col-lg-4 p-0 float-right"  id="calculation_form" ng-class="!order_data ? 'disabled':''">
+				<div 
+					class="checkout mb-5 position-sticky col-12 col-md-5 col-lg-4 p-0 float-right"  id="calculation_form" 
+					ng-class="!order_data ? 'disabled':''">
 					<form name="order_checkout">
 						<button ng-disabled="!order_data" class="btn btn-theme w-100" id="checkout" type="submit">{{ trans('admin_messages.checkout') }}
 						</button>
 					</form>
 					<input type="hidden" id="order_id" value="@{{order_id}}">
 					<div class="cart-scroll">
-						<div class="checkout-item d-flex align-items-start" ng-repeat="order_row in order_data.items">
+						<div 
+							class="checkout-item d-flex align-items-start" 
+							ng-repeat="order_row in order_data.items">
 							<div class="checkout-select col-3">
 								<div class="select">
-									<select id='count_quantity1'  ng-model="order_row.item_count" data-price='@{{ (menu_item.offer_price!=0) ? menu_item.offer_price : menu_item_price}}' ng-change="order_store_changes(order_row.order_item_id)">
+									<select 
+										id='count_quantity1' 
+										ng-model="order_row.item_count" 
+										data-price='@{{ (menu_item.offer_price!=0) ? menu_item.offer_price : menu_item_price}}' 
+										ng-change="order_store_changes(order_row.order_item_id)"
+									>
 										<option value="" disabled></option>
 										@for($i=1;$i<=20;$i++)
 										<option value="{{$i}}">{{$i}}</option>
@@ -272,13 +303,37 @@
 
 					<div class="cart-btn col-12 col-md-7" ng-init="individual_price = individual_price">
 						@if($store_time_data==0)
-						<button class="btn btn-theme w-100 disabled" type="submit">{{ trans('messages.store.closed') }}</button>
+						<button class="btn btn-theme w-100 disabled" type="submit">
+							{{ trans('messages.store.closed') }}
+						</button>
 						@elseif($store->status==0)
-						<button class="btn btn-theme w-100 disabled" type="submit">{{ trans('messages.store.currently_unavailable') }}</button>
+						<button class="btn btn-theme w-100 disabled" type="submit">
+							{{ trans('messages.store.currently_unavailable') }}
+						</button>
 						@else
-						<button ng-if="menu_item.is_visible == 0" disabled="disabled" class="btn btn-theme w-100">{{ trans('messages.store.item_is_sold_out') }}</button>
-						<button class="btn btn-theme w-100" ng-if="menu_item.is_visible != 0 && menu_item.menu_item_status!=0" type="submit" id="cart_sumbit" ng-click="order_store_session()" data-val="@{{menu_item.is_visible}}">{{ trans('admin_messages.add') }} <span class ="count_item">@{{item_count}}</span> <span>{{ trans('messages.store.to_cart') }} </span><span class="span_close">(<span>{!!$store->currency->code!!}</span><span ng-hide="menu_item" class="ml-2" id="menu_item_price"></span> <span>@{{ menu_item.price }}</span> )</span></button>
-						<button class="btn btn-theme w-100" disabled="disabled" ng-if=" menu_item.is_visible != 0 && menu_item.menu_item_status==0" >{{ trans('messages.store.item_is') }} <span ng-if="menu_item.menu_closed_status=='Available'">{{ trans('admin_messages.available') }}</span><span ng-if="menu_item.menu_closed_status=='Un Available'">{{ trans('messages.store.unavailable') }}</span><span ng-if="menu_item.menu_closed_status=='Closed'">{{ trans('messages.store.closed') }}</span></button>
+						<button 
+							ng-if="menu_item.is_visible == 0" disabled="disabled" class="btn btn-theme w-100">
+							{{ trans('messages.store.item_is_sold_out') }}
+						</button>						
+						<button 
+							class="btn btn-theme w-100" 
+							ng-if="menu_item.is_visible != 0 && menu_item.menu_item_status!=0" type="submit" 
+							id="cart_sumbit" 
+							ng-click="order_store_session()" 
+							data-val="@{{menu_item.is_visible}}">
+							{{ trans('admin_messages.add') }} <span class ="count_item">@{{item_count}}</span> <span>{{ trans('messages.store.to_cart') }} </span>
+							<span class="span_close">(<span>{!!$store->currency->code!!}</span>
+							<span ng-hide="menu_item" class="ml-2" id="menu_item_price"></span> <span>@{{ menu_item.price }}</span> )</span>
+						</button>
+						<button class="btn btn-theme w-100" disabled="disabled" ng-if=" menu_item.is_visible != 0 && menu_item.menu_item_status==0" >
+							{{ trans('messages.store.item_is') }} <span ng-if="menu_item.menu_closed_status=='Available'">{{ trans('admin_messages.available') }}</span>
+							<span ng-if="menu_item.menu_closed_status=='Un Available'">
+								{{ trans('messages.store.unavailable') }}
+							</span>
+							<span ng-if="menu_item.menu_closed_status=='Closed'">
+								{{ trans('messages.store.closed') }}
+							</span>
+						</button>
 						@endif
 					</div>
 				</div>

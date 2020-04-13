@@ -2374,10 +2374,13 @@ select {
     @include border-default();
     @include border-radius(30px);
     width: calc(50% - 20px);
-    margin: 20px 0 0 20px;
-    float: left;
-    cursor: pointer;
+    margin: 20px 0 0 20px;    
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    float: left;
 
     &:nth-child(2n+1) {
       margin-left: 0;  
@@ -2385,19 +2388,23 @@ select {
     }
 
     .pro-info {
-      position: relative;
-      width: calc(100% - 120px);
+      position: relative;      
       padding: 30px 15px;
+      width: 100%;
+      background: #fff;
 
       h2 {
         font-size: 16px;
         line-height: 24px;
         font-family: $site-font;
         margin-bottom: 10px;
+        color: $driver-theme;
+        font-weight: bold;
       }
 
       p {
         margin-bottom: 0;
+        font-weight: bold;
       }
 
       .icon-tree-leaf {
@@ -2407,8 +2414,36 @@ select {
 
     .pro-img {
       background: no-repeat center / cover;
-      width: 120px;
+      width: 200px;
+      height: 200px;
       flex: 0 0 auto;
+    }
+
+    .quantity {
+      flex: 100%;
+      width: 100%;
+
+      .value-changer {
+        border-radius: 4px;
+        margin-left: 0.5rem;
+        border-color: $driver-theme;
+        color: $driver-theme;
+        width: 50% !important;
+      }
+
+      .count_item {
+        border: 1px solid #E0E0E0;
+        height: 50px;
+        padding: 11px;
+        border-radius: 4px;
+        text-align: right;
+        font-size: 1rem;
+      }
+
+      .btn-add-cart {
+        height: 50px;
+        margin-left: 0.5rem;
+      }
     }
   }
 }
@@ -2553,10 +2588,10 @@ select {
   }
 }
 
-.sold-out {
+.sold-out {  
+  right: 10px;
+  top: 10px;
   position: absolute;
-  top: 0;
-  right: 0;
   display: inline-block;
   @include border-radius(30px);
   background: $sold-bg;
