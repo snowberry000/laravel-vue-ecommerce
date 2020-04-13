@@ -97,6 +97,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<div class="detail-content">
 		<div class="container">
 			<div class="clearfix">
@@ -154,14 +155,29 @@
 									</button>
 									<button ng-if="checkIsInCart({{$menu_row->id}})"  class="value-changer" data-val="add">
 										<i class="icon icon-add"></i>
-									</button>				
-
-									<button 
-										class="btn btn-theme btn-add-cart w-100"
-										ng-if="!checkIsInCart({{$menu_row->id}})" 
-									>
-										{{ trans('admin_messages.add') }} 
-									</button>
+									</button>			
+									@if($menu_row->is_visible != 0 && $menu_category1->menu_closed)
+										<button 
+											class="btn btn-theme btn-add-cart w-100"
+											ng-if="!checkIsInCart({{$menu_row->id}})"
+											type="submit" 
+											id="cart_sumbit" 										
+											data-val="@{{menu_item.is_visible}}"											
+										>
+											{{ trans('admin_messages.add') }} 
+										</button>
+									@else			
+										<button 
+											class="btn btn-theme btn-add-cart w-100"
+											ng-if="!checkIsInCart({{$menu_row->id}})"
+											type="submit" 
+											id="cart_sumbit" 										
+											data-val="@{{menu_item.is_visible}}"											
+											disabled="disabled"
+										>
+											{{ trans('admin_messages.add') }} 
+										</button>			
+									@endif			
 								</div>
 							</div>
 							@endif
