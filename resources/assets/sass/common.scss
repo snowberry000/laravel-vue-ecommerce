@@ -1026,12 +1026,25 @@ custom-close {
     font-size: 20px;
     color: $black;
 
+    &:before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-image: url(../images/shopping-cart.svg);
+      background-size: 20px 20px;
+      background-position: center center;
+      background-repeat: no-repeat;      
+    }
+
     &.active {
-      background: $theme-color;
-      color: #fff;
+      background: $theme-color;      
       border-radius: 50%;
       padding: 10px;
       line-height: 19px;
+
+      &:before {
+        background-image: url(../images/shopping-cart-white.svg);    
+      }
 
       + .cart-count {
         display: inline-block !important;
@@ -1087,7 +1100,7 @@ header {
     }
 
     img {
-      width: 100px;
+      width: 15rem;
     }
   }
 
@@ -1224,6 +1237,15 @@ header {
       @include border-radius(10px);
       padding: 15px;
       font-size: 20px;
+    }
+
+    .error-msg {  
+      color: #dc3545;
+      display: none;
+
+      &.show {
+        display: block;
+      }
     }
   }
 }
@@ -1589,6 +1611,10 @@ i.icon {
   .dropdown-toggle {
     &:after {
       content: none;
+    }
+
+    .filter-option-inner-inner {
+      line-height: 18px;
     }
   }
 
@@ -10706,4 +10732,41 @@ html[lang="ar"] {
       right: auto;
     }
   }
+}
+
+.accordion-section {
+  margin-bottom: 6rem;
+
+  .panel-default{
+    border-bottom: 1px solid $grey-300;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+
+  .panel-title {
+    font-size: 20px;
+    font-family: "Poppins-Regular";
+    margin: 0;
+    padding: 8px 16px;
+    position: relative;
+
+    a {
+      color: $heading-color !important;
+      cursor: pointer;
+    }
+    
+    .chevron-down {
+      width: 36px;
+      position: absolute;
+      right: 0;
+      top: 0;  
+      transition: transform 1s;
+      transform: rotate(0deg);
+    }
+
+    .chevron-down.up {  
+      transform: rotate(180deg);
+    }
+    
+  }  
 }
