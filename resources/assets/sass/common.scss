@@ -323,6 +323,10 @@ html {
 body {
   background: $white;
   font-family: $site-font;
+  background-color: #f3f3f3 !important;
+  color: #212529;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 h1,
@@ -358,23 +362,18 @@ ul {
 }
 
 .site-pattern {
-  svg {
-    height: 100%;
-    background: #ffe3c4;
-    vertical-align: top;
-    width: 100%;
-
-    .pattern-stroke {
-      stroke: $driver-theme;
-      stroke-width: 1.25;
-      fill: none;
-    }
-  }
 }
 
 .position-sticky {
   top: 0;
   height: 100%;
+  font-family: $site-font;
+  cursor: pointer;
+  border: 0;
+  color: $white;
+  min-width: 105px;
+  text-transform: capitalize;
+  padding: 10px 16px;
 }
 
 .theme-color {
@@ -644,7 +643,7 @@ button,
   font-family: $btn-font;
   cursor: pointer;
   @include border-none();
-  @include border-radius(30px);
+  // @include border-radius(30px);
   padding: 8px 16px;
   color: $white;
   min-width: 105px;
@@ -838,7 +837,7 @@ custom-scroll {
 }
 
 .table-responsive {
-  background: $white;
+  background: #f3f3f3;
   @extend custom-scroll;
   overflow-y: hidden;
   overflow-x: auto;
@@ -958,7 +957,7 @@ custom-close {
 }
 
 .btn-theme {
-  background: $theme-color;
+  background: #134E9A;
 
   &:not(:disabled):not(.disabled):active:focus {
     box-shadow: none;
@@ -968,7 +967,7 @@ custom-close {
   &:not(:disabled):active,
   &:not(:disabled):focus,
   &:not(:disabled):hover {
-    background: $theme-hover;
+    background: #0098A6;
     box-shadow: none;
     color: $white;
   }
@@ -1059,7 +1058,7 @@ custom-close {
 }
 
 header {
-  padding: 15px 0;
+  padding: 20px 0;
   background: #fff;
   width: 100%;
   position: fixed;
@@ -1127,8 +1126,8 @@ header {
   input {
     padding: 13px 16px;
     height: 100%;
-    @include border-radius(30px);
     @include border-none();
+    border-color: #d8d8d8;
   }
 }
 
@@ -1136,7 +1135,7 @@ header {
   position: relative;
   padding: 185px 0 100px;
   overflow: hidden;
-
+  background: url(../images/main-banner-bg.jpg) no-repeat center/cover;
   &:before {
     content: "";
     display: inline-block;
@@ -1156,11 +1155,11 @@ header {
     width:100%;
     will-change:transform;
     transform:translateY(0);
-    animation:slowScroll 120s;
-    animation-iteration-count:3;
-    animation-delay:0.5s;
-    animation-timing-function:easeInOutSine;
-    background: url(../images/main-banner-bg.jpg) no-repeat center / cover;
+    // animation:slowScroll 120s;
+    // animation-iteration-count:3;
+    // animation-delay:0.5s;
+    // animation-timing-function:easeInOutSine;
+    // background: url(../images/main-banner-bg.jpg) no-repeat center / cover;
     z-index: 0;
   }
 }
@@ -1203,13 +1202,14 @@ header {
     margin-bottom: 20px;
 
     img {
-      width: 70px;
+      width: 15rem;
+      padding-bottom: 1rem;
     }
   }
 
   h1 {
     color: $heading-color;
-    font-size: 26px;
+    font-size: 2.5rem;
     line-height: 42px;
     margin: 0;
   }
@@ -1269,7 +1269,7 @@ header {
 }
 
 footer {
-  background: $footer-bg;  
+  background: $white;  
   color: $white;
 
   .bootstrap-select {
@@ -1329,10 +1329,10 @@ footer {
   }
 
   a {
-    color: #fff;
+    color: #4a4b4d;
 
     &:hover {
-      color: #E0E0E0;
+      color: #343a40;
     }
 
   }
@@ -1408,7 +1408,7 @@ footer {
 }
 
 .get-start-info {
-  background: #f4f4f4;
+  background: #fff;
   padding: 80px 60px;
   position: relative;
 
@@ -1511,16 +1511,17 @@ i.icon {
 
   .slider-img {
     img {
-      width: 140px;
+      width: 10em;
       display: inline-block;
     }
   }
 
   .slider-row {
     @include border-radius(30px);
-    box-shadow: 0 0 20px #efefef;
+    box-shadow: 0 0 20px #bcbbbb;
     padding: 50px;
     width: calc((100% / 3) - 30px);
+    background-color: white;
   }
 }
 
@@ -1957,6 +1958,7 @@ footer {
       opacity: 1;
       max-height: 1000px;
       z-index: 1000;
+      background: #f3f3f3;
 
       > .container {
         height: 100%;
@@ -1965,8 +1967,8 @@ footer {
       .search-category-list {
         height: calc(100% - 41px);
         overflow: auto;
+        background: #f3f3f3;
         @extend custom-scroll;
-
         h4 {
           margin: 20px 0;
           font-size: 20px;
@@ -1977,6 +1979,7 @@ footer {
 
   .icon-search-3 {
     font-size: 24px;
+    padding-left: 10px;
   }
 }
 
@@ -2399,7 +2402,6 @@ select {
   .pro-item {
     position: relative;
     @include border-default();
-    @include border-radius(30px);
     width: calc(50% - 20px);
     margin: 20px 0 0 20px;    
     overflow: hidden;
@@ -2408,6 +2410,7 @@ select {
     align-items: center;
     padding: 20px;
     float: left;
+    background: $white;
 
     &:nth-child(2n+1) {
       margin-left: 0;  
@@ -2427,6 +2430,7 @@ select {
         margin-bottom: 10px;
         color: $driver-theme;
         font-weight: bold;
+        background: $white;
       }
 
       p {
@@ -4528,12 +4532,7 @@ button.btn-arrow,
 }
 
 .driver-banner {
-  position: relative;
-
-  .signup-slider {
-    padding-right: 20%;
-  }
-
+  position: relative;  
   .pattern {
     position: absolute;
     right: 0;
@@ -5607,6 +5606,7 @@ button[aria-label="Toggle fullscreen view"] {
 .copyright {
   p {
     font-size: 12px;
+    color: #4a4c4e;
   }
 }
 
@@ -6753,8 +6753,9 @@ br {
       margin-top: 0 !important;
     }
 
-    header {
-      background: rgba(255, 255, 255, 0.8);
+    header {      
+
+      background: $white;
 
       &.active {
         background: $white;
@@ -6772,8 +6773,6 @@ br {
         &:before {
           left: auto;
           right: 5px;
-          transform: translateX(100%);
-          background: linear-gradient(to right, #f4f4f4 10%, #ffffff00);
         }
       }
     }
@@ -6843,7 +6842,7 @@ br {
 
   button,
   .btn {
-    padding: 7px 10px;
+    padding: 10px 10px;
     min-width: 90px;
   }
 
@@ -7148,7 +7147,7 @@ br {
   .home-banner-content {
     .logo {
       img {
-        width: 50px;
+        width: 10rem;
       }
     }
 
@@ -10127,9 +10126,7 @@ html[lang="ar"] {
       .get-start-info {
         &:before {
           left: auto;
-          right: 5px;
-          background: linear-gradient(to right, #f4f4f4 10%, #ffffff00);
-          transform: translateX(100%);
+          right: 5px;          
         }
       }
     }
