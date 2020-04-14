@@ -113,12 +113,12 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
 
   $scope.checkIsInCart = function(itemId) {
     var isIn = false;
-    if ($scope.order_data && $scope.order_data.items.length > 0) {      
+    if ($scope.order_data && $scope.order_data.items.length > 0) {
       $scope.order_data.items.forEach(item => {
         if (!isIn) {
           if (item.item_id === parseInt(itemId))
-            isIn = true;          
-        }        
+            isIn = true;
+        }
       })
     }
     return isIn;
