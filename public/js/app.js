@@ -49362,9 +49362,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/product/gofer_grocery/resources/assets/js/app.js */"./resources/assets/js/app.js");
-__webpack_require__(/*! /opt/lampp/htdocs/product/gofer_grocery/resources/assets/sass/common.scss */"./resources/assets/sass/common.scss");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/product/gofer_grocery/resources/assets/sass/admin/common.scss */"./resources/assets/sass/admin/common.scss");
+__webpack_require__(/*! /var/www/html/resources/assets/js/app.js */"./resources/assets/js/app.js");
+__webpack_require__(/*! /var/www/html/resources/assets/sass/common.scss */"./resources/assets/sass/common.scss");
+module.exports = __webpack_require__(/*! /var/www/html/resources/assets/sass/admin/common.scss */"./resources/assets/sass/admin/common.scss");
 
 
 /***/ })

@@ -11556,7 +11556,7 @@ table.dataTable > thead > tr > th {
 }
 
 .login-page .page-header .container form {
-  padding: 100px 0;
+  padding: 50% 0;
 }
 
 .login-page .header-filter::before {
@@ -11729,7 +11729,6 @@ table.dataTable.table-condensed .sorting_desc:after {
   height: calc(100% - 102px);
   overflow-x: hidden;
   padding: 0;
-  background: black;
 }
 
 .sidebar[data-background-color="black"] .nav p {
@@ -11850,7 +11849,7 @@ input[type=file] {
 
 .sidebar .logo {
   text-align: center;
-  background: #fff;
+  background: #f5f8fa;
 }
 
 .sidebar .logo a,
@@ -11860,7 +11859,7 @@ input[type=file] {
 }
 
 .sidebar .logo img {
-  width: 10rem;
+  width: 100px;
   height: auto;
 }
 
@@ -12344,3 +12343,4 @@ footer {
     padding: 15px;
   }
 }
+
