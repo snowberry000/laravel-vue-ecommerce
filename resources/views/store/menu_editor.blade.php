@@ -11,8 +11,12 @@
 					<h2>{{ trans('messages.store.craft_your_menu') }}</h2>
 					<!-- <p class="required-b">Pending changes</p> -->
 				</div>
-				<div class="menu-container row m-0 mt-4" ng-init="menu={{ $menu }}; category_index = null; menu_index = null;menu_item_index = null; menu_item_details = {};">
+				<div class="menu-container row m-0" ng-init="menu={{ $menu }}; category_index = null; menu_index = null;menu_item_index = null; menu_item_details = {};">
 					<div class="col-md-6 col-lg-3 d-md-flex align-items-end flex-column p-0">
+						<div class="w-100 mt-auto">
+							<button type="button" data-target="#edit_menu_modal"   data-toggle="modal" class="theme-color text-uppercase bg-white text-center w-100" ng-click="add_menu_pop()" >{{ trans('messages.store_dashboard.add_menu') }}</button>
+						</div>
+
 						<ul class="menu-list">
 							<li ng-repeat="menulist in menu" ng-init="initToggleBar()" ng-class="menu_index == $index ? 'open active' : '' " >
 								<a href="javascript:void(0)" ng-click= "select_menu($index)">
@@ -55,15 +59,16 @@
 						</div>
 					</li>
 				</ul>
-				<div class="w-100 mt-auto pt-4">
-					<button type="button" data-target="#edit_menu_modal"   data-toggle="modal" class="theme-color text-uppercase bg-white text-center w-100" ng-click="add_menu_pop()" >{{ trans('messages.store_dashboard.add_menu') }}</button>
-				</div>
 			</div>
 
 					<!-- <div  ng-repeat="menulist in menu">
 						<div ng-repeat="menucategory in menulist.menu_category"> -->
 
 							<div class="col-md-6 col-lg-3 d-md-flex align-items-end flex-column p-0 mt-5 mt-md-0" ng-show="category_index !== null">
+								<div class="w-100 text-md-right text-lg-left">
+									<button type="button" class="theme-color bg-white text-center text-uppercase w-100" ng-click="add_new_item()">{{ trans('admin_messages.add_item') }}</button>
+								</div>
+
 								<ul class="menu-list" ng-if="menu[menu_index].menu_category[category_index].menu_item.length > 0">
 									<li ng-repeat="menu_item in menu[menu_index].menu_category[category_index].menu_item" ng-class="menu_item_index == $index ? 'active' : '' " ng-click="select_menu_item($index)">
 										<a href="javascript:void(0)" class="clearfix" ng-click="set($index,'item');">@{{menu_item.menu_item_name}}
@@ -72,12 +77,12 @@
 										</a>
 									</li>
 								</ul>
-								<div class="w-100 mt-auto pt-4 text-md-right text-lg-left">
-									<button type="button" class="theme-color bg-white text-center text-uppercase w-100" ng-click="add_new_item()">{{ trans('admin_messages.add_item') }}</button>
-								</div>
 							</div>
 
 							<div class="item_all_details col-md-12 col-lg-6 d-md-flex align-items-end flex-column p-0 mt-5 mt-lg-0" ng-show="menu_item_index !== null">
+							<div class="w-100 text-right mt-auto">
+									<button type="button" class="theme-color bg-white text-center text-uppercase w-100" ng-click="update_item()">{{ trans('admin_messages.submit_changes') }}</button>
+								</div>
 								<div class="panel-content w-100">
 									<form id="item_form" class="form_valitate">
 										<label>{{ trans('admin_messages.item_name') }} <span class="required" aria-required="true">*</span></label>
@@ -218,11 +223,6 @@
 
 
 									</form>
-
-
-								</div>
-								<div class="w-100 text-right mt-auto pt-4">
-									<button type="button" class="btn btn-theme w-100 text-uppercase" ng-click="update_item()">{{ trans('admin_messages.submit_changes') }}</button>
 								</div>
 							</div>
 						</div>
