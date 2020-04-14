@@ -1269,7 +1269,7 @@ header {
 }
 
 footer {
-  background: $footer-bg;
+  background: $footer-bg;  
   color: $white;
 
   .bootstrap-select {
@@ -1334,6 +1334,7 @@ footer {
     &:hover {
       color: #E0E0E0;
     }
+
   }
 
   > .container {
