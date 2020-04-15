@@ -1209,7 +1209,7 @@ header {
 
   h1 {
     color: $heading-color;
-    font-size: 2.5rem;
+    font-size: 2rem;
     line-height: 42px;
     margin: 0;
   }
@@ -2881,6 +2881,7 @@ body.modal-open,
 
 .checkout-total p {
   margin-bottom: 10px;
+  color: $heading-color;
 }
 
 .num-verify {
