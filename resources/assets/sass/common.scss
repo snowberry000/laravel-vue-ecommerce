@@ -1029,10 +1029,8 @@ custom-close {
       content: "";
       width: 20px;
       height: 20px;
-      background-image: url(../images/shopping-cart.svg);
-      background-size: 20px 20px;
-      background-position: center center;
-      background-repeat: no-repeat;      
+      mask: url(../images/shopping-cart-empty.svg) no-repeat center center;
+      background-color: #212529;
     }
 
     &.active {
@@ -1041,8 +1039,9 @@ custom-close {
       padding: 10px;
       line-height: 19px;
 
-      &:before {
-        background-image: url(../images/shopping-cart-white.svg);    
+      &:before {        
+        mask: url(../images/shopping-cart-full.svg) no-repeat center center;
+        background-color: white;
       }
 
       + .cart-count {
