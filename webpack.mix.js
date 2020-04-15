@@ -1,4 +1,6 @@
 let mix = require('laravel-mix');
+const del = require('del');
+
 mix.setResourceRoot('../');
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +13,12 @@ mix.setResourceRoot('../');
  |
  */
 
- mix.js('resources/assets/js/app.js', 'public/js')
+ mix.js('resources/assets/js/bootstrap.js', 'public/js')
  .sass('resources/assets/sass/common.scss', 'public/css')
  .sass('resources/assets/sass/admin/common.scss', 'public/admin_assets/css')
  .copy('resources/assets/fonts', 'public/admin_assets/fonts');
+
+ mix.js('resources/assets/js/bootstrap-select.js', 'public/js')
+.minify('public/js/bootstrap-select.js').then(() => {
+    del('public/js/bootstrap-select.js')
+ })

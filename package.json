@@ -22,8 +22,6 @@
     "lodash": "^4.17.4",
     "popper.js": "^1.12",
     "resolve-url-loader": "^3.1.0",
-    "vue": "^2.5.7",
-    "vue-template-compiler": "^2.6.10",
     "webpack": "^4.35.2",
     "webpack-cli": "^3.3.5"
   },

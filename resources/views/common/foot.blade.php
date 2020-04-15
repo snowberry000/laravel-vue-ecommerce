@@ -1,4 +1,4 @@
-<script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/bootstrap.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/owl.carousel.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/bootstrap-select.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/bootstrap-toggle.min.js')}}" type="text/javascript"></script>

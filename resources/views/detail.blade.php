@@ -212,8 +212,7 @@
 										ng-model="order_row.item_count" 
 										data-price='@{{ (menu_item.offer_price!=0) ? menu_item.offer_price : menu_item_price}}' 
 										ng-change="order_store_changes(order_row.order_item_id)"
-									>
-										<option value="" disabled></option>
+									>										
 										@for($i=1;$i<=20;$i++)
 										<option value="{{$i}}">{{$i}}</option>
 										@endfor
