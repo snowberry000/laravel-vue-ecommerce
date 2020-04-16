@@ -79,8 +79,8 @@
 									<i class="icon icon-close-2" id="schedule-close-sm"></i>
 								</div>
 								<div class="search-input w-100 ml-0">
-									<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1"><g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Icons-/-Semantic-/-Location" stroke="#f68202"><g id="Group" transform="translate(1.500000, 0.000000)"><path d="M6.5,15.285929 L10.7392259,10.9636033 C13.0869247,8.56988335 13.0869247,4.68495065 10.7392259,2.29123075 C8.39683517,-0.0970769149 4.60316483,-0.0970769149 2.26077415,2.29123075 C-0.0869247162,4.68495065 -0.0869247162,8.56988335 2.26077415,10.9636033 L6.5,15.285929 Z" id="Combined-Shape"></path><circle id="Oval-3" cx="6.5" cy="6.5" r="2"></circle></g></g></g></svg>
-									<input type="text" class="w-100 text-truncate" placeholder="{{ trans('messages.store.enter_your_address') }}" value="{{session('locality')}}"  id="location_search_mob" />
+									<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1"><g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Icons-/-Semantic-/-Location" stroke="#f68202"><g id="Group" transform="translate(1.500000, 0.000000)"><path d="M6.5,15.285929 L10.7392259,10.9636033 C13.0869247,8.56988335 13.0869247,4.68495065 10.7392259,2.29123075 C8.39683517,-0.0970769149 4.60316483,-0.0970769149 2.26077415,2.29123075 C-0.0869247162,4.68495065 -0.0869247162,8.56988335 2.26077415,10.9636033 L6.5,15.285929 Z" id="Combined-Shape"></path><circle id="Oval-3" cx="6.5" cy="6.5" r="2"></circle></g></g></g></svg>									
+									<input type="text" class="w-100 text-truncate" placeholder="{{ trans('messages.store.enter_your_address') }}" value="{{session('location')}}"  id="location_search_mob" />
 								</div>
 								<div class="asap">
 									<h3 class="schedule-option d-flex align-items-center {{@session('schedule_data')[status]!='Schedule'?'active':''}} " data-val="ASAP">
@@ -131,8 +131,8 @@
 	</div>
 
 	<div class="search-result pt-4 pt-md-5 pb-3" ng-cloak>
-		<div class="container">
-			<h1 ng-hide="search_key">{{ isset($request_cat) ? $request_cat : trans('messages.store.item')  }} {{trans('messages.store.delivery_in')}}  @{{city}}</h1>
+		<div class="container">			
+			<h1 ng-hide="search_key">{{ isset($request_cat) ? $request_cat : trans('messages.store.item')  }} {{trans('messages.store.delivery_in')}}  @{{locality}}</h1>
 			<h1 ng-show="search_key">{{trans('messages.store.results_for')}} @{{search_key}}</h1>
 			<div class="whole-product my-4 my-md-5 row clearfix">
 				<div class="product float-left col-lg-4 col-md-6 col-12" ng-repeat="store in store_data.category">
