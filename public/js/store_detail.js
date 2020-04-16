@@ -39,7 +39,6 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
   $scope.apply_promo = function () {
     $('.promo_code_error').addClass('text-danger');
 
-
     var promo_code = $('.promo_code_val').val();
     if (promo_code == '') {
       $('.promo_code_error').removeClass('d-none');
@@ -100,7 +99,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
   //   });
   // });
 
-  $scope.getProductCount = function(itemId) {    
+  $scope.getProductCount = function(itemId, withStr = "") {    
     var count = 1;
     if ($scope.order_data && $scope.order_data.items.length > 0) {
       $scope.order_data.items.forEach(item => {
@@ -108,7 +107,11 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
           count = item.item_count
       })
     }
-    return count;
+
+    if (withStr.length > 0)
+      return count + " " + withStr;
+    else
+      return count;
   }
 
   $scope.checkIsInCart = function(itemId) {
@@ -123,6 +126,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
     }
     return isIn;
   }
+
   //add or remove count
 
   $(document).on('click', '.value-changer', function () {
@@ -178,8 +182,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
       $('#calculation_form').removeClass('loading');
       $('#calculation_form').removeClass('loading');
 
-    });
-    
+    });    
   });
 
   //checkout page
@@ -234,6 +237,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
     $('.location_error_msg').addClass('d-none');
 
     var item_id = $(this).closest('.pro-item').attr('data-id');
+    var item_count = $(this).parent().children('.add_item_count').val()
     var url_item = getUrls('item_details');
 
     $http.post(url_item, {
@@ -253,7 +257,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
       $http.post(add_cart, {
         store_id: $scope.store_id,
         menu_data: menu_item,
-        item_count: 1,
+        item_count: parseInt(item_count),
         item_notes: "",
         item_price: $scope.price,
         individual_price: $scope.individual_price,
@@ -339,24 +343,9 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   //sesion clear function
 
   $('.store_popup').click(function () {
-
-
-
     var url = getUrls('session_clear_data');
 
     $http.post(url, {
@@ -367,7 +356,6 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
       $scope.other_store = 'no';
       $scope.order_store_session();
     });
-
 
   });
 
@@ -743,9 +731,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
 
   }
 
-}]);
-
-
+}])
 
 //orders detail controller
 
