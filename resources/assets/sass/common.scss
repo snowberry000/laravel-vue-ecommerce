@@ -2418,7 +2418,7 @@ select {
 
       .quantity {
 
-        input[type='text'].count_item, .value-changer {
+        .count_item-div, .value-changer {
           display: none;
         }
 
@@ -2505,13 +2505,39 @@ select {
         display: none;
       }
       
-      input[type="text"].count_item {
-        display: block;
-        &:focus {
-          border: 1px solid $theme-color;
+      .count_item-div {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        .count_item {
+
+          &:focus {
+            border: 1px solid $theme-color;
+          }
+
+          &.error {
+            border: 1px solid #dc3545;
+          }
+
+        }
+
+        .input-validator {
+          position: absolute;
+          left: 0;
+          top: 50px;
+          margin: 0;
+          white-space: nowrap;
+          font-size: 0.9rem;
+          color: #dc3545;
+          display: none;
+
+          &.error {
+            display: block;
+          }
         }
       }
-
+      
       .btn-add-cart {
         height: 50px;
         margin-left: 0.5rem;

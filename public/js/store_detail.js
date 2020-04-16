@@ -185,6 +185,23 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
     });    
   });
 
+  $('.add_item_count').keyup(function (event) {
+
+    function isNormalInteger(str) {
+      var n = Math.floor(Number(str));
+      return n !== Infinity && String(n) === str && n >= 0;
+    }
+
+    var value = event.target.value;
+    if (!isNormalInteger(value) || parseInt(value) < 1 || parseInt(value) > 20) {      
+      $(this).addClass('error');
+      $(this).parent().children('.input-validator').addClass('error');
+    } else {      
+      $(this).removeClass('error');
+      $(this).parent().children('.input-validator').removeClass('error');
+    }
+  });
+
   //checkout page
 
   $('#checkout').click(function () {
@@ -236,8 +253,12 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
 
     $('.location_error_msg').addClass('d-none');
 
+    var item_count_element = $(this).parent().find('.add_item_count')[0];
+    if ($(item_count_element).hasClass('error'))
+      return false;
+
     var item_id = $(this).closest('.pro-item').attr('data-id');
-    var item_count = $(this).parent().children('.add_item_count').val()
+    var item_count = item_count_element.value;
     var url_item = getUrls('item_details');
 
     $http.post(url_item, {
@@ -306,6 +327,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
     });
 
   }
+
   $scope.$watch('order_data', function () {
     if ($scope.other_store == 'no' && $scope.order_data) {
       if ($scope.order_data.total_item_count > 0) {
@@ -681,7 +703,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
   $scope.add_notes = '';
 
   $scope.order_store_session = function () {    
-    debugger;
+
     if ($scope.other_store == 'yes') {
       $('#myModal').modal();
       return false;
@@ -696,9 +718,9 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
 
     $scope.item_notes = $scope.add_notes;
 
-    var index_id = $(this).attr('data-remove');
+    // var index_id = $(this).attr('data-remove');
 
-    var menu_item_id = $scope.menu_item.id;
+    // var menu_item_id = $scope.menu_item.id;
 
     var add_cart = getUrls('add_cart');
 

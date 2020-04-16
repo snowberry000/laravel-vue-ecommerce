@@ -117,7 +117,8 @@
 								class="pro-item" 
 								data-id="{{$menu_row->id}}" 
 								data-name="{{$menu_row->name}}" 
-								data-price="{{ ($menu_row->offer_price!=0) ? $menu_row->offer_price : $menu_row->price }}"
+								data-price="{{ ($menu_row->offer_price!=0) ? $menu_row->offer_price : $menu_row->price }}"								
+								ng-class="checkIsInCart({{$menu_row->id}}) ? 'added-cart' : ''"
 							>
 								@if($store_time_data==0)
 								<label class="sold-out">{{ trans('messages.store.closed') }}</label>
@@ -148,37 +149,31 @@
 									</p>
 								</div>
 								<div class="quantity d-flex align-items-center mb-md-0">
+
 									<span class="count_item w-100" ng-bind="getProductCount({{$menu_row->id}})"></span>
+
+									<div class="count_item-div w-100">
+										<input class="add_item_count count_item w-100" type="text" value="1" />
+										<span class="input-validator">Please input number between 1 and 20</span>
+									</div>									
 									
-									<button ng-if="checkIsInCart({{$menu_row->id}})" class="value-changer" data-val="remove">
+									<button class="value-changer" data-val="remove">
 										<i class="icon icon-remove"></i>
-									</button>
-									<button ng-if="checkIsInCart({{$menu_row->id}})"  class="value-changer" data-val="add">
+									</button>									
+									<button class="value-changer" data-val="add">
 										<i class="icon icon-add"></i>
 									</button>			
-									@if($menu_row->is_visible != 0 && $menu_category1->menu_closed)
-										<button 
-											class="btn btn-theme btn-add-cart w-100"
-											ng-if="!checkIsInCart({{$menu_row->id}})"
-											type="submit" 
-											id="cart_sumbit" 										
-											data-val="@{{menu_item.is_visible}}"											
-										>
-											{{ trans('admin_messages.add') }} 
-										</button>
-									@else			
-										<button 
-											class="btn btn-theme btn-add-cart w-100"
-											ng-if="!checkIsInCart({{$menu_row->id}})"
-											type="submit" 
-											id="cart_sumbit" 										
-											data-val="@{{menu_item.is_visible}}"											
-											disabled="disabled"
-										>
-											{{ trans('admin_messages.add') }} 
-										</button>			
-									@endif			
-								</div>
+
+									<button 
+										class="btn btn-theme btn-add-cart w-100"											
+										type="submit" 											
+										data-val="@{{menu_item.is_visible}}"											
+										ng-disabled="{{$menu_row->is_visible != 0 && $menu_category1->menu_closed ? 'false' : 'true'}}"
+									>
+										{{ trans('admin_messages.add') }} 
+									</button>									
+								</div>								
+								<h2 class="added-cart-count" ng-bind="getProductCount({{$menu_row->id}}, 'in basket')"></h2>
 							</div>
 							@endif
 							@endforeach
@@ -212,7 +207,7 @@
 										ng-model="order_row.item_count" 
 										data-price='@{{ (menu_item.offer_price!=0) ? menu_item.offer_price : menu_item_price}}' 
 										ng-change="order_store_changes(order_row.order_item_id)"
-									>										
+									>
 										@for($i=1;$i<=20;$i++)
 										<option value="{{$i}}">{{$i}}</option>
 										@endfor
