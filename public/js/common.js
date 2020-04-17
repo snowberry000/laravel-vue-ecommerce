@@ -14,7 +14,7 @@ $(window).on('load', function() {
 function refreshSelect() {
   setTimeout(function(){ 
     $('select').selectpicker('refresh');
-  }, 1);
+  }, 10);
 }
 
 $(document).ready(function () {
@@ -76,9 +76,6 @@ $(document).ready(function() {
   setTimeout(function() {
     $('#schedule_button').css('display','block');
     $('#count_card').removeClass('text-hide');
-    setTimeout(function(){ 
-      $('select').selectpicker('refresh');
-    }, 100);
   },100);
 })
 
@@ -86,16 +83,17 @@ $(document).mouseup(function(e) {
   var container = $(".tooltip-content");
   var container1 = $(".schedule-dropdown");
 
-      // if the target of the click isn't the container nor a descendant of the container
-      if (!container.is(e.target) && container.has(e.target).length === 0) {
-        container.hide();
-      }
-       // if the target of the click isn't the container nor a descendant of the container
-       if (!container1.is(e.target) && container1.has(e.target).length === 0) {
-        container1.hide();
-        $('.schedule-popup').removeClass('d-flex');
-      }
-    });
+  // if the target of the click isn't the container nor a descendant of the container
+  if (!container.is(e.target) && container.has(e.target).length === 0) {
+    container.hide();
+  }
+
+  // if the target of the click isn't the container nor a descendant of the container
+  if (!container1.is(e.target) && container1.has(e.target).length === 0) {
+    container1.hide();
+    $('.schedule-popup').removeClass('d-flex');
+  }
+});
 
 app.filter('checkTimeInDay', ["$filter", function($filter) {
   return function(time, date) {
@@ -347,7 +345,6 @@ app.controller('header_controller', ['$scope', '$http', '$timeout', function ($s
   $scope.longitude = '';
   $scope.street_address = '';
   $scope.locality = '';
-
   var place = data;
   for (var i = 0; i < place.address_components.length; i++) {
     var addressType = place.address_components[i].types[0];
@@ -378,19 +375,18 @@ app.controller('header_controller', ['$scope', '$http', '$timeout', function ($s
         $scope.country = val;
       if(addressType       == 'administrative_area_level_1')
         $scope.state = val;
-
+      loca = $scope.street_address+" "+$scope.locality+" "+$scope.country+" "+$scope.state;
       $('#city_change').text($scope.city);
     }
   }
-
+  console.log(loca);
   $scope.latitude = place.geometry.location.lat();
   $scope.longitude = place.geometry.location.lng();
   $scope.is_auto_complete = 1;
-
         //store session data
         var url_search = getUrls('store_location');
-        var location_val = $('#location_search').val();
-        $scope.location = location_val;
+        var location_val = loca;
+        $scope.location = $('#location_search').val();
         $scope.street_address = ($scope.street_address)?$scope.street_address:$scope.city;
         $http.post(url_search,{
           postal_code: $scope.postal_code,
@@ -404,14 +400,14 @@ app.controller('header_controller', ['$scope', '$http', '$timeout', function ($s
           locality   : $scope.locality,
         }).then(function(response){
           $('#city_change').text($scope.city);
-          $('#location_search').val($scope.locality);
+          $('#location_search').val($scope.location);
           $('.location_error_msg').addClass('d-none');
           var url = getUrls('search');
           window.location.href = url ;
         });
       }
 
-    }]);
+}]);
 
 //forget password for eater
 
@@ -776,9 +772,7 @@ app.controller('home_page', ['$scope', '$http', '$timeout', function ($scope, $h
         return false;
       }
       else{
-        //console.log($scope.latitude,$scope.longitude);
         var locations = location.replace(/\s/g, '+');
-        // var url = getUrl('search', { 'location': locations });
         //search page redirect
         var url = getUrls('search');
         //window.location.href = url + '?postal_code=' + $scope.postal_code + '&city=' + $scope.city + '&latitude=' + $scope.latitude + '&longitude=' + $scope.longitude;
@@ -866,12 +860,10 @@ app.controller('home_page', ['$scope', '$http', '$timeout', function ($scope, $h
       var code_generated = $('#code_session').val();
 
       if(code_entered != code_generated){
-        //console.log('wrong');
         $('#code_check').css('display','block');
         return false;
       }
       else{
-        //console.log('correct');
         $('#code_check').css('display','none');
 
         return true;
@@ -935,10 +927,6 @@ app.controller('payout_preferences1', ['$scope', '$http', function($scope, $http
   $scope.payout_currency = $('[name="currency"]').val();
   $('[name="currency"]').val($('[name="currency"] option:first').val());
 
-  setTimeout(function(){ 
-    $('select').selectpicker('refresh');
-  }, 10);
-
 });
   $(document).on('change', '[name="currency"]', function() {
     $scope.payout_currency = $('[name="currency"]').val()
@@ -964,8 +952,7 @@ app.controller('payout_preferences1', ['$scope', '$http', function($scope, $http
     $('.edit_payout_mtd').removeClass('hide');
 
     $('#payout_popup1').removeClass('hide').attr("aria-hidden", "false");
-    $('#payout_preference_submit').addClass('loading');
-        //console.log('sa');
+    $('#payout_preference_submit').addClass('loading');        
         var user_id    = $('#user_id_data').val();
         var url_search = getUrls('get_payout_preference');
 
@@ -1010,11 +997,6 @@ app.controller('payout_preferences1', ['$scope', '$http', function($scope, $http
           $scope.change_currency();
           $('#legal_document span').addClass('hide');
           $('#payout_preference_submit').removeClass('loading');
-
-          setTimeout(function(){ 
-            $('select').selectpicker('refresh');
-          }, 10);
-
         });
       }
       $scope.change_currency = function()
@@ -1137,299 +1119,285 @@ app.controller('payout_preferences1', ['$scope', '$http', function($scope, $http
                 $(this).parent().parent().html('');
               });
 
-            }]);
+}]);
 
+//search page controller
+app.controller('stores_search', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
+  $scope.category_id ='';
 
+  setTimeout(function(){
 
+    $(document).ready(function () {
+      $('.search_page').addClass('loading');
+      $scope.search_result();
+    });
 
+  },100);
 
+  $scope.repeater = function (range) {
+  var arr = []; 
+  for (var i = 0; i < range; i++) {
+    arr.push(i);
+  }
+  return arr;
+}
 
-  //search page controller
+  //search page google search
 
-  app.controller('stores_search', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
-   $scope.category_id ='';
+  var autocompletes;
+  initAutocompletes();
 
-   setTimeout(function(){
-
-      //console.log($scope.latitude,$scope.longitude);
-      $(document).ready(function () {
-        $('.search_page').addClass('loading');
-        $scope.search_result();
-      });
-
-    },100);
-
-   $scope.repeater = function (range) {
-    var arr = []; 
-    for (var i = 0; i < range; i++) {
-      arr.push(i);
-    }
-    return arr;
+  function initAutocompletes() {
+    autocompletes = new google.maps.places.Autocomplete(document.getElementById('location_search'),{ types: ['geocode'] });
+    autocompletes.addListener('place_changed', fillInAddress1);
   }
 
-    //search page google search
+  function fillInAddress1() {
+    fetchMapAddress1(autocompletes.getPlace());
+  }
 
-    var autocompletes;
-    initAutocompletes();
+  function fetchMapAddress1(data) {
 
-    function initAutocompletes() {
-      autocompletes = new google.maps.places.Autocomplete(document.getElementById('location_search'),{ types: ['geocode'] });
-      autocompletes.addListener('place_changed', fillInAddress1);
-    }
+    var componentForm = {
+      street_number: 'short_name',
+      route: 'long_name',
+      sublocality_level_1: 'long_name',
+      sublocality_level_2: 'long_name',
+      sublocality_level_3: 'long_name',
+      sublocality: 'long_name',
+      locality: 'long_name',
+      administrative_area_level_1: 'long_name',
+      country: 'short_name',
+      postal_code: 'short_name'
+    };
 
-    function fillInAddress1() {
-      fetchMapAddress1(autocompletes.getPlace());
-    }
+    $scope.postal_code = '';
+    $scope.city = '';
+    $scope.latitude = '';
+    $scope.longitude = '';
+    $scope.street_address = '';
+    $scope.locality = '';
 
-    function fetchMapAddress1(data) {
+    var place = data;
+    for (var i = 0; i < place.address_components.length; i++) {
+      var addressType = place.address_components[i].types[0];
+      if (componentForm[addressType]) {
+        var val = place.address_components[i][componentForm[addressType]];
+        if (addressType == 'postal_code') $scope.postal_code = val;
+        if (addressType == 'locality') $scope.city = val;
+        
+        if (addressType == 'sublocality_level_1' && $scope.locality == '') 
+          $scope.locality = val;
+        else if (addressType == 'sublocality' && $scope.locality == '') 
+          $scope.locality = val;
+        else if (addressType == 'locality' && $scope.locality == '') 
+          $scope.locality = val;
+        else if(addressType == 'administrative_area_level_1' && $scope.locality == '') 
+          $scope.locality = val;
+        else if(addressType  == 'country' && $scope.locality == '') 
+          $scope.locality = place.address_components[i]['long_name'];
+        if(addressType       == 'street_number')
+          $scope.street_address = val;
+        if(addressType       == 'route')
+          $scope.street_address = $scope.street_address+' '+val;
+        if(addressType       == 'country')
+          $scope.country = val;
+        if(addressType       == 'administrative_area_level_1')
+          $scope.state = val;
 
-      var componentForm = {
-        street_number: 'short_name',
-        route: 'long_name',
-        sublocality_level_1: 'long_name',
-        sublocality_level_2: 'long_name',
-        sublocality_level_3: 'long_name',
-        sublocality: 'long_name',
-        locality: 'long_name',
-        administrative_area_level_1: 'long_name',
-        country: 'short_name',
-        postal_code: 'short_name'
-      };
-
-      $scope.postal_code = '';
-      $scope.city = '';
-      $scope.latitude = '';
-      $scope.longitude = '';
-      $scope.street_address = '';
-      $scope.locality = '';
-
-      var place = data;
-      for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
-        if (componentForm[addressType]) {
-          var val = place.address_components[i][componentForm[addressType]];
-          if (addressType == 'postal_code') $scope.postal_code = val;
-          if (addressType == 'locality') $scope.city = val;
-
-          if (addressType == 'locality') $scope.city = val;
-          
-          if (addressType == 'sublocality_level_1' && $scope.locality == '') 
-            $scope.locality = val;
-          else if (addressType == 'sublocality' && $scope.locality == '') 
-            $scope.locality = val;
-          else if (addressType == 'locality' && $scope.locality == '') 
-            $scope.locality = val;
-          else if(addressType == 'administrative_area_level_1' && $scope.locality == '') 
-            $scope.locality = val;
-          else if(addressType  == 'country' && $scope.locality == '') 
-            $scope.locality = place.address_components[i]['long_name'];
-          
-
-
-          if(addressType       == 'street_number')
-            $scope.street_address = val;
-          if(addressType       == 'route')
-            $scope.street_address = $scope.street_address+' '+val;
-          if(addressType       == 'country')
-            $scope.country = val;
-          if(addressType       == 'administrative_area_level_1')
-            $scope.state = val;
-
-        }
       }
-      
-      $scope.latitude = place.geometry.location.lat();
-      $scope.longitude = place.geometry.location.lng();
-      $scope.is_auto_complete = 1;
-      $('#location_search').val($scope.locality);
-      $('#location_search_mob').val($scope.locality);
-        //store session data
-        var url_search = getUrls('store_location');
-        var location_val = $('#location_search').val();
-        $scope.location = location_val;
-        $scope.street_address = ($scope.street_address)?$scope.street_address:$scope.city;
-          //console.log(url_search,location_val);
-          $http.post(url_search,{
-            postal_code: $scope.postal_code,
-            city       : $scope.city,
-            address1   : $scope.street_address,
-            latitude   : $scope.latitude,
-            longitude  : $scope.longitude,
-            state      : $scope.state,
-            country    : $scope.country,
-            location   : $scope.location,
-            locality   : $scope.locality,
-          }).then(function(response){
-              //console.log(response);
-              $('.search_page').addClass('loading');
-
-              $scope.search_result();
-            });
-        }
-
-
-        $('.schedule-option').click(function(){
-          var status = $(this).attr('data-val');
-          $scope.schedule_status_clone = status;
-          $scope.schedule_status = Lang.get('js_messages.store.'+status);
-
-          $scope.$apply();
-          if($scope.schedule_status_clone=='ASAP'){
-
-            var url = getUrls('schedule_store');
-            date ='';
-            time = '';
-            $http.post(url,{
-              status   : $scope. $scope.schedule_status_clone,
-              date     : date,
-              time     : time,
-            }).then(function(response){
-              location.reload();
-            });
-          }
-
-        });
-
-
-        $scope.save_time = function(){
-         if($('#count_card').text() > 0)
-          $('#schedule_modal_mob').modal();
-        else
-          $('.schedule_modal_mob').trigger("click");
-      }
-
-      $('.schedule_modal_mob').click(function(){
-        var schedule_session=$('#schedule_status_session').val();  
-        var date = $scope.schedule_date;
-        var time = $('#mob_schedule_time').val();
-        var url = getUrls('schedule_store');
-        $http.post(url,{
-          status   :$scope.schedule_status_clone ? $scope.schedule_status_clone : schedule_session,
-          date     : date,
-          time     : time,
+      var loca = $scope.street_address+" "+$scope.locality+" "+$scope.country+" "+ ($scope.state === "undefined" ? $scope.state : "") ;
+    }
+    
+    $scope.latitude = place.geometry.location.lat();
+    $scope.longitude = place.geometry.location.lng();
+    $scope.is_auto_complete = 1;
+    $('#location_search').val($scope.locality);
+    $('#location_search_mob').val($scope.locality);
+      //store session data
+      var url_search = getUrls('store_location');
+      var location_val = $('#location_search').val();
+      $scope.location = location_val;
+      $scope.street_address = ($scope.street_address)?$scope.street_address:$scope.city;
+        $http.post(url_search,{
+          postal_code: $scope.postal_code,
+          city       : $scope.city,
+          address1   : $scope.street_address,
+          latitude   : $scope.latitude,
+          longitude  : $scope.longitude,
+          state      : $scope.state,
+          country    : $scope.country,
+          location   : $scope.location,
+          locality   : $scope.locality,
         }).then(function(response){
-          location.reload();
-        });
-      });
+            $('.search_page').addClass('loading');
+            $scope.search_result();
+          });
+      }
 
 
+      $('.schedule-option').click(function(){
+        var status = $(this).attr('data-val');
+        $scope.schedule_status_clone = status;
+        $scope.schedule_status = Lang.get('js_messages.store.'+status);
 
+        $scope.$apply();
+        if($scope.schedule_status_clone=='ASAP'){
 
-
-    // search result function
-
-    $scope.search_result = function(){
-
-      var url = getUrls('search_result');
-
-      var request_cat =$('#request_cat').val();
-
-      $('.search_page').addClass('loading');
-      
-      $http.post(url,{
-        postal_code : $scope.postal_code,
-        city        : $scope.city,
-        latitude    : $scope.latitude,
-        longitude   : $scope.longitude,
-        location    : $scope.location,
-        category    : $scope.category_id,
-        keyword : request_cat,
-      }).then(function(response){     
-
-        $scope.store_data = response.data;
-        $scope.search_data_key = response.data.search;
-        $('.search_page').removeClass('loading');
-        if(response.data.store==''){
-          $('.no_result').css('display','block');
-        }
-        else{
-          $('.no_result').css('display','none');
+          var url = getUrls('schedule_store');
+          date ='';
+          time = '';
+          $http.post(url,{
+            status   : $scope. $scope.schedule_status_clone,
+            date     : date,
+            time     : time,
+          }).then(function(response){
+            location.reload();
+          });
         }
 
       });
 
+
+      $scope.save_time = function(){
+        if($('#count_card').text() > 0)
+        $('#schedule_modal_mob').modal();
+      else
+        $('.schedule_modal_mob').trigger("click");
     }
 
-
-    //category search based on recommended
-
-    $( ".recommended_val" ).click(function( event ) {
-
-      $scope.category_id = $(this).attr('data-id');
-      
-      $('.category-list').toggleClass('active');
-      $('body').removeClass('non-scroll');
-
-      $scope.search_result();
-
-    });
-
-    //category search based on popular
-
-    $( ".popular_val" ).click(function( event ) {
-
-      $scope.category_id = $(this).attr('data-id');
-
-      $('.category-list').toggleClass('active');
-      $('body').removeClass('non-scroll');
-
-      $scope.search_result();
-
-    });
-
-
-    //top category filter search
-
-    $('#top_category_search, #top_category_search_mob').change(function(){
-      var keyword = $(this).val();
-      $('.search-field .icon-close-2').trigger('click');
-
-      var url = getUrls('search_data');
-      $('.search_page').addClass('loading');
+    $('.schedule_modal_mob').click(function(){
+      var schedule_session=$('#schedule_status_session').val();  
+      var date = $scope.schedule_date;
+      var time = $('#mob_schedule_time').val();
+      var url = getUrls('schedule_store');
       $http.post(url,{
-        keyword : keyword,
+        status   :$scope.schedule_status_clone ? $scope.schedule_status_clone : schedule_session,
+        date     : date,
+        time     : time,
       }).then(function(response){
-        $('#top_category_search, #top_category_search_mob').blur();
-
-        $scope.store_data = response.data;
-        $scope.search_data_key = response.data.search;
-        $('.search_page').removeClass('loading');
-
-        if(response.data.store=='')
-        {
-          $('.no_result').css('display','block');
-        }
-
-        else
-        {
-          $('.no_result').css('display','none');
-        }
+        location.reload();
       });
+    });
 
-      if(keyword==''){
-        $scope.search_result();
+
+
+
+
+  // search result function
+
+  $scope.search_result = function(){
+
+    var url = getUrls('search_result');
+
+    var request_cat =$('#request_cat').val();
+
+    $('.search_page').addClass('loading');
+    
+    $http.post(url,{
+      postal_code : $scope.postal_code,
+      city        : $scope.city,
+      latitude    : $scope.latitude,
+      longitude   : $scope.longitude,
+      location    : $scope.location,
+      category    : $scope.category_id,
+      keyword : request_cat,
+    }).then(function(response){     
+
+      $scope.store_data = response.data;
+      $scope.search_data_key = response.data.search;
+      $('.search_page').removeClass('loading');
+      if(response.data.store==''){
+        $('.no_result').css('display','block');
+      }
+      else{
+        $('.no_result').css('display','none');
+      }
+
+    });
+
+  }
+
+
+  //category search based on recommended
+
+  $( ".recommended_val" ).click(function( event ) {
+
+    $scope.category_id = $(this).attr('data-id');
+    
+    $('.category-list').toggleClass('active');
+    $('body').removeClass('non-scroll');
+
+    $scope.search_result();
+
+  });
+
+  //category search based on popular
+
+  $( ".popular_val" ).click(function( event ) {
+
+    $scope.category_id = $(this).attr('data-id');
+
+    $('.category-list').toggleClass('active');
+    $('body').removeClass('non-scroll');
+
+    $scope.search_result();
+
+  });
+
+
+  //top category filter search
+
+  $('#top_category_search, #top_category_search_mob').change(function(){
+    var keyword = $(this).val();
+    $('.search-field .icon-close-2').trigger('click');
+
+    var url = getUrls('search_data');
+    $('.search_page').addClass('loading');
+    $http.post(url,{
+      keyword : keyword,
+    }).then(function(response){
+      $('#top_category_search, #top_category_search_mob').blur();
+
+      $scope.store_data = response.data;
+      $scope.search_data_key = response.data.search;
+      $('.search_page').removeClass('loading');
+
+      if(response.data.store=='')
+      {
+        $('.no_result').css('display','block');
+      }
+
+      else
+      {
+        $('.no_result').css('display','none');
       }
     });
 
-    //top category search
-    $( ".category_top_val" ).click(function( event ) {
-      $scope.category_id = $(this).attr('data-id');
-      $('.search-field .icon-close-2').trigger('click');
+    if(keyword==''){
       $scope.search_result();
-    });
+    }
+  });
 
-    //more category search
+  //top category search
+  $( ".category_top_val" ).click(function( event ) {
+    $scope.category_id = $(this).attr('data-id');
+    $('.search-field .icon-close-2').trigger('click');
+    $scope.search_result();
+  });
 
-    $( ".category_more_val" ).click(function( event ) {
+  //more category search
 
-      $scope.category_id = $(this).attr('data-id');
+  $( ".category_more_val" ).click(function( event ) {
 
-      $('.icon-close-2').trigger('click');
+    $scope.category_id = $(this).attr('data-id');
 
-      $scope.search_result();
+    $('.icon-close-2').trigger('click');
 
-    });
-  }]);
+    $scope.search_result();
+
+  });
+}]);
 
 $('.signup-slider.owl-carousel').owlCarousel({
   items: 1,

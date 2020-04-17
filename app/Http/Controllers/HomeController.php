@@ -103,7 +103,7 @@ class HomeController extends Controller {
 		$message = 'Your verification code is ' . $this->view_data['verification_code'];
 
 		$phone_number = $this->view_data['country_code'] . $this->view_data['phone_number'];
-		//$message_send = send_nexmo_message($phone_number, $message);
+		$message_send = send_nexmo_message($phone_number, $message);
 		return json_encode(['success' => 'true', 'data' => 'message send']);
 		if ($message_send['status'] == 'Success') {
 			return json_encode(['success' => 'true', 'data' => $message_send]);
