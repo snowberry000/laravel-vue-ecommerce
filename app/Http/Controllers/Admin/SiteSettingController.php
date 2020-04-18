@@ -203,23 +203,23 @@ class SiteSettingController extends Controller {
 					if ($submit == 'site_images' && $key == 'site_logo') {
 						$file = $request->file('site_images')['site_logo'];
 
-						$file_path = $this->fileUpload($file, 'public/images/site_setting');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '1', $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
+						// $orginal_path = Storage::url($file_path['path']);
 						// $this->fileResize($orginal_path, get_image_size('site_logo')['width'], get_image_size('site_logo')['height'], $orginal_path);
 					} elseif ($submit == 'site_images' && $key == 'site_favicon') {
 						$file = $request->file('site_images')['site_favicon'];
 
-						$file_path = $this->fileUpload($file, 'public/images/site_setting');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '2', $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
+						// $orginal_path = Storage::url($file_path['path']);
 						// $this->fileResize($orginal_path, get_image_size('site_favicon')['width'], get_image_size('site_favicon')['height'], $orginal_path);
 					} elseif ($submit == 'site_images' && $key == 'store_logo') {
 						$file = $request->file('site_images')['store_logo'];
 
-						$file_path = $this->fileUpload($file, 'public/images/site_setting');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '3', $file_path['file_name'], '1');
 						// $orginal_path = Storage::url($file_path['path']);
@@ -227,50 +227,49 @@ class SiteSettingController extends Controller {
 					} elseif ($submit == 'site_images' && $key == 'email_logo') {
 						$file = $request->file('site_images')['email_logo'];
 
-						$file_path = $this->fileUpload($file, 'public/images/site_setting');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '4', $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
-						$this->fileCrop($orginal_path, get_image_size('email_logo')['width'], get_image_size('email_logo')['height'], $orginal_path);
+						$this->fileCrop($file, $file_path['path'], get_image_size('email_logo')['width'], get_image_size('email_logo')['height'], $orginal_path);
 					} elseif ($submit == 'site_images' && $key == 'footer_logo') {
 						$file = $request->file('site_images')['footer_logo'];
 
-						$file_path = $this->fileUpload($file, 'public/images/site_setting');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '5', $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
+						// $orginal_path = Storage::url($file_path['path']);
 						// $this->fileCrop($orginal_path, get_image_size('footer_logo')['width'], get_image_size('footer_logo')['height'], $orginal_path);
 					} elseif ($submit == 'site_images' && $key == 'app_logo') {
 						$file = $request->file('site_images')['app_logo'];
 
-						$file_path = $this->fileUpload($file, 'public/images/site_setting');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '6', $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
+						// $orginal_path = Storage::url($file_path['path']);
 						// $this->fileCrop($orginal_path, get_image_size('app_logo')['width'], get_image_size('app_logo')['height'], $orginal_path);
 					} elseif ($submit == 'site_images' && $key == 'driver_logo') {
 						$file = $request->file('site_images')['driver_logo'];
 
-						$file_path = $this->fileUpload($file, 'public/images/site_setting');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '7', $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
+						// $orginal_path = Storage::url($file_path['path']);
 						// $this->fileCrop($orginal_path, get_image_size('driver_logo')['width'], get_image_size('driver_logo')['height'], $orginal_path);
 					} elseif ($submit == 'site_images' && $key == 'driver_white_logo') {
 						$file = $request->file('site_images')['driver_white_logo'];
 
-						$file_path = $this->fileUpload($file, 'public/images/site_setting');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '8', $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
+						// $orginal_path = Storage::url($file_path['path']);
 						// $this->fileCrop($orginal_path, get_image_size('driver_white_logo')['width'], get_image_size('driver_white_logo')['height'], $orginal_path);
 					} elseif ($submit == 'site_images' && $key == 'eater_home_image') {
 						$file = $request->file('site_images')['eater_home_image'];
 
-						$file_path = $this->fileUpload($file, 'public/images/site_setting');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '9', $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
+						// $orginal_path = Storage::url($file_path['path']);
 						// $this->fileCrop($orginal_path, get_image_size('eater_home_image')['width'], get_image_size('driver_white_logo')['height'], $orginal_path);
 					} else {
 

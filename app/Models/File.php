@@ -39,15 +39,15 @@ class File extends Model {
 
 	public function getImageNameAttribute() {
 		if ($this->attributes['type'] == 3 || $this->attributes['type'] == 4) {
-			$folder = 'store/' . $this->attributes['source_id'];
+			$folder = env('AWS_BUCKET_STORE_IMG_DIR') . $this->attributes['source_id'] . '/';
 		} elseif ($this->attributes['type'] == 2) {
-			$folder = 'eater';
+			$folder = env('AWS_BUCKET_EATER_IMG_DIR');
 		} else {
-			$folder = 'driver';
+			$folder = env('AWS_BUCKET_DRIVER_IMG_DIR');
 		}
 
 		if ($this->attributes['name']) {
-			$images = url(Storage::url('images/' . $folder . '/' . $this->attributes['name']));
+			$images = url(Storage::disk('s3')->url($folder . $this->attributes['name']));
 		} else {
 			$images = '';
 		}
@@ -63,7 +63,7 @@ class File extends Model {
 	public function getStoreDocumentAttribute() {
 
 		if ($this->name) {
-			return url(Storage::url('images/store')) . '/' . $this->source_id . '/documents/' . $this->name;
+			return url(Storage::disk('s3')->url(env('AWS_BUCKET_STORE_IMG_DIR') . $this->source_id . '/documents/' . $this->name));
 		} else {
 			return sample_image();
 		}
@@ -72,7 +72,7 @@ class File extends Model {
 	//store_home_slider_image
 	public function getStoreHomeSliderImageAttribute() {
 		if ($this->attributes['name']) {
-			return url(Storage::url('images/store_home_slider')) . '/'. $this->name;
+			return url(Storage::disk('s3')->url(env('AWS_BUCKET_STOREHOMESLIDER_IMG_DIR') . $this->name));
 		} else {
 			return sample_image();
 		}
@@ -81,7 +81,7 @@ class File extends Model {
 	//eater_home_slider_image
 	public function getEaterHomeSliderImageAttribute() {
 		if ($this->attributes['name']) {
-			return url(Storage::url('images/eater_home_slider')) . '/'. $this->name;
+			return url(Storage::disk('s3')->url(env('AWS_BUCKET_EATERHOMESLIDER_IMG_DIR') . $this->name));
 		} else {
 			return sample_image();
 		}
@@ -90,7 +90,7 @@ class File extends Model {
 
 	//site_image_url
 	public function getSiteImageUrlAttribute() {
-		return Storage::url("public/images/site_setting/" . $this->attributes['name']);
+		return Storage::disk('s3')->url(env("AWS_BUCKET_SITESETTING_IMG_DIR") . $this->attributes['name']);
 	}
 
 	//file_extension

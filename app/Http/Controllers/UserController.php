@@ -164,7 +164,7 @@ class UserController extends Controller {
 			if (request()->profile_photo != null) {
 
 				$file = request()->file('profile_photo');
-				$file_path = $this->fileUpload($file, 'public/images/eater');
+				$file_path = $this->fileUpload($file, env('AWS_BUCKET_EATER_IMG_DIR'));
 
 				$this->fileSave('eater_image', $user_id, $file_path['file_name'], '1');
 				$original_path = url(Storage::url($file_path['path']));

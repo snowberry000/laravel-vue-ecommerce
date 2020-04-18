@@ -25,23 +25,20 @@ trait FileProcessing {
 	 * $file_name upload file name
 	 * @return \Illuminate\Http\Response
 	 */
-	public function fileUpload($file, $file_save_path = 'public', $file_name = '') {
+	public function fileUpload($file, $file_save_path = '', $file_name = '') {
+		
 		if ($file_name == '') {
 			$fullName = $file->getClientOriginalName();
 			$ext = $file->getClientOriginalExtension();
 			$file_name = explode('.'.$ext,$fullName)[0];
-
 		}
-		$check_path = Storage::url($file_save_path);
-		if (!Storage::exists($check_path)) {
-			Storage::makeDirectory($check_path);
-		}
+		
 		$extension = '.' . $file->getClientOriginalExtension();
 		$file_name = str_slug($file_name, '-') . time() . $extension;
-		$path = Storage::putFileAs($file_save_path, $file, $file_name);
-		// dd($path);
-		return collect(['file_name' => $file_name, 'path' => $path]);
+		$file_path = $file_save_path .'/'. $file_name;
+		Storage::disk('s3')->put($file_path, file_get_contents($file), 'public');
 
+		return collect(['file_name' => $file_name, 'path' => $file_path]);
 	}
 
 	/**
@@ -86,13 +83,12 @@ trait FileProcessing {
 
 	}
 
-	public function fileCrop($source_url, $crop_width = 225, $crop_height = 225, $destination_url = '') {
+	public function fileCrop($file, $source_url, $destination_dir, $crop_width = 225, $crop_height = 225, $destination_url = '') {
 		$source_url = trim($source_url, '/');
-		$destination_url = trim($destination_url, '/');
-		$image = Image::make($source_url);
+		$destination_url = trim($destination_url, '/');		
+		$image = Image::make($file);
 		$image_width = $image->width();
 		$image_height = $image->height();
-
 		if ($image_width < $crop_width && $crop_width < $crop_height) {
 			$image = $image->fit($crop_width, $image_height);
 		}if ($image_height < $crop_height && $crop_width > $crop_height) {
@@ -104,9 +100,10 @@ trait FileProcessing {
 
 		if ($destination_url == '') {
 			$source_url_details = pathinfo($source_url);
-			$destination_url = @$source_url_details['dirname'] . '/' . @$source_url_details['filename'] . '_' . $crop_width . 'x' . $crop_height . '.' . @$source_url_details['extension'];
+			$destination_url = $destination_dir . '/' . @$source_url_details['filename'] . '_' . $crop_width . 'x' . $crop_height . '.' . @$source_url_details['extension'];
 		}
-		$croped_image->save($destination_url);
+		// $croped_image->save($destination_url);		
+		Storage::disk('s3')->put($destination_url, $croped_image->stream()->detach(), 'public');
 
 		return $destination_url;
 	}

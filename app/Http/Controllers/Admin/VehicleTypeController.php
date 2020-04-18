@@ -96,7 +96,7 @@ class VehicleTypeController extends Controller {
 				if ($request->file('vehicle_image')) {
 						$file = $request->file('vehicle_image');
 
-						$file_path = $this->fileUpload($file, 'public/images/vehicle_image');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_VEHICLE_IMG_DIR'));
 						$this->fileSave('vehicle_image', $vehicle_type->id, $file_path['file_name'], '1');
 					}
 
@@ -181,7 +181,7 @@ class VehicleTypeController extends Controller {
 				if ($request->file('vehicle_image')) {
 						$file = $request->file('vehicle_image');
 
-						$file_path = $this->fileUpload($file, 'public/images/vehicle_image');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_VEHICLE_IMG_DIR'));
 						$this->fileSave('vehicle_image', $vehicle_type->id, $file_path['file_name'], '1');
 					}
 

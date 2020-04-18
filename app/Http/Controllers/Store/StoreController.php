@@ -736,14 +736,14 @@ class StoreController extends Controller {
 
 				$file = $request->file('file');
 
-				$file_path = $this->fileUpload($file, 'public/images/store/' . $store_id . '/menu_item');
+				$file_path = $this->fileUpload($file, env('AWS_BUCKET_STORE_IMG_DIR') . $store_id . '/menu_item');
 
 				$this->fileSave('menu_item_image', $menu_item->id, $file_path['file_name'], '1');
 
 				$orginal_path = Storage::url($file_path['path']);
 				$size = get_image_size('item_image_sizes');
 				foreach ($size as $new_size) {
-					$this->fileCrop($orginal_path, $new_size['width'], $new_size['height']);
+					$this->fileCrop($file, $file_path['path'], $new_size['width'], $new_size['height']);
 				}
 
 			}
@@ -785,14 +785,14 @@ class StoreController extends Controller {
 
 				$file = $request->file('file');
 
-				$file_path = $this->fileUpload($file, 'public/images/store/' . $store_id . '/menu_item');
+				$file_path = $this->fileUpload($file, env('AWS_BUCKET_STORE_IMG_DIR') . $store_id . '/menu_item');
 
 				$this->fileSave('menu_item_image', $menu_item->id, $file_path['file_name'], '1');
 
-				$orginal_path = Storage::url($file_path['path']);
+				// $orginal_path = Storage::url($file_path['path']);
 				$size = get_image_size('item_image_sizes');
 				foreach ($size as $new_size) {
-					$this->fileCrop($orginal_path, $new_size['width'], $new_size['height']);
+					$this->fileCrop($file, $file_path['path'], $new_size['width'], $new_size['height']);
 				}
 
 			}

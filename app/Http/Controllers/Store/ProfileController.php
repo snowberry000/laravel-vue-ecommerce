@@ -171,13 +171,12 @@ class ProfileController extends Controller {
 
 			$file = $request->file('banner_image');
 
-			$file_path = $this->fileUpload($file, 'public/images/store/' . $store_id);
+			$file_path = $this->fileUpload($file, env('AWS_BUCKET_STORE_IMG_DIR') . $store_id);
 
-			$this->fileSave('store_banner', $store_id, $file_path['file_name'], '1');
-			$orginal_path = Storage::url($file_path['path']);
+			$this->fileSave('store_banner', $store_id, $file_path['file_name'], '1');			
 			$size = get_image_size('store_image_sizes');
 			foreach ($size as $value) {
-				$this->fileCrop($orginal_path, $value['width'], $value['height']);
+				$this->fileCrop($file, $file_path['path'], $value['width'], $value['height']);
 			}
 
 		}
@@ -241,7 +240,7 @@ class ProfileController extends Controller {
 			}
 			if (isset($request->document_file[$key])) {
 				$file = $request->document_file[$key];
-				$file_path = $this->fileUpload($file, 'public/images/store/' . $store_id . '/documents');
+				$file_path = $this->fileUpload($file, env('AWS_BUCKET_STORE_IMG_DIR') . $store_id . '/documents');
 				$file_id = $this->fileSave('store_document', $store_id, $file_path['file_name'], '1', $multiple, $request->document_id[$key]);
 				$store_document->document_id = $file_id;
 

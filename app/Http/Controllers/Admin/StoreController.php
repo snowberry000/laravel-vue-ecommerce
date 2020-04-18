@@ -195,23 +195,23 @@ class StoreController extends Controller {
 
 					$file = $request->file('banner_image');
 
-					$file_path = $this->fileUpload($file, 'public/images/store/' . $new_store->id);
-
+					$file_path = $this->fileUpload($file, env('AWS_BUCKET_STORE_IMG_DIR') . $new_store->id);
 					$this->fileSave('store_banner', $new_store->id, $file_path['file_name'], '1');
-					$orginal_path = Storage::url($file_path['path']);
+
 					$size = get_image_size('store_image_sizes');
 					foreach ($size as $value) {
-						$this->fileCrop($orginal_path, $value['width'], $value['height']);
+						$this->fileCrop($file, $file_path['path'], env('AWS_BUCKET_STORE_IMG_DIR') . $new_store->id, $value['width'], $value['height']);
 					}
-
 				}
+
 				//documents
 				if ($request->document) {
 					foreach ($request->document as $key => $value) {
 
 						$file = $value['document_file'];
-						$file_path = $this->fileUpload($file, 'public/images/store/' . $new_store->id . '/documents');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_STORE_IMG_DIR') . $new_store->id . '/documents');
 						$file_id = $this->fileSave('store_document', $new_store->id, $file_path['file_name'], '1', 'multiple');
+
 						$store_document = new StoreDocument;
 						$store_document->name = $value['name'];
 						$store_document->document_id = $file_id;
@@ -781,15 +781,13 @@ class StoreController extends Controller {
 
 					$file = $request->file('banner_image');
 
-					$file_path = $this->fileUpload($file, 'public/images/store/' . $new_store->id);
-
+					$file_path = $this->fileUpload($file, env('AWS_BUCKET_STORE_IMG_DIR') . $new_store->id);
 					$this->fileSave('store_banner', $new_store->id, $file_path['file_name'], '1');
-					$orginal_path = Storage::url($file_path['path']);
+
 					$size = get_image_size('store_image_sizes');
 					foreach ($size as $value) {
-						$this->fileCrop($orginal_path, $value['width'], $value['height']);
+						$this->fileCrop($file, $file_path['path'], env('AWS_BUCKET_STORE_IMG_DIR') . $new_store->id, $value['width'], $value['height']);
 					}
-
 				}
 
 				//documents
@@ -813,7 +811,7 @@ class StoreController extends Controller {
 
 						if (@$value['document_file']) {
 							$file = $value['document_file'];
-							$file_path = $this->fileUpload($file, 'public/images/store/' . $new_store->id . '/documents');
+							$file_path = $this->fileUpload($file, env('AWS_BUCKET_STORE_IMG_DIR') . $new_store->id . '/documents');
 							$file_id = $this->fileSave('store_document', $new_store->id, $file_path['file_name'], '1', 'multiple');
 							$store_document->document_id = $file_id;
 						}

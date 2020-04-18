@@ -1223,10 +1223,9 @@ class EaterController extends Controller {
 
 				$file = $request->file('image');
 
-				$file_path = $this->fileUpload($file, 'public/images/eater');
+				$file_path = $this->fileUpload($file, env('AWS_BUCKET_EATER_IMG_DIR'));
 
 				$this->fileSave('eater_image', $user_details->id, $file_path['file_name'], '1');
-				$orginal_path = Storage::url($file_path['path']);
 
 				$user = User::where('id', $user_details->id)->first();
 

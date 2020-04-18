@@ -125,9 +125,9 @@ class DriverController extends Controller {
 		}
 
 		$file = $request->file('document');
-		$file_path = $this->fileUpload($file, 'public/images/driver');
+		$file_path = $this->fileUpload($file, env('AWS_BUCKET_DRIVER_IMG_DIR'));
 		$this->fileSave('driver_' . $request->type, $driver->id, $file_path['file_name'], '1');
-		$original_path = url(Storage::url($file_path['path']));
+		$original_path = url(Storage::disk('s3')->url($file_path['path']));
 
 		if ($driver->documents->count() == 5) {
 			$driver->user->status = $driver->user->statusArray['waiting for approval'];
@@ -1173,11 +1173,11 @@ class DriverController extends Controller {
 
 			$file = $request->file('document');
 
-			$file_path = $this->fileUpload($file, 'public/images/stripe/' . $user->id);
+			$file_path = $this->fileUpload($file, env('AWS_BUCKET_STRIPE_IMG_DIR') . $user->id);
 
 			$this->fileSave('stripe_document', $user->id, $file_path['file_name'], '1');
 
-			$original_path = Storage::url($file_path['path']);
+			$original_path = Storage::disk('s3')->url($file_path['path']);
 
 			$file = dirname($_SERVER['SCRIPT_FILENAME']) . $original_path;
 
@@ -1294,7 +1294,7 @@ class DriverController extends Controller {
 
 				$file = $request->file('document');
 
-				$file_path = $this->fileUpload($file, 'public/images/other_payout_document/' . $user->id);
+				$file_path = $this->fileUpload($file, env('AWS_BUCKET_OTHERPAYMENTDOCUMENT_IMG_DIR') . $user->id);
 
 				$this->fileSave('stripe_document', $user->id, $file_path['file_name'], '1');
 
@@ -1618,11 +1618,11 @@ class DriverController extends Controller {
 
 		if ($file) {
 
-			$file_path = $this->fileUpload($file, 'public/images/trip_image/' . $order->id);
+			$file_path = $this->fileUpload($file, env('AWS_BUCKET_TRIP_IMG_DIR') . $order->id);
 
 			$this->fileSave('trip_image', $order->id, $file_path['file_name'], '1');
 
-			$original_path = Storage::url($file_path['path']);
+			$original_path = Storage::disk('s3')->url($file_path['path']);
 		}
 
 		$order->order_delivery->completed();

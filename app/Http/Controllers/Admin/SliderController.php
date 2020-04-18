@@ -105,8 +105,8 @@ class SliderController extends Controller {
 
 				if ($request->file('image')) {
 						$file = $request->file('image');
-						$folder = $request->type==1?'store_home_slider':'eater_home_slider';
-						$file_path = $this->fileUpload($file, 'public/images/'.$folder);
+						$folder = $request->type==1?env('AWS_BUCKET_STOREHOMESLIDER_IMG_DIR'):env('AWS_BUCKET_EATERHOMESLIDER_IMG_DIR');
+						$file_path = $this->fileUpload($file, $folder);
 
 						$this->fileSave($folder, $slider->id, $file_path['file_name'], '1');
 					}

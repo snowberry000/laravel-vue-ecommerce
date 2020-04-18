@@ -91,22 +91,19 @@ class CategoryController extends Controller {
 				if ($request->file('image')) {
 						$file = $request->file('image');
 
-						$file_path = $this->fileUpload($file, 'public/images/category_image');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_CATEGORY_IMG_DIR'));
 
 						$this->fileSave('category_image', $category->id, $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
-						$this->fileCrop($orginal_path, get_image_size('category_image_size')['width'], get_image_size('category_image_size')['height']);
+						$this->fileCrop($file, $file_path['path'], get_image_size('category_image_size')['width'], get_image_size('category_image_size')['height']);
 					}
 				if ($request->file('dietary_icon') && $request->is_dietary=='yes') {
 						$file = $request->file('dietary_icon');
 
-						$file_path = $this->fileUpload($file, 'public/images/category_image');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_CATEGORY_IMG_DIR'));
 
 						$this->fileSave('dietary_icon', $category->id, $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
-						$this->fileCrop($orginal_path, get_image_size('dietary_icon_size')['width'], get_image_size('dietary_icon_size')['height']);
+						$this->fileCrop($file, $file_path['path'], get_image_size('dietary_icon_size')['width'], get_image_size('dietary_icon_size')['height']);
 					}
-
 
 				flash_message('success', trans('admin_messages.added_successfully'));
 				return redirect()->route('admin.category');
@@ -226,20 +223,18 @@ class CategoryController extends Controller {
 					if ($request->file('image')) {
 						$file = $request->file('image');
 
-						$file_path = $this->fileUpload($file, 'public/images/category_image');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_CATEGORY_IMG_DIR'));
 
-						$this->fileSave('category_image', $category->id, $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
-						$this->fileCrop($orginal_path, get_image_size('category_image_size')['width'], get_image_size('category_image_size')['height']);
+						$this->fileSave('category_image', $category->id, $file_path['file_name'], '1');						
+						$this->fileCrop($file, $file_path['path'], get_image_size('category_image_size')['width'], get_image_size('category_image_size')['height']);
 					}
 					if ($request->file('dietary_icon') && $request->is_dietary=='yes') {
 						$file = $request->file('dietary_icon');
 
-						$file_path = $this->fileUpload($file, 'public/images/category_image');
+						$file_path = $this->fileUpload($file, env('AWS_BUCKET_CATEGORY_IMG_DIR'));
 
-						$this->fileSave('dietary_icon', $category->id, $file_path['file_name'], '1');
-						$orginal_path = Storage::url($file_path['path']);
-						$this->fileCrop($orginal_path, get_image_size('dietary_icon_size')['width'], get_image_size('dietary_icon_size')['height']);
+						$this->fileSave('dietary_icon', $category->id, $file_path['file_name'], '1');						
+						$this->fileCrop($file, $file_path['path'], get_image_size('dietary_icon_size')['width'], get_image_size('dietary_icon_size')['height']);
 					}
 
 				flash_message('success', trans('admin_messages.updated_successfully'));
