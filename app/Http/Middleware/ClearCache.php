@@ -38,9 +38,9 @@ class ClearCache {
 			date_default_timezone_set($timezone);
 		} else {
 
-			date_default_timezone_set('Asia/Calcutta');
+			date_default_timezone_set('Europe/London');
 
-			Session::put('time_zone', 'Asia/Calcutta');
+			Session::put('time_zone', 'Europe/London');
 			Session::put('country_code', 'GB');
 			$phone_code = Country::where('code', 'GB')->first()->phone_code;
 			Session::put('phone_code', $phone_code);
