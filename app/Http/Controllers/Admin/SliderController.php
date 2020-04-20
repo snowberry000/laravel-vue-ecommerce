@@ -107,8 +107,9 @@ class SliderController extends Controller {
 						$file = $request->file('image');
 						$folder = $request->type==1?env('AWS_BUCKET_STOREHOMESLIDER_IMG_DIR'):env('AWS_BUCKET_EATERHOMESLIDER_IMG_DIR');
 						$file_path = $this->fileUpload($file, $folder);
+						$type = $request->type==1?'store_home_slider':'eater_home_slider';
 
-						$this->fileSave($folder, $slider->id, $file_path['file_name'], '1');
+						$this->fileSave($type, $slider->id, $file_path['file_name'], '1');
 					}
 
 					$removed_translations = explode(',', $request->removed_translations);
