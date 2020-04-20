@@ -1510,6 +1510,9 @@ i.icon {
     img {
       width: 10em;
       display: inline-block;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 
