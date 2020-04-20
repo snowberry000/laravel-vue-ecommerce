@@ -52,7 +52,7 @@ if (!function_exists('sample_image')) {
 	 */
 
 	function sample_image() {
-		return url('/images/sample.png');
+		return 'sample.png';
 	}
 }
 
@@ -118,7 +118,7 @@ if (!function_exists('site_setting')) {
 			} else {
 				$file = File::where('type', 1)->where('source_id', $value)->first();
 				if ($file) {
-					return url($file->site_image_url);
+					return $file->site_image_url;
 				}
 
 			}

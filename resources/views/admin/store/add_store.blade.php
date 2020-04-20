@@ -246,7 +246,11 @@
     <div class="col-md-9 pt-md-4">
       <div class="fileinput fileinput-new" data-provides="fileinput">
         <div class="fileinput-new thumbnail">
-         <img ng-if="document.file.file_extension!='pdf'" src="@{{document.document_file?document.document_file:(document.document_old_file?document.document_old_file:default_img)}}" alt="...">
+         <img 
+          ng-if="document.file.file_extension!='pdf'" 
+          src="{{env('IMG_CLOUD_URL')}}@{{document.document_file?document.document_file:(document.document_old_file?document.document_old_file:default_img)}}" 
+          alt="..."
+        >
          <a ng-if="document.file.file_extension=='pdf'"  href="@{{document.document_file?document.document_file:(document.document_old_file?document.document_old_file:default_img)}}" alt="...">
          @{{document.file.name}}
          </a>

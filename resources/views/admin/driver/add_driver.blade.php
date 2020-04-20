@@ -145,10 +145,10 @@
           @if($driver->driver->get_document_name($key,'file_extension')=='pdf')
           <a  href="{{@$driver->driver->get_document_name($key,'image_name')}}" alt="..."> {{@$driver->driver->get_document_name($key,'name')}} </a>
           @else
-          <img src="{{@$driver->driver->get_document_name($key,'image_name')}}" alt="...">
+          <img src="{{env('IMG_CLOUD_URL')}}{{@$driver->driver->get_document_name($key,'image_name')}}" alt="...">
           @endif
         @else
-        <img src="{{$default_img}}" alt="...">
+        <img src="{{env('IMG_CLOUD_URL')}}{{$default_img}}" alt="...">
         @endif
       </div>
       <div class="fileinput-preview fileinput-exists thumbnail"></div>
