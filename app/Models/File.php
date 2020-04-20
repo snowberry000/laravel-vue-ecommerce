@@ -90,7 +90,7 @@ class File extends Model {
 
 	//site_image_url
 	public function getSiteImageUrlAttribute() {
-		return Storage::disk('s3')->url(env("AWS_BUCKET_SITESETTING_IMG_DIR") . '/' . $this->attributes['name']);
+		return env("AWS_BUCKET_SITESETTING_IMG_DIR") . '/' . $this->attributes['name'];
 	}
 
 	//file_extension
