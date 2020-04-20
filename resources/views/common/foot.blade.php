@@ -162,7 +162,7 @@ $.datepicker.setDefaults($.datepicker.regional[ "{{ (Session::get('language')) ?
     window.ciResponsive = new window.CIResponsive({
       token: 'aangtpncgo',    
       lazyLoading: true,
-      baseUrl: 'https://cloudimage.public.airstore.io/_s3quickshopper_/'
+      baseUrl: 'http://quickshopper.s3.eu-west-2.amazonaws.com/'
     });
     window.lazySizes.init();
   });
