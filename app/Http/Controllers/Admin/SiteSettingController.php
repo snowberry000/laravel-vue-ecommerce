@@ -230,7 +230,7 @@ class SiteSettingController extends Controller {
 						$file_path = $this->fileUpload($file, env('AWS_BUCKET_SITESETTING_IMG_DIR'));
 
 						$this->fileSave('site_setting', '4', $file_path['file_name'], '1');
-						$this->fileCrop($file, $file_path['path'], get_image_size('email_logo')['width'], get_image_size('email_logo')['height'], $orginal_path);
+						$this->fileCrop($file, $file_path['path'], get_image_size('email_logo')['width'], get_image_size('email_logo')['height'], $file_path['path']);
 					} elseif ($submit == 'site_images' && $key == 'footer_logo') {
 						$file = $request->file('site_images')['footer_logo'];
 
