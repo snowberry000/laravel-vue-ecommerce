@@ -150,23 +150,4 @@ $.datepicker.setDefaults($.datepicker.regional[ "{{ (Session::get('language')) ?
   });
 </script> -->
 @stack('scripts')
-
-<script>
-  window.lazySizesConfig = window.lazySizesConfig || {};
-  window.lazySizesConfig.init = false;
-</script>
-<script src="https://cdn.scaleflex.it/filerobot/js-cloudimage-responsive/lazysizes.min.js"></script>
-<script src="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4.2.1/js-cloudimage-responsive.min.js"></script>
-
-<script>
-  $( document ).ready(function() {
-    window.ciResponsive = new window.CIResponsive({
-      token: 'aangtpncgo',    
-      lazyLoading: true,
-      baseUrl: 'http://quickshopper.s3.eu-west-2.amazonaws.com/'
-    });
-    window.lazySizes.init();
-  });
-</script>
-
 </body></html>

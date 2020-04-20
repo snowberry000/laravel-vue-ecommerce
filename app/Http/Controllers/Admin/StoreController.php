@@ -199,9 +199,9 @@ class StoreController extends Controller {
 					$this->fileSave('store_banner', $new_store->id, $file_path['file_name'], '1');
 
 					$size = get_image_size('store_image_sizes');
-					foreach ($size as $value) {
-						$this->fileCrop($file, $file_path['path'], env('AWS_BUCKET_STORE_IMG_DIR') . $new_store->id, $value['width'], $value['height']);
-					}
+					// foreach ($size as $value) {
+					// 	$this->fileCrop($file, $file_path['path'], env('AWS_BUCKET_STORE_IMG_DIR') . $new_store->id, $value['width'], $value['height']);
+					// }
 				}
 
 				//documents
@@ -1134,11 +1134,11 @@ class StoreController extends Controller {
 
 			$this->fileSave('menu_item_image', $menu_item->id, $file_path['file_name'], '1');
 
-			$orginal_path = Storage::url($file_path['path']);
+			// $orginal_path = Storage::url($file_path['path']);
 			$size = get_image_size('item_image_sizes');
-			foreach ($size as $new_size) {
-				$this->fileCrop($orginal_path, $new_size['width'], $new_size['height']);
-			}
+			// foreach ($size as $new_size) {
+			// 	$this->fileCrop($orginal_path, $new_size['width'], $new_size['height']);
+			// }
 
 		}
 

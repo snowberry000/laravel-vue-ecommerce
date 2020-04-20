@@ -167,7 +167,7 @@ class UserController extends Controller {
 				$file_path = $this->fileUpload($file, env('AWS_BUCKET_EATER_IMG_DIR'));
 
 				$this->fileSave('eater_image', $user_id, $file_path['file_name'], '1');
-				$original_path = url(Storage::url($file_path['path']));
+				// $original_path = url(Storage::url($file_path['path']));
 			}
 
 			$user_detail = User::find($user_id);

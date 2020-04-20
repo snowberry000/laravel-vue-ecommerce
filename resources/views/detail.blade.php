@@ -137,7 +137,7 @@
 									@endif
 								</label>
 								@endif
-								<div class="pro-img" style="background-image: url('{{$menu_row->menu_item_image}}');"></div>
+								<div class="pro-img" style="background-image: url('{{env('IMG_CLOUD_URL')}}{{$menu_row->menu_item_image}}');"></div>
 								<div class="pro-info">
 									<h2 class="text-truncate">{{$menu_row->name}}</h2>
 									<p><span>{!! $store->currency->code !!}</span>

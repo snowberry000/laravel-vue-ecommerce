@@ -47,7 +47,7 @@ class File extends Model {
 		}
 
 		if ($this->attributes['name']) {
-			$images = url(Storage::disk('s3')->url($folder . $this->attributes['name']));
+			$images = $folder . $this->attributes['name'];
 		} else {
 			$images = '';
 		}
@@ -63,7 +63,7 @@ class File extends Model {
 	public function getStoreDocumentAttribute() {
 
 		if ($this->name) {
-			return url(Storage::disk('s3')->url(env('AWS_BUCKET_STORE_IMG_DIR') . $this->source_id . '/documents/' . $this->name));
+			return env('AWS_BUCKET_STORE_IMG_DIR') . $this->source_id . '/documents/' . $this->name;
 		} else {
 			return sample_image();
 		}

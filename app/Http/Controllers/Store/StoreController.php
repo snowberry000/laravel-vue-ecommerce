@@ -742,9 +742,9 @@ class StoreController extends Controller {
 
 				$orginal_path = Storage::url($file_path['path']);
 				$size = get_image_size('item_image_sizes');
-				foreach ($size as $new_size) {
-					$this->fileCrop($file, $file_path['path'], $new_size['width'], $new_size['height']);
-				}
+				// foreach ($size as $new_size) {
+				// 	$this->fileCrop($file, $file_path['path'], $new_size['width'], $new_size['height']);
+				// }
 
 			}
 

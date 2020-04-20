@@ -175,9 +175,9 @@ class ProfileController extends Controller {
 
 			$this->fileSave('store_banner', $store_id, $file_path['file_name'], '1');			
 			$size = get_image_size('store_image_sizes');
-			foreach ($size as $value) {
-				$this->fileCrop($file, $file_path['path'], $value['width'], $value['height']);
-			}
+			// foreach ($size as $value) {
+			// 	$this->fileCrop($file, $file_path['path'], $value['width'], $value['height']);
+			// }
 
 		}
 

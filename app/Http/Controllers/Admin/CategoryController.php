@@ -94,7 +94,7 @@ class CategoryController extends Controller {
 						$file_path = $this->fileUpload($file, env('AWS_BUCKET_CATEGORY_IMG_DIR'));
 
 						$this->fileSave('category_image', $category->id, $file_path['file_name'], '1');
-						$this->fileCrop($file, $file_path['path'], get_image_size('category_image_size')['width'], get_image_size('category_image_size')['height']);
+						// $this->fileCrop($file, $file_path['path'], get_image_size('category_image_size')['width'], get_image_size('category_image_size')['height']);
 					}
 				if ($request->file('dietary_icon') && $request->is_dietary=='yes') {
 						$file = $request->file('dietary_icon');
@@ -102,7 +102,7 @@ class CategoryController extends Controller {
 						$file_path = $this->fileUpload($file, env('AWS_BUCKET_CATEGORY_IMG_DIR'));
 
 						$this->fileSave('dietary_icon', $category->id, $file_path['file_name'], '1');
-						$this->fileCrop($file, $file_path['path'], get_image_size('dietary_icon_size')['width'], get_image_size('dietary_icon_size')['height']);
+						// $this->fileCrop($file, $file_path['path'], get_image_size('dietary_icon_size')['width'], get_image_size('dietary_icon_size')['height']);
 					}
 
 				flash_message('success', trans('admin_messages.added_successfully'));
@@ -226,7 +226,7 @@ class CategoryController extends Controller {
 						$file_path = $this->fileUpload($file, env('AWS_BUCKET_CATEGORY_IMG_DIR'));
 
 						$this->fileSave('category_image', $category->id, $file_path['file_name'], '1');						
-						$this->fileCrop($file, $file_path['path'], get_image_size('category_image_size')['width'], get_image_size('category_image_size')['height']);
+						// $this->fileCrop($file, $file_path['path'], get_image_size('category_image_size')['width'], get_image_size('category_image_size')['height']);
 					}
 					if ($request->file('dietary_icon') && $request->is_dietary=='yes') {
 						$file = $request->file('dietary_icon');
@@ -234,7 +234,7 @@ class CategoryController extends Controller {
 						$file_path = $this->fileUpload($file, env('AWS_BUCKET_CATEGORY_IMG_DIR'));
 
 						$this->fileSave('dietary_icon', $category->id, $file_path['file_name'], '1');						
-						$this->fileCrop($file, $file_path['path'], get_image_size('dietary_icon_size')['width'], get_image_size('dietary_icon_size')['height']);
+						// $this->fileCrop($file, $file_path['path'], get_image_size('dietary_icon_size')['width'], get_image_size('dietary_icon_size')['height']);
 					}
 
 				flash_message('success', trans('admin_messages.updated_successfully'));

@@ -154,7 +154,7 @@
                       <div class="col-md-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                           <div class="fileinput-new thumbnail">
-                            <img ci-src="{{site_setting('site_logo','1')}}" alt="...">
+                            <img src="{{env('IMG_CLOUD_URL')}}{{site_setting('site_logo','1')}}?force_format=webp" alt="...">
                           </div>
                           <div class="fileinput-preview fileinput-exists thumbnail"></div>
                           <div>
@@ -175,7 +175,7 @@
                       <div class="col-md-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                           <div class="fileinput-new thumbnail">
-                            <img ci-src="{{site_setting('site_favicon','2')}}" alt="...">
+                            <img src="{{env('IMG_CLOUD_URL')}}{{site_setting('site_favicon','2')}}?force_format=webp" alt="...">
                           </div>
                           <div class="fileinput-preview fileinput-exists thumbnail"></div>
                           <div>
@@ -196,7 +196,7 @@
                       <div class="col-md-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                           <div class="fileinput-new thumbnail">
-                            <img ci-src="{{site_setting('store_logo','3')}}" alt="...">
+                            <img src="{{env('IMG_CLOUD_URL')}}{{site_setting('store_logo','3')}}?force_format=webp" alt="...">
                           </div>
                           <div class="fileinput-preview fileinput-exists thumbnail"></div>
                           <div>
@@ -218,7 +218,7 @@
                       <div class="col-md-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                           <div class="fileinput-new thumbnail">
-                            <img ci-src="{{site_setting('email_logo','4')}}" alt="...">
+                            <img src="{{env('IMG_CLOUD_URL')}}{{site_setting('email_logo','4')}}?force_format=webp" alt="...">
                           </div>
                           <div class="fileinput-preview fileinput-exists thumbnail"></div>
                           <div>
@@ -240,7 +240,7 @@
                       <div class="col-md-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                           <div class="fileinput-new thumbnail">
-                            <img ci-src="{{site_setting('footer_logo','5')}}" alt="...">
+                            <img src="{{env('IMG_CLOUD_URL')}}{{site_setting('footer_logo','5')}}?force_format=webp" alt="...">
                           </div>
                           <div class="fileinput-preview fileinput-exists thumbnail"></div>
                           <div>
@@ -262,7 +262,7 @@
                       <div class="col-md-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                           <div class="fileinput-new thumbnail">
-                            <img ci-src="{{site_setting('app_logo','6')}}" alt="...">
+                            <img src="{{env('IMG_CLOUD_URL')}}{{site_setting('app_logo','6')}}?force_format=webp" alt="...">
                           </div>
                           <div class="fileinput-preview fileinput-exists thumbnail"></div>
                           <div>
@@ -284,7 +284,7 @@
                       <div class="col-md-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                           <div class="fileinput-new thumbnail">
-                            <img ci-src="{{url('/')}}/images/quickshopper-logo.svg" alt="...">
+                            <img src="{{env('IMG_CLOUD_URL')}}{{url('/')}}/images/quickshopper-logo.svg?force_format=webp" alt="...">
                           </div>
                           <div class="fileinput-preview fileinput-exists thumbnail"></div>
                           <div>
@@ -306,7 +306,7 @@
                       <div class="col-md-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                           <div class="fileinput-new thumbnail">
-                            <img ci-src="{{site_setting('driver_white_logo','8')}}" alt="...">
+                            <img src="{{env('IMG_CLOUD_URL')}}{{site_setting('driver_white_logo','8')}}?force_format=webp" alt="...">
                           </div>
                           <div class="fileinput-preview fileinput-exists thumbnail"></div>
                           <div>
@@ -327,7 +327,7 @@
                       <div class="col-md-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                           <div class="fileinput-new thumbnail">
-                            <img ci-src="{{site_setting('eater_home_image','9')}}" alt="...">
+                            <img src="{{env('IMG_CLOUD_URL')}}{{site_setting('eater_home_image','9')}}?force_format=webp" alt="...">
                           </div>
                           <div class="fileinput-preview fileinput-exists thumbnail"></div>
                           <div>

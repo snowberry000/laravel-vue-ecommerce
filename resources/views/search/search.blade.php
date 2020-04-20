@@ -137,7 +137,7 @@
 			<div class="whole-product my-4 my-md-5 row clearfix">
 				<div class="product float-left col-lg-4 col-md-6 col-12" ng-repeat="store in store_data.category">
 					<a href="details/@{{store.store_id}}" class="details_page" data-id="@{{store.store_id}}">
-						<div class="product-img" style="background-image: url('@{{store.banner.original}}');">
+						<div class="product-img" style="background-image: url('{{env('IMG_CLOUD_URL')}}@{{store.banner.original}}');">
 							<span class="closed-overlay" ng-if="store.status==0 && store.store_closed!=0">
 								{{ trans('messages.store.currently_unavailable') }}
 							</span>

@@ -38,7 +38,7 @@
 			@foreach($slider as $key=>$home_slider)
 			<div class="slider-row text-center">
 				<div class="slider-img">
-					<img ci-src="{{$home_slider->slider_image}}"/>
+					<img src="{{env('IMG_CLOUD_URL')}}{{$home_slider->slider_image}}?force_format=webp"/>
 				</div>
 				<div class="slider-info">
 					<h1>
@@ -57,7 +57,7 @@
 		<div class="container">
 			<div class="get-start-wrap d-md-flex">
 				<div class="get-start-img col-12 col-md-5 p-0">
-					<img class="img-fluid" src="{{url('/')}}/images/content-banner1.jpg">
+					<img class="img-fluid" src="{{env('IMG_CLOUD_URL')}}content-banner1.jpg?force_format=webp">
 				</div>
 				<div class="get-start-info col-12 col-md-7">
 					<h2>{{trans('messages.store_deliver',['site_name'=>site_setting('site_name')])}}</h2>
@@ -69,7 +69,7 @@
 			</div>
 			<div class="get-start-wrap d-md-flex">
 				<div class="get-start-img col-12 col-md-5 p-0">
-					<img class="img-fluid" src="{{url('/')}}/images/content-banner2.jpg">
+				<img class="img-fluid" src="{{env('IMG_CLOUD_URL')}}content-banner2.jpg?force_format=webp">
 				</div>
 				<div class="get-start-info col-12 col-md-7">
 					<h2>{{trans('messages.deliver_eats')}}</h2>

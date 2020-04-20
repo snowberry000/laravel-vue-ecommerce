@@ -52,10 +52,10 @@
               $country_code=(request()->old('phone_country_code'))?request()->old('phone_country_code'):@$store->country_code;
             @endphp
               <select id="phone_code_country" name="phone_country_code" class="form-control">
-                                @foreach ($country as $key => $country)
-                                    <option value="{{ $country->phone_code }}" {{ $country->phone_code == $country_code ? 'selected' : '' }} >{{ $country->name }}</option>
-                                @endforeach
-                            </select>
+                @foreach ($country as $key => $country)
+                  <option value="{{ $country->phone_code }}" {{ $country->phone_code == $country_code ? 'selected' : '' }} >{{ $country->name }}</option>
+                @endforeach
+              </select>
            <span class="text-danger">{{ $errors->first('phone_country_code') }}</span>
          </div>
        </div>
@@ -165,7 +165,7 @@
  <div class="col-md-5 pt-md-4">
   <div class="fileinput fileinput-new" data-provides="fileinput">
     <div class="fileinput-new thumbnail">
-      <img src="@if(isset($store->store->store_image)){{$store->store->store_image}}@else{{getEmptyStoreImage()}}@endif" alt="...">
+      <img src="{{env('IMG_CLOUD_URL')}}@if(isset($store->store->store_image)){{$store->store->store_image}}@else{{getEmptyStoreImage()}}@endif?force_format=webp" alt="...">
     </div>
     <div class="fileinput-preview fileinput-exists thumbnail"></div>
     <div>

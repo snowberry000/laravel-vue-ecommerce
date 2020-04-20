@@ -48,7 +48,7 @@
                 <div class="fileinput fileinput-new" data-provides="fileinput">
                   <div class="fileinput-new thumbnail">
                     @if(isset($slider->slider_image))                    
-                    <img ci-src="{{$slider->slider_image}}" alt="...">
+                    <img src="{{env('IMG_CLOUD_URL')}}{{$slider->slider_image}}?force_format=webp" alt="...">
                     @endif
                   </div>
                   <div class="fileinput-preview fileinput-exists thumbnail"></div>

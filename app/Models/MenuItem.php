@@ -79,14 +79,14 @@ class MenuItem extends Model {
 			if (get_current_root() == 'api') {
 				$image = [
 
-					'small' => url(Storage::url('images/store/' . $store_id . '/menu_item/' . $file_name)),
-					'medium' => url(Storage::url('images/store/' . $store_id . '/menu_item/' . $file_name0)),
-					'original' => url(Storage::url('images/store/' . $store_id . '/menu_item/' . $menu_image->name)),
+					'small' => 'images/store/' . $store_id . '/menu_item/' . $file_name,
+					'medium' => 'images/store/' . $store_id . '/menu_item/' . $file_name0,
+					'original' => 'images/store/' . $store_id . '/menu_item/' . $menu_image->name,
 
 				];
 				return $image;
 			} else {
-				return url(Storage::url('images/store/' . $store_id . '/menu_item/' . $file_name1));
+				return 'images/store/' . $store_id . '/menu_item/' . $file_name1;
 			}
 
 		} else {
@@ -108,7 +108,7 @@ class MenuItem extends Model {
 			$file_name = $name[0] . '_120x120.' . $name[1];
 			$menu_item = MenuItem::find($this->attributes['id']);
 			$store_id = Menu::find($menu_item->menu_id)->store_id;
-			return url(Storage::url('images/store/' . $store_id . '/menu_item/' . $file_name));
+			return 'images/store/' . $store_id . '/menu_item/' . $file_name;
 		} else {
 			return (object) [];
 		}
