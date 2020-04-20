@@ -38,7 +38,7 @@
 			@foreach($slider as $key=>$home_slider)
 			<div class="slider-row text-center">
 				<div class="slider-img">
-					<img src="{{$home_slider->slider_image}}"/>
+					<img ci-src="{{$home_slider->slider_image}}"/>
 				</div>
 				<div class="slider-info">
 					<h1>

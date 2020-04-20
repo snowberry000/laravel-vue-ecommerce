@@ -22,6 +22,21 @@
 <script src="{{asset('js/common.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/locationpicker.jquery.js')}}?dasd" type="text/javascript"></script>
 
+<script src="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4/js-cloudimage-responsive.min.js"></script>
+<script>
+
+  window.lazySizesConfig = window.lazySizesConfig || {};
+  window.lazySizesConfig.init = false;
+</script>
+<script src="https://cdn.scaleflex.it/filerobot/js-cloudimage-responsive/lazysizes.min.js"></script>
+<script>
+  const ciResponsive = new window.CIResponsive({
+    token: 'aangtpncgo',    
+    lazyLoading: true,
+  });
+  window.lazySizes.init();
+</script>
+
 <script type="text/javascript">
     $('select').addClass('selectpicker');
 
