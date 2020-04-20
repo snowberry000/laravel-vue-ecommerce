@@ -72,7 +72,7 @@ class File extends Model {
 	//store_home_slider_image
 	public function getStoreHomeSliderImageAttribute() {
 		if ($this->attributes['name']) {
-			return url(Storage::disk('s3')->url(env('AWS_BUCKET_STOREHOMESLIDER_IMG_DIR') . $this->name));
+			return url(Storage::disk('s3')->url(env('AWS_BUCKET_STOREHOMESLIDER_IMG_DIR') . '/'. $this->name));
 		} else {
 			return sample_image();
 		}
@@ -81,7 +81,7 @@ class File extends Model {
 	//eater_home_slider_image
 	public function getEaterHomeSliderImageAttribute() {
 		if ($this->attributes['name']) {
-			return url(Storage::disk('s3')->url(env('AWS_BUCKET_EATERHOMESLIDER_IMG_DIR') . $this->name));
+			return url(Storage::disk('s3')->url(env('AWS_BUCKET_EATERHOMESLIDER_IMG_DIR') . '/' . $this->name));
 		} else {
 			return sample_image();
 		}
@@ -90,7 +90,7 @@ class File extends Model {
 
 	//site_image_url
 	public function getSiteImageUrlAttribute() {
-		return Storage::disk('s3')->url(env("AWS_BUCKET_SITESETTING_IMG_DIR") . $this->attributes['name']);
+		return Storage::disk('s3')->url(env("AWS_BUCKET_SITESETTING_IMG_DIR") . '/' . $this->attributes['name']);
 	}
 
 	//file_extension
