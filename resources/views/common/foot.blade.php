@@ -22,21 +22,6 @@
 <script src="{{asset('js/common.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/locationpicker.jquery.js')}}?dasd" type="text/javascript"></script>
 
-<script src="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4/js-cloudimage-responsive.min.js"></script>
-<script>
-
-  window.lazySizesConfig = window.lazySizesConfig || {};
-  window.lazySizesConfig.init = false;
-</script>
-<script src="https://cdn.scaleflex.it/filerobot/js-cloudimage-responsive/lazysizes.min.js"></script>
-<script>
-  const ciResponsive = new window.CIResponsive({
-    token: 'aangtpncgo',    
-    lazyLoading: true,
-  });
-  window.lazySizes.init();
-</script>
-
 <script type="text/javascript">
     $('select').addClass('selectpicker');
 
@@ -165,4 +150,22 @@ $.datepicker.setDefaults($.datepicker.regional[ "{{ (Session::get('language')) ?
   });
 </script> -->
 @stack('scripts')
+
+<script>
+  window.lazySizesConfig = window.lazySizesConfig || {};
+  window.lazySizesConfig.init = false;
+</script>
+<script src="https://cdn.scaleflex.it/filerobot/js-cloudimage-responsive/lazysizes.min.js"></script>
+<script src="https://cdn.scaleflex.it/plugins/js-cloudimage-responsive/4/js-cloudimage-responsive.min.js"></script>
+<script>
+  $( document ).ready(function() {
+    window.ciResponsive = new window.CIResponsive({
+      token: 'aangtpncgo',    
+      lazyLoading: true,
+      baseUrl: 'https://cloudimage.public.airstore.io/_s3quickshopper_/'
+    });
+    window.lazySizes.init();
+  });
+</script>
+
 </body></html>
