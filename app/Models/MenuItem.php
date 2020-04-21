@@ -79,14 +79,14 @@ class MenuItem extends Model {
 			if (get_current_root() == 'api') {
 				$image = [
 
-					'small' => 'images/store/' . $store_id . '/menu_item/' . $file_name,
-					'medium' => 'images/store/' . $store_id . '/menu_item/' . $file_name0,
-					'original' => 'images/store/' . $store_id . '/menu_item/' . $menu_image->name,
+					'small' => env('AWS_BUCKET_STORE_IMG_DIR') . $store_id . '/menu_item/' . $file_name,
+					'medium' => env('AWS_BUCKET_STORE_IMG_DIR') . $store_id . '/menu_item/' . $file_name0,
+					'original' => env('AWS_BUCKET_STORE_IMG_DIR') . $store_id . '/menu_item/' . $menu_image->name,
 
 				];
 				return $image;
 			} else {
-				return 'images/store/' . $store_id . '/menu_item/' . $file_name1;
+				return env('AWS_BUCKET_STORE_IMG_DIR') . $store_id . '/menu_item/' . $menu_image->name;
 			}
 
 		} else {
@@ -104,11 +104,11 @@ class MenuItem extends Model {
 		$menu_image = File::where('source_id', $this->attributes['id'])->where('type', 6)->first();
 
 		if ($menu_image) {
-			$name = explode('.', $menu_image->name);
-			$file_name = $name[0] . '_120x120.' . $name[1];
+			// $name = explode('.', $menu_image->name);
+			// $file_name = $name[0] . '_120x120.' . $name[1];
 			$menu_item = MenuItem::find($this->attributes['id']);
 			$store_id = Menu::find($menu_item->menu_id)->store_id;
-			return 'images/store/' . $store_id . '/menu_item/' . $file_name;
+			return env('AWS_BUCKET_STORE_IMG_DIR') . $store_id . '/menu_item/' . $menu_image->name;
 		} else {
 			return (object) [];
 		}

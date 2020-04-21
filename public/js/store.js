@@ -514,321 +514,318 @@ app.controller('store_signup', ['$scope','$http','$timeout', function($scope,$ht
 
 }]);
 
-app.controller('menu_editor', ['$scope','$http','$timeout','$filter','fileUploadService',function($scope,$http,$timeout,$filter,fileUploadService) {
+app.controller('menu_editor', ['$scope', '$http', '$timeout', '$filter', 'fileUploadService', function ($scope, $http, $timeout, $filter, fileUploadService) {
 
   // Code for the Validator
-         var $validator = $('.form_valitate').validate({
-              rules: {
-
-                menu_item_name: { required: true },
-                menu_item_desc: { required: true },
-                menu_item_price: { required: true,number:true,maxlength:7},
-                item_type: { required: true },
-                menu_item_tax: { required: true,number:true,maxlength:7,max:100 },
-                item_status: { required: true },  
-                item_image: { image_valitation:"png|jpg|jpeg|gif"},                    
-                "menu_item_translations[0][locale]":{ required: true },
-                "menu_item_translations[1][locale]":{ required: true },
-                "menu_item_translations[0][name]":{ required: true },
-                "menu_item_translations[1][name]":{ required: true },
-                "menu_item_translations[0][description]":{ required: true },
-                "menu_item_translations[1][description]":{ required: true },
-                
-              },
-              messages: {
-                menu_item_name: { required: Lang.get('js_messages.store.field_required') },
-                menu_item_desc: { required: Lang.get('js_messages.store.field_required') },
-                menu_item_price: { required: Lang.get('js_messages.store.field_required'),number:Lang.get('js_messages.store.please_enter_valid_number'),maxlength:Lang.get('js_messages.store.please_enter_no_more_than_characters')},
-                item_type: { required: Lang.get('js_messages.store.field_required') },
-                menu_item_tax: { required: Lang.get('js_messages.store.field_required'),number:Lang.get('js_messages.store.please_enter_valid_number'),maxlength:Lang.get('js_messages.store.please_enter_no_more_than_characters'),max:Lang.get('js_messages.store.please_enter_value_less_than_or_equal') },
-                item_status: { required: Lang.get('js_messages.store.field_required') },                      
-                item_image:  {  required : Lang.get('js_messages.store.field_required'),image_valitation:Lang.get('js_messages.store.please_upload_images_like_file_only')},
-                "menu_item_translations[0][locale]":{ required: Lang.get('js_messages.store.field_required') },
-                "menu_item_translations[1][locale]":{ required: Lang.get('js_messages.store.field_required') },
-                "menu_item_translations[0][name]":{ required: Lang.get('js_messages.store.field_required') },
-                "menu_item_translations[1][name]":{ required: Lang.get('js_messages.store.field_required') },
-                "menu_item_translations[0][description]":{ required: Lang.get('js_messages.store.field_required') },
-                "menu_item_translations[1][description]":{ required: Lang.get('js_messages.store.field_required') },
-              },
-              errorElement: "span",
-              errorClass: "text-danger",
-              errorPlacement: function( label, element ) {
-                if(element.attr( "data-error-placement" ) === "container" ){
-                  container = element.attr('data-error-container');
-                  $(container).append(label);
-                } else {
-                  label.insertAfter( element ); 
-                }
-              },
-            });
-
-         $.validator.addMethod("image_valitation", function(value, element, param) {
-          param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
-          return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
-          }, $.validator.format("Please upload the images like JPG,JPEG,PNG,GIF File Only."));
-
-
-
-         
-  // Code for the Validator
-         var $validator = $('.update_menu_time').validate({
-              rules: {
-                menu_name: { required: true },
-                "menu_timing_day[]": { required: true },
-                "menu_timing_start_time[]": { required: true,greate_then:true },        
-                "menu_timing_end_time[]": { required: true },
-                "translations[0][locale]":{ required: true },
-                "translations[1][locale]":{ required: true },
-                "translations[0][name]":{ required: true },
-                "translations[1][name]":{ required: true },
-              },
-               messages: {
-                menu_name: { required: Lang.get('js_messages.store.field_required') },
-                "menu_timing_day[]":{ required: Lang.get('js_messages.store.field_required') },
-                "menu_timing_start_time[]": { required: Lang.get('js_messages.store.field_required') , greate_then: Lang.get('js_messages.store.start_time_should_less_than_end_time') }, 
-                "menu_timing_end_time[]": { required: Lang.get('js_messages.store.field_required') }, 
-                "translations[0][locale]":{ required: Lang.get('js_messages.store.field_required') },
-                "translations[1][locale]":{ required: Lang.get('js_messages.store.field_required') },
-                "translations[0][name]":{ required: Lang.get('js_messages.store.field_required') },
-                "translations[1][name]":{ required: Lang.get('js_messages.store.field_required') },
-           
-              },
-              errorElement: "span",
-              errorClass: "text-danger",
-              errorPlacement: function( label, element ) {
-                  
-                if(element.attr( "data-error-placement" ) === "container" ){
-                  container = element.attr('data-error-container');
-                  $(container).append(label);
-                } else {
-                  label.insertAfter( element ); 
-                }
-                
-              },
-            });
-
-         $.validator.addMethod('greate_then', function(value, element, param) {
-            var end_time = $(element).attr('data-end_time');
-            var start_time = $(element).val();
-            
-            if(end_time) {
-              return start_time < end_time;
-            }
-            else {
-              return 'false';
-            }
-            }, 'The start time should be less than the end time');
-
-          $('#category_add_form').validate({
-              rules: {
-                category_name: {required: true},
-                "category_translations[0][locale]": { required: true },
-                "category_translations[1][locale]": { required: true },
-                "category_translations[0][name]": { required: true },        
-                "category_translations[1][name]": { required: true },        
-                
-              },
-               messages: {
-                 category_name: { required: Lang.get('js_messages.store.field_required') },               
-                "category_translations[0][locale]":{ required: Lang.get('js_messages.store.field_required') },
-                "category_translations[1][locale]":{ required: Lang.get('js_messages.store.field_required') },
-                "category_translations[0][name]":{ required: Lang.get('js_messages.store.field_required') },
-                "category_translations[1][name]":{ required: Lang.get('js_messages.store.field_required') },                
-              },
-              errorElement: "span",
-              errorClass: "text-danger",
-              errorPlacement: function( label, element ) {
-                if(element.attr( "data-error-placement" ) === "container" ){
-                  container = element.attr('data-error-container');
-                  $(container).append(label);
-                } else {
-                  label.insertAfter( element ); 
-                }
-              },
-            });
-
-           $('#category_edit_form').validate({
-              rules: {
-                category_name: {required: true},
-                "category_translations[0][locale]": { required: true },
-                "category_translations[1][locale]": { required: true },
-                "category_translations[0][name]": { required: true },    
-                "category_translations[1][name]": { required: true },        
-                
-              },
-              messages: {
-                 category_name: { required: Lang.get('js_messages.store.field_required') },               
-                "category_translations[0][locale]":{ required: Lang.get('js_messages.store.field_required') },
-                "category_translations[1][locale]":{ required: Lang.get('js_messages.store.field_required') },
-                "category_translations[0][name]":{ required: Lang.get('js_messages.store.field_required') },
-                "category_translations[1][name]":{ required: Lang.get('js_messages.store.field_required') },                
-              },
-              errorElement: "span",
-              errorClass: "text-danger",
-              errorPlacement: function( label, element ) {
-                if(element.attr( "data-error-placement" ) === "container" ){
-                  container = element.attr('data-error-container');
-                  $(container).append(label);
-                } else {
-                  label.insertAfter( element ); 
-                }
-              },
-            });
-
-  $scope.initToggleBar = function() {
-
-     $scope.menu_item_index = null;
-     $scope.category_index = null;
-     // $scope.menu_index = null;
-      if(!$scope.$$phase) {
-        $scope.$apply();
+  var $validator = $('.form_valitate').validate({
+    rules: {
+      menu_item_name: { required: true },
+      menu_item_desc: { required: true },
+      menu_item_price: { required: true, number: true, maxlength: 7 },
+      item_type: { required: true },
+      menu_item_tax: { required: true, number: true, maxlength: 7, max: 100 },
+      item_status: { required: true },
+      item_image: { image_valitation: "png|jpg|jpeg|gif" },
+      "menu_item_translations[0][locale]": { required: true },
+      "menu_item_translations[1][locale]": { required: true },
+      "menu_item_translations[0][name]": { required: true },
+      "menu_item_translations[1][name]": { required: true },
+      "menu_item_translations[0][description]": { required: true },
+      "menu_item_translations[1][description]": { required: true },
+    },
+    messages: {
+      menu_item_name: { required: Lang.get('js_messages.store.field_required') },
+      menu_item_desc: { required: Lang.get('js_messages.store.field_required') },
+      menu_item_price: { required: Lang.get('js_messages.store.field_required'), number: Lang.get('js_messages.store.please_enter_valid_number'), maxlength: Lang.get('js_messages.store.please_enter_no_more_than_characters') },
+      item_type: { required: Lang.get('js_messages.store.field_required') },
+      menu_item_tax: { required: Lang.get('js_messages.store.field_required'), number: Lang.get('js_messages.store.please_enter_valid_number'), maxlength: Lang.get('js_messages.store.please_enter_no_more_than_characters'), max: Lang.get('js_messages.store.please_enter_value_less_than_or_equal') },
+      item_status: { required: Lang.get('js_messages.store.field_required') },
+      item_image: { required: Lang.get('js_messages.store.field_required'), image_valitation: Lang.get('js_messages.store.please_upload_images_like_file_only') },
+      "menu_item_translations[0][locale]": { required: Lang.get('js_messages.store.field_required') },
+      "menu_item_translations[1][locale]": { required: Lang.get('js_messages.store.field_required') },
+      "menu_item_translations[0][name]": { required: Lang.get('js_messages.store.field_required') },
+      "menu_item_translations[1][name]": { required: Lang.get('js_messages.store.field_required') },
+      "menu_item_translations[0][description]": { required: Lang.get('js_messages.store.field_required') },
+      "menu_item_translations[1][description]": { required: Lang.get('js_messages.store.field_required') },
+    },
+    errorElement: "span",
+    errorClass: "text-danger",
+    errorPlacement: function (label, element) {
+      if (element.attr("data-error-placement") === "container") {
+        container = element.attr('data-error-container');
+        $(container).append(label);
+      } else {
+        label.insertAfter(element);
       }
- 
-}
+    },
+  });
 
-$scope.select_menu = function(index) {
-  if($scope.menu_index==='' || $scope.menu_index===null)
-    $scope.menu_index = index;
-  else{
-    if($scope.menu_index==index)
-      $scope.menu_index = null;
-    else
-      $scope.menu_index = index;
+  $.validator.addMethod("image_valitation", function (value, element, param) {
+    param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
+    return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
+  }, $.validator.format("Please upload the images like JPG,JPEG,PNG,GIF File Only."));
+
+
+
+
+  // Code for the Validator
+  var $validator = $('.update_menu_time').validate({
+    rules: {
+      menu_name: { required: true },
+      "menu_timing_day[]": { required: true },
+      "menu_timing_start_time[]": { required: true, greate_then: true },
+      "menu_timing_end_time[]": { required: true },
+      "translations[0][locale]": { required: true },
+      "translations[1][locale]": { required: true },
+      "translations[0][name]": { required: true },
+      "translations[1][name]": { required: true },
+    },
+    messages: {
+      menu_name: { required: Lang.get('js_messages.store.field_required') },
+      "menu_timing_day[]": { required: Lang.get('js_messages.store.field_required') },
+      "menu_timing_start_time[]": { required: Lang.get('js_messages.store.field_required'), greate_then: Lang.get('js_messages.store.start_time_should_less_than_end_time') },
+      "menu_timing_end_time[]": { required: Lang.get('js_messages.store.field_required') },
+      "translations[0][locale]": { required: Lang.get('js_messages.store.field_required') },
+      "translations[1][locale]": { required: Lang.get('js_messages.store.field_required') },
+      "translations[0][name]": { required: Lang.get('js_messages.store.field_required') },
+      "translations[1][name]": { required: Lang.get('js_messages.store.field_required') },
+
+    },
+    errorElement: "span",
+    errorClass: "text-danger",
+    errorPlacement: function (label, element) {
+
+      if (element.attr("data-error-placement") === "container") {
+        container = element.attr('data-error-container');
+        $(container).append(label);
+      } else {
+        label.insertAfter(element);
+      }
+
+    },
+  });
+
+  $.validator.addMethod('greate_then', function (value, element, param) {
+    var end_time = $(element).attr('data-end_time');
+    var start_time = $(element).val();
+
+    if (end_time) {
+      return start_time < end_time;
+    }
+    else {
+      return 'false';
+    }
+  }, 'The start time should be less than the end time');
+
+  $('#category_add_form').validate({
+    rules: {
+      category_name: { required: true },
+      "category_translations[0][locale]": { required: true },
+      "category_translations[1][locale]": { required: true },
+      "category_translations[0][name]": { required: true },
+      "category_translations[1][name]": { required: true },
+
+    },
+    messages: {
+      category_name: { required: Lang.get('js_messages.store.field_required') },
+      "category_translations[0][locale]": { required: Lang.get('js_messages.store.field_required') },
+      "category_translations[1][locale]": { required: Lang.get('js_messages.store.field_required') },
+      "category_translations[0][name]": { required: Lang.get('js_messages.store.field_required') },
+      "category_translations[1][name]": { required: Lang.get('js_messages.store.field_required') },
+    },
+    errorElement: "span",
+    errorClass: "text-danger",
+    errorPlacement: function (label, element) {
+      if (element.attr("data-error-placement") === "container") {
+        container = element.attr('data-error-container');
+        $(container).append(label);
+      } else {
+        label.insertAfter(element);
+      }
+    },
+  });
+
+  $('#category_edit_form').validate({
+    rules: {
+      category_name: { required: true },
+      "category_translations[0][locale]": { required: true },
+      "category_translations[1][locale]": { required: true },
+      "category_translations[0][name]": { required: true },
+      "category_translations[1][name]": { required: true },
+
+    },
+    messages: {
+      category_name: { required: Lang.get('js_messages.store.field_required') },
+      "category_translations[0][locale]": { required: Lang.get('js_messages.store.field_required') },
+      "category_translations[1][locale]": { required: Lang.get('js_messages.store.field_required') },
+      "category_translations[0][name]": { required: Lang.get('js_messages.store.field_required') },
+      "category_translations[1][name]": { required: Lang.get('js_messages.store.field_required') },
+    },
+    errorElement: "span",
+    errorClass: "text-danger",
+    errorPlacement: function (label, element) {
+      if (element.attr("data-error-placement") === "container") {
+        container = element.attr('data-error-container');
+        $(container).append(label);
+      } else {
+        label.insertAfter(element);
+      }
+    },
+  });
+
+  $scope.initToggleBar = function () {
+
+    $scope.menu_item_index = null;
     $scope.category_index = null;
+    // $scope.menu_index = null;
+    if (!$scope.$$phase) {
+      $scope.$apply();
+    }
+
+  }
+
+  $scope.select_menu = function (index) {
+    if ($scope.menu_index === '' || $scope.menu_index === null)
+      $scope.menu_index = index;
+    else {
+      if ($scope.menu_index == index)
+        $scope.menu_index = null;
+      else
+        $scope.menu_index = index;
+      $scope.category_index = null;
+      $scope.menu_item_index = null;
+    }
+  }
+
+  $scope.category = function (index, menu_index) {
+
+    $scope.category_index = index;
+    $scope.menu_index = menu_index;
     $scope.menu_item_index = null;
   }
-}
 
-$scope.category = function(index, menu_index) {
+  $scope.select_menu_item = function (index) {
+    $('#myFileField').val('');
 
-  $scope.category_index = index;
-  $scope.menu_index = menu_index;
-  $scope.menu_item_index = null;
-}
+    $scope.menu_item_index = index;
+    $scope.menu_item_details = $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item[$scope.menu_item_index];
+    ;
+    $scope.menu_item_details.item_image = $('#site-content').attr('prefix') + $scope.menu_item_details.item_image;
+    $scope.menu_item_translations = $scope.menu_item_details.translations;
 
-$scope.select_menu_item = function(index) {
-
-  $('#myFileField').val('');
-  
-  $scope.menu_item_index = index;
-  $scope.menu_item_details = $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item[$scope.menu_item_index];
- ;
- $scope.menu_item_translations = $scope.menu_item_details.translations;
- 
-}
+  }
 
 
-$scope.add_category = function(menu_id,name){
-$('.text-danger').text('');
-$scope.menu_id = menu_id;
-$scope.category_name = name;
-$scope.category_translations = [];
-}
+  $scope.add_category = function (menu_id, name) {
+    $('.text-danger').text('');
+    $scope.menu_id = menu_id;
+    $scope.category_name = name;
+    $scope.category_translations = [];
+  }
 
-$scope.edit_category = function(id,name,menu){
+  $scope.edit_category = function (id, name, menu) {
 
-$('.text-danger').text('');
- var translations;
-$scope.menu_id = '';
-$scope.category_name = name;
-$scope.category_id = id;
-translations = menu.translations;
-if (typeof menu.translations === 'undefined') {
-  translations = [];
-}
-$scope.category_translations = translations;
-}
+    $('.text-danger').text('');
+    var translations;
+    $scope.menu_id = '';
+    $scope.category_name = name;
+    $scope.category_id = id;
+    translations = menu.translations;
+    if (typeof menu.translations === 'undefined') {
+      translations = [];
+    }
+    $scope.category_translations = translations;
+  }
 
-$scope.save_category = function(action){
+  $scope.save_category = function (action) {
 
-   if(action == 'add'){
+    if (action == 'add') {
       var $valid = $('#category_add_form').valid();
       console.log($valid);
 
       if (!$valid) {
-          $validator.focusInvalid();
-          return false;
+        $validator.focusInvalid();
+        return false;
       }
-    }else{
-       var $valid = $('#category_edit_form').valid();
-        
+    } else {
+      var $valid = $('#category_edit_form').valid();
+
 
       if (!$valid) {
-          $validator.focusInvalid();
-          return false;
+        $validator.focusInvalid();
+        return false;
       }
     }
     var method = 'POST';
-    var url = 'update_category';   
-    var FormData = { 'name' : $scope.category_name ,'id' : $scope.category_id,'action' : action , 'menu_id' : $scope.menu_id, 'translations': $scope.category_translations };
+    var url = 'update_category';
+    var FormData = { 'name': $scope.category_name, 'id': $scope.category_id, 'action': action, 'menu_id': $scope.menu_id, 'translations': $scope.category_translations };
     $('.item_all_details').addClass('loading');
     $http({
 
-          method: method,
-          url: url,
-          data: FormData,
-        
-    }).
-    success(function(response) {
-      $('.item_all_details').removeClass('loading');
-      if(action=='edit'){
-      $('#sub_edit_modal').modal('toggle');
-      var getMenu = response.translations;
-      $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_category = response.category_name;
-    }
-    else
-    { 
-        $('#add_category_modal').modal('toggle');
-
-         $scope.menu[$scope.menu_index].menu_category.push({
-          'menu_category_id' : response.category_id,
-          'menu_category' : response.category_name,
-          'menu_item' : [],
-          'translations' : response.translations
-         });
-
-    }
-
+      method: method,
+      url: url,
+      data: FormData,
 
     }).
-    error(function(response) {
-      $('.item_all_details').removeClass('loading');
+      success(function (response) {
+        $('.item_all_details').removeClass('loading');
+        if (action == 'edit') {
+          $('#sub_edit_modal').modal('toggle');
+          var getMenu = response.translations;
+          $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_category = response.category_name;
+        }
+        else {
+          $('#add_category_modal').modal('toggle');
+
+          $scope.menu[$scope.menu_index].menu_category.push({
+            'menu_category_id': response.category_id,
+            'menu_category': response.category_name,
+            'menu_item': [],
+            'translations': response.translations
+          });
+
+        }
+
+
+      }).
+      error(function (response) {
+        $('.item_all_details').removeClass('loading');
         $scope.codeStatus = response || "Request failed";
-    });
+      });
     return false;
 
-}
+  }
 
 
 
-  $scope.menu_time = function(index,menu_id,name){
+  $scope.menu_time = function (index, menu_id, name) {
     $('.text-danger').text('');
     $scope.menu_index = index;
     $scope.menu_id = menu_id;
     var method = 'GET';
-    var url = 'menu_time/'+ menu_id;   
+    var url = 'menu_time/' + menu_id;
     $('.item_all_details').addClass('loading');
     $http({
 
-          method: method,
-          url: url,
-        
-    }).
-    success(function(response) {
-      var getMenu = response.translations;
-     $scope.translations = getMenu[0].translations;
-     $scope.menu_timing = response.menu_time;
-    $scope.menu_name = name;
-    setTimeout(function(){ 
-      $('select').selectpicker('refresh');
-    }, 1);
-      $('.item_all_details').removeClass('loading');
-    
+      method: method,
+      url: url,
 
     }).
-    error(function(response) {
-        
-    });
+      success(function (response) {
+        var getMenu = response.translations;
+        $scope.translations = getMenu[0].translations;
+        $scope.menu_timing = response.menu_time;
+        $scope.menu_name = name;
+        setTimeout(function () {
+          $('select').selectpicker('refresh');
+        }, 1);
+        $('.item_all_details').removeClass('loading');
+
+
+      }).
+      error(function (response) {
+
+      });
     return false;
 
   }
@@ -842,205 +839,215 @@ $scope.save_category = function(action){
     $scope.translations = [];
     $('.text-danger').text('');
   }
+
   $scope.add_menu_time = function () {
-    $scope.menu_timing.push({id:''});
-
+    $scope.menu_timing.push({ id: '' });
   }
-  $scope.remove_menu_time= function(item,id) { 
 
-  $scope.menu_timing.splice(item, 1);  
+  $scope.remove_menu_time = function (item, id) {
 
-  $('.add_loading').addClass('loading');
-  var method = 'GET';
-  var url = 'remove_menu_time/'+id;
+    $scope.menu_timing.splice(item, 1);
+
+    $('.add_loading').addClass('loading');
+    var method = 'GET';
+    var url = 'remove_menu_time/' + id;
 
     $http({
 
-          method: method,
-          url: url,
+      method: method,
+      url: url,
 
-        
+
     }).
-    success(function(response) {
-      $('.add_loading').removeClass('loading');
-   
-    }).
-    error(function(response) {
-      $('.add_loading').removeClass('loading');
-    });
+      success(function (response) {
+        $('.add_loading').removeClass('loading');
+
+      }).
+      error(function (response) {
+        $('.add_loading').removeClass('loading');
+      });
     return false;
 
-}
+  }
 
-$scope.update_menu_time = function(){
+  $scope.update_menu_time = function () {
 
     var $valid = $('.update_menu_time').valid();
-      if (!$valid) {
-          $validator.focusInvalid();
-          return false;
-      }
-      
+    if (!$valid) {
+      $validator.focusInvalid();
+      return false;
+    }
+
     var method = 'POST';
     var url = 'update_menu_time';
-    var FormData = { menu_time : $scope.menu_timing,menu_id : $scope.menu_id ,menu_name : $scope.menu_name,translations : $scope.translations  }
+    var FormData = { menu_time: $scope.menu_timing, menu_id: $scope.menu_id, menu_name: $scope.menu_name, translations: $scope.translations }
     $('.item_all_details').addClass('loading');
     $http({
 
-          method: method,
-          url: url,
-          data: FormData,
+      method: method,
+      url: url,
+      data: FormData,
 
-        
+
     }).
-    success(function(response) {
-      $('.item_all_details').removeClass('loading');
-    $('#edit_menu_modal').modal('toggle');
-    console.log($scope.menu_index);
-    if($scope.menu_id)
-    $scope.menu[$scope.menu_index].menu = response.menu_name; 
-    else
-    $scope.menu = response.menu; 
-    
-    }).
-    error(function(response) {
-      $('.item_all_details').removeClass('loading');
-    });
+      success(function (response) {
+        $('.item_all_details').removeClass('loading');
+        $('#edit_menu_modal').modal('toggle');
+        console.log($scope.menu_index);
+        if ($scope.menu_id)
+          $scope.menu[$scope.menu_index].menu = response.menu_name;
+        else
+          $scope.menu = response.menu;
+
+      }).
+      error(function (response) {
+        $('.item_all_details').removeClass('loading');
+      });
     return false;
-
-}
-
-
-$scope.update_item = function()
-{
-
-      $('.item_all_details').addClass('loading');
-      var $valid = $('.form_valitate').valid();
-      if (!$valid) {
-          $validator.focusInvalid();
-          $('.item_all_details').removeClass('loading');
-          return false;
-      }
-
-      
-     
-     var file = $scope.myFile;
-     var uploadUrl = "update_menu_item", //Url of webservice/api/server
-    promise = fileUploadService.uploadFileToUrl(file, uploadUrl,{ menu_item : $scope.menu_item_details },$scope.menu_item_translations);
-
-    promise.success(function(response) {
-       $('.item_all_details').removeClass('loading');
-      if(response.menu_item_id)
-        $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item.push(response);
-        $scope.menu_item_translations = response.translations;
-      if(response.edit_menu_item_image){
-        $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item[$scope.menu_item_index].item_image=response.edit_menu_item_image;
-        $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item[$scope.menu_item_index].menu_item_name=response.edit_menu_item_name;
-      }
-
-      $scope.menu_item_index = null;
-    
-    }).
-    error(function(response) {
-      
-    });
-    return false;
-
-}
-
-$scope.add_new_item = function() {
-
-  $('#myFileField').val('');
-  $scope.myFile = '';
-$scope.menu_item_index = 0;
-$scope.menu_item_details = { 'menu_item_id' : '',
-'menu_item_name' : '',
-'menu_item_desc' : '',
-'menu_item_price' :'', 
-'menu_item_tax_percentage' :'' ,
-'menu_item_type' :'' ,
-'menu_item_status' :'' ,
-'item_image' : null,
-'menu_id' : $scope.menu[$scope.menu_index].menu_id,
-'category_id' : $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_category_id,
-
-
- };
- $('#myFileField').val('');
- $('#file_text').text('');
-  $('span.upload_text').removeAttr('title');
-  $('#chooses_file').removeAttr("style");
-  $('#banner_name').text(Lang.get('js_messages.file.choose_file'));
-  $scope.myFile='';
-
-  $scope.menu_item_translations= [];
-}
-
- $scope.set= function(set_id,name) { 
-  $scope.myFile = '';
-  $('.delete_item_msg').text('');
-    $scope.remove_id = set_id; 
-    $scope.delete_name = name; 
-    if(name=='menu')
-      $scope.menu_index = set_id;
-      $scope.myFile='';
- }
-
-  $scope.remove_item= function(item,$text) { 
-
-  var item = item;
-
-   console.log(item,$text);
-   // return false;
-   $('.add_loading').addClass('loading');
-    var method = 'POST';
-    var url = 'delete_menu';
-    var FormData = {category_index:$scope.category_index, menu : $scope.menu[$scope.menu_index],category : $text ,key : item }
-
-    $http({
-
-          method: method,
-          url: url,
-          data: FormData,
-
-        
-    }).
-    success(function(response) {
-      $('.add_loading').removeClass('loading');
-      $('.delete_item_msg').text('');
-      if(response.status=='false'){
-          $('#delete_error_modal').modal();
-          $('.delete_item_msg').text(response.msg);
-          return false;
-      }
-     
-   if($text=='menu')
-    {
-    $scope.menu.splice(item, 1);  
-    $scope.category_index = null;
-    }
-    else if($text=='category')
-    {
-      $scope.menu[$scope.menu_index].menu_category.splice(item, 1);
-      $scope.category_index = null;
-    }
-    else
-    {
-      $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item.splice(item, 1);
-       $scope.menu_item_index = null;
-    }
-
-    
-    }).
-    error(function(response) {
-      
-    });
-    return false;
-
 
   }
 
 
-  }]);
+  $scope.update_item = function () {
+
+    $('.item_all_details').addClass('loading');
+    var $valid = $('.form_valitate').valid();
+    if (!$valid) {
+      $validator.focusInvalid();
+      $('.item_all_details').removeClass('loading');
+      return false;
+    }
+
+    var file = $scope.myFile;
+    var uploadUrl = "update_menu_item", //Url of webservice/api/server
+      promise = fileUploadService.uploadFileToUrl(file, uploadUrl, { menu_item: $scope.menu_item_details }, $scope.menu_item_translations);
+
+    promise.success(function (response) {
+      $('.item_all_details').removeClass('loading');
+      if (response.menu_item_id)
+        $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item.push(response);
+      $scope.menu_item_translations = response.translations;
+      if (response.edit_menu_item_image) {
+        $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item[$scope.menu_item_index].item_image = response.edit_menu_item_image;
+        $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item[$scope.menu_item_index].menu_item_name = response.edit_menu_item_name;
+      }
+
+      $scope.menu_item_index = null;
+
+    }).
+      error(function (response) {
+
+      });
+    return false;
+
+  }
+
+  $scope.add_new_item = function () {
+
+    $('#myFileField').val('');
+    $scope.myFile = '';
+    $scope.menu_item_index = 0;
+    $scope.menu_item_details = {
+      'menu_item_id': '',
+      'menu_item_name': '',
+      'menu_item_desc': '',
+      'menu_item_price': '',
+      'menu_item_tax_percentage': '',
+      'menu_item_type': '',
+      'menu_item_status': '',
+      'item_image': null,
+      'menu_id': $scope.menu[$scope.menu_index].menu_id,
+      'category_id': $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_category_id,
+
+
+    };
+    $('#myFileField').val('');
+    $('#file_text').text('');
+    $('span.upload_text').removeAttr('title');
+    $('#chooses_file').removeAttr("style");
+    $('#banner_name').text(Lang.get('js_messages.file.choose_file'));
+    $scope.myFile = '';
+
+    $scope.menu_item_translations = [];
+  }
+
+  $scope.set = function (set_id, name) {
+    $scope.myFile = '';
+    $('.delete_item_msg').text('');
+    $scope.remove_id = set_id;
+    $scope.delete_name = name;
+    if (name == 'menu')
+      $scope.menu_index = set_id;
+    $scope.myFile = '';
+  }
+
+  $scope.remove_item = function (item, $text) {
+
+    var item = item;
+
+    console.log(item, $text);
+    // return false;
+    $('.add_loading').addClass('loading');
+    var method = 'POST';
+    var url = 'delete_menu';
+    var FormData = { category_index: $scope.category_index, menu: $scope.menu[$scope.menu_index], category: $text, key: item }
+
+    $http({
+
+      method: method,
+      url: url,
+      data: FormData,
+
+
+    }).
+      success(function (response) {
+        $('.add_loading').removeClass('loading');
+        $('.delete_item_msg').text('');
+        if (response.status == 'false') {
+          $('#delete_error_modal').modal();
+          $('.delete_item_msg').text(response.msg);
+          return false;
+        }
+
+        if ($text == 'menu') {
+          $scope.menu.splice(item, 1);
+          $scope.category_index = null;
+        }
+        else if ($text == 'category') {
+          $scope.menu[$scope.menu_index].menu_category.splice(item, 1);
+          $scope.category_index = null;
+        }
+        else {
+          $scope.menu[$scope.menu_index].menu_category[$scope.category_index].menu_item.splice(item, 1);
+          $scope.menu_item_index = null;
+        }
+
+
+      }).
+      error(function (response) {
+
+      });
+    return false;
+
+
+  }
+  
+  $scope.$watch('myFile', function(new_value, old_value){
+    if (
+      new_value !== null && 
+      new_value !== undefined && 
+      typeof(new_value) === "object") 
+    {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $scope.menu_item_details.item_image = e.target.result;
+        $scope.$apply();
+      };
+      reader.readAsDataURL(new_value);
+    }
+  });
+
+}]);
 
 
   app.controller('preparation_time', ['$scope','$http','$timeout','$filter',function($scope,$http,$timeout,$filter) {

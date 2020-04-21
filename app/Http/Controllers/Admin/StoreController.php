@@ -1130,7 +1130,7 @@ class StoreController extends Controller {
 
 			$file = $request->file('file');
 
-			$file_path = $this->fileUpload($file, 'public/images/store/' . $store_id . '/menu_item');
+			$file_path = $this->fileUpload($file, env('AWS_BUCKET_STORE_IMG_DIR') . $store_id . '/menu_item');
 
 			$this->fileSave('menu_item_image', $menu_item->id, $file_path['file_name'], '1');
 

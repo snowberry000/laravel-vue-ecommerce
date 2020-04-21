@@ -957,7 +957,7 @@ class DriverController extends Controller {
 		}
 
 		$file = $request->file('file');
-		$file_path = $this->fileUpload($file, 'public/images/driver');
+		$file_path = $this->fileUpload($file, env('AWS_BUCKET_DRIVER_IMG_DIR'));
 
 		$this->fileSave('driver_' . $request->type, $driver->id, $file_path['file_name'], '1');
 		$original_path = url(Storage::url($file_path['path']));

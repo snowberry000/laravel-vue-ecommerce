@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('main')
-<main id="site-content" role="main" ng-controller="menu_editor">
+<main id="site-content" role="main" ng-controller="menu_editor" prefix="{{env('IMG_CLOUD_URL')}}">
 	<div class="partners">
 		@include ('store.navigation')
 		<div class="menu-editor mt-md-4 mb-5" >
@@ -124,15 +124,19 @@
 													</span>
 												</label>
 												<div class="file-input menu_image">
-
-													<input autocomplete="off" type="file" name="item_image" ng-model="menu_item_details.item_image" demo-file-model="myFile" class="form-control" id ="myFileField" style="visibility:hidden;">
-													<a class="choose_file_type banner_choose" id="chooses_file"><span id="banner_name">{{trans('messages.profile.choose_file')}}</span></a>
+													<input autocomplete="off" type="file" name="item_image" demo-file-model="myFile" class="form-control" id ="myFileField" style="visibility:hidden;">
+													<a class="choose_file_type banner_choose" id="chooses_file">
+														<span id="banner_name">{{trans('messages.profile.choose_file')}}</span>
+													</a>
 													<span class="upload_text" id="file_text"></span>
 												</div>
 											</div>
 											<div class="col-md-6 mt-2 mt-md-0">
 												<div class="menu_img_rest">
-													<img class="img-fluid " ng-show="menu_item_details.item_image && menu_item_details.item_image.length!=null " ng-src="@{{menu_item_details.item_image}}">
+													<img 	
+														class="img-fluid " 														
+														ng-show="menu_item_details.item_image && menu_item_details.item_image.length!=null " 
+														ng-src="@{{menu_item_details.item_image}}">
 												</div>
 											</div>
 										</div>
