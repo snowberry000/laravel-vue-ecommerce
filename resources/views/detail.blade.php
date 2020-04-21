@@ -1,7 +1,7 @@
 @extends('template2')
 @section('main')
 <main id="site-content" role="main" ng-controller="stores_detail" ng-init="order_data = {{json_encode($order_detail_data)}};store_id={{$store->id}};other_store='{{$other_store}}'">
-	<div class="detail-banner" style="background-image: url('{{$store->store_image}}');">
+	<div class="detail-banner" style="background-image: url('{{env('IMG_CLOUD_URL')}}{{$store->store_image}}');">
 		<div class="container">
 			<div class="banner-content product">
 				<div class="product-info">
