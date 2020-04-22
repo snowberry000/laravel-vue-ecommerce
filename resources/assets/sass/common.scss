@@ -2298,8 +2298,7 @@ select {
       }
       
     }
-  }
-  
+  }  
 }
 
 
@@ -2355,6 +2354,15 @@ select {
         color: $heading-color;
         white-space: nowrap;
         padding: 10px;
+
+        &.active {
+          background-color: $theme-color;
+          color: white;
+          border-radius: 25px;
+          &:hover {
+            color: #262626;
+          }
+        }
 
         &:hover {
           color: $theme-color;
