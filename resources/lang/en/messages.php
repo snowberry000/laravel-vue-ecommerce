@@ -471,7 +471,7 @@ return [
 		'closed'=>'Closed',
 		'currently_unavailable'=>'Currently unavailable',
 		'item_is_sold_out'=>'Item is Sold out',
-		'add_items_to_your_cart_and_they_appear'=>'Add items to your cart and they’ll appear here',
+		'add_items_to_your_cart_and_they_appear'=>'Products you add to your basket will appear here',
 		'more'=>'More',
 		'start_new_cart'=>'Start New Cart?',
 		'your_cart_already_contains'=>'Your cart already contains an item from',
