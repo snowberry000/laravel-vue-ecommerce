@@ -83,12 +83,12 @@
 									</li>
 								</ul>
 							</div>
-
-							<div class="more-list ml-auto" ng-show="menu_category.length >= 7">
+					
+							<div class="more-list ml-auto" ng-show="menu_category.length > 7">
 								<a href="#" class="more-btn text-truncate text-right">{{ trans('messages.store.more') }}</a>
 								<ul class="more-option">
 
-									<li ng-repeat="list_of_menu in menu_category" ng-if="$index>=6">
+									<li ng-repeat="list_of_menu in menu_category" ng-if="$index>=7">
 										<a href="#@{{list_of_menu.id}}">
 											@{{list_of_menu.name}}
 										</a>
@@ -108,8 +108,7 @@
 								@foreach($store_menu as $menu_category1)
 								@if($menu_category1->menu_category)
 								@foreach($menu_category1->menu_category as $category_row)
-								<div class="popular mb-4 mb-md-5" id="{{$category_row->id}}">
-									
+								<div class="popular mb-4 mb-md-5" id="{{$category_row->id}}" ng-if="menu_category.length > 0 && {{$menu_category1->id}} == menu_category[0].menu_id">
 									<h1>{{$category_row->name}}</h1>
 									<div class="pro-row clearfix">
 										@if($category_row->menu_item)

@@ -2355,20 +2355,15 @@ select {
         white-space: nowrap;
         padding: 10px;
 
-        &.active {
-          background-color: $theme-color;
-          color: white;
-          border-radius: 25px;
-          &:hover {
-            color: #262626;
-          }
-        }
-
         &:hover {
           color: $theme-color;
         }
       }
     }
+  }
+
+  .category-select + .menu-list {
+    margin-left: 1em;
   }
 
   .menu-list {
@@ -2379,6 +2374,18 @@ select {
       display: inline-block;
       vertical-align: middle;
       max-width: 100%;
+      li {
+        a {
+          &.active {
+            background-color: $theme-color;
+            color: white;
+            border-radius: 25px;
+            &:hover {
+              color: #262626;
+            }
+          }
+        }
+      }      
     }
   }
 
