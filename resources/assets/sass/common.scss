@@ -2244,6 +2244,77 @@ select {
   }
 }
 
+#store-detail-section {  
+  .checkout-container {
+    border-left: 1px solid #E0E0E0;
+    height: 100vh;
+  }
+}
+
+@media screen and (max-width: 1599px) {
+
+  #store-detail-section {
+    .row {
+
+      flex-wrap: nowrap;
+
+      .store-container {       
+        flex: 0 0 calc(100% - 400px);
+        max-width: calc(100% - 400px);
+      }
+
+      .checkout-container {
+        flex: 0 0 400px;        
+        max-width: 400px;
+      }
+
+    }    
+  } 
+
+}
+
+@media screen and (max-width: 1023px) {
+  #store-detail-section {
+    .row {      
+
+      .store-container {       
+        flex: 0 0 calc(100% - 360px);
+        max-width: calc(100% - 360px);
+      }
+
+      .checkout-container {
+        flex: 0 0 360px;        
+        max-width: 360px;
+      }      
+    }
+  } 
+}
+
+@media screen and (max-width: 767px) {
+  #store-detail-section {
+    .row {
+      
+      flex-wrap: wrap;
+
+      .store-container {       
+        max-width: 100%;
+        flex: 0 0 100%;
+      }
+
+      .checkout-container {
+        flex: 0 0 100%;
+        max-width: 100%; 
+        height: auto;   
+      }
+      
+    }
+  } 
+}
+
+#calculation_form {
+  background-color: white;
+}
+
 .detail-banner {
   background: no-repeat center / cover;
   padding: 165px 15px;
@@ -2272,7 +2343,7 @@ select {
 .detail-menu {
   @include border-bottom();
   margin-bottom: 30px;
-
+  transition: none !important;
   &.active {
     @include border-top();
     position: fixed;
@@ -2280,6 +2351,7 @@ select {
     background: $white;
     z-index: 9;
     box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #E0E0E0;
   }
 
   ul {

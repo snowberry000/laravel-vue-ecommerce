@@ -1,196 +1,202 @@
 @extends('template2')
 @section('main')
-<main id="site-content" role="main" ng-controller="stores_detail" ng-init="order_data = {{json_encode($order_detail_data)}};store_id={{$store->id}};other_store='{{$other_store}}'">
-	<div class="detail-banner" style="background-image: url('{{env('IMG_CLOUD_URL')}}{{$store->store_image}}');">
-		<div class="container">
-			<div class="banner-content product">
-				<div class="product-info">
-					<input type="hidden" value="1" name="check_detail_page" id="check_detail_page">
-					<input type="hidden" id="session_order_data" value="{{json_encode(session('order_data'))}}">
-					<h2>
-						<a href="#">
-							@if($store)
-							<span>{{$store->name}}</span>
-							@if($store->user_address)
-							@if($store->user_address->city !='' && $store->user_address->city !=null)
-							- <span>{{$store->user_address->city}}</span>
-							@endif
-							@endif
-							@endif
-						</a>
-					</h2>
-					@if(isset($store_category))
-					<div class="pro-category">
-						<p class="text-truncate">
-							@for($i=0;$i<$store->price_rating;$i++)
-							{!! $store->currency->original_symbol !!}
-							@endfor
-						</p>
-						@foreach($store_category as $row)
-						<p class="text-truncate">
-							<span>•</span>
-							{{$row->category_name}}
-						</p>
-						@endforeach
-					</div>
-					@endif
-					@if(isset($store))
-					<div class="product-rating">
-
-						@if($store->review->store_rating_count)
-							<span>
-								<i class="icon icon-star mr-1"></i>
-								{{$store->review->store_rating}} <span>({{$store->review->store_rating_count}})</span>
-							</span>
-						@endif
-
-					@if($store->status==0)
-                    <span>{{ trans('messages.store.currently_unavailable') }} </span>
-                    @elseif(isset($store->store_time->closed)!=0)
-                    <span>{{ $store->convert_mintime }} – {{ $store->convert_maxtime }} <span>{{trans('messages.store.min')}}</span></span>
-                    @else
-					<span>{{ $store->store_next_opening }} </span>
-					@endif
-					</div>
-					@endif
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="detail-menu" ng-init="menu_category={{json_encode($menu_category)}}" ng-cloak>
-		<div class="container">
-			<div class="d-block d-md-flex align-items-center clearfix my-4 my-md-0">
-				@if(count($store_menu)>1)
-				<div class="category-select select mb-3 mb-md-0 py-3">
-					<select id="menu_changes">
-						@foreach($store_menu as $menu)
-						<option value="{{$menu->id}}">{{$menu->name}}</option>
-						@endforeach
-					</select>
-				</div>
-				@endif
-
-				<div class="menu-list">
-					<ul class="text-truncate" >
-						<li ng-repeat="list_of_menu in menu_category" ng-if="$index<7">
-							<a href="#@{{list_of_menu.id}}">
-								@{{list_of_menu.name}}
-							</a>
-						</li>
-					</ul>
-				</div>
-
-				<div class="more-list ml-auto" ng-show="menu_category.length > 7">
-					<a href="#" class="more-btn text-truncate text-right">{{ trans('messages.store.more') }}</a>
-					<ul class="more-option">
-
-						<li  ng-repeat="list_of_menu in menu_category" ng-if="$index>6">
-							<a href="#@{{list_of_menu.id}}">
-								@{{list_of_menu.name}}
-							</a>
-						</li>
-					</ul>
-				</div>
-
-
-			</div>
-		</div>
-	</div>
-	
-	<div class="detail-content">
-		<div class="container">
-			<div class="clearfix">
-				<div class="detail-products col-12 col-md-7 col-lg-8 pl-0 pr-0 pr-md-4 float-left">
-					@if($store_menu)
-					@foreach($store_menu as $menu_category1)
-					@if($menu_category1->menu_category)
-					@foreach($menu_category1->menu_category as $category_row)
-					<div class="popular mb-4 mb-md-5" id="{{$category_row->id}}">
-						
-						<h1>{{$category_row->name}}</h1>
-						<div class="pro-row clearfix">
-							@if($category_row->menu_item)
-							@foreach($category_row->menu_item as $menu_row)
-							@if($menu_row->status==1)
-							<div 
-								class="pro-item" 
-								data-id="{{$menu_row->id}}" 
-								data-name="{{$menu_row->name}}" 
-								data-price="{{ ($menu_row->offer_price!=0) ? $menu_row->offer_price : $menu_row->price }}"								
-								ng-class="checkIsInCart({{$menu_row->id}}) ? 'added-cart' : ''"
-							>
-								@if($store_time_data==0)
-								<label class="sold-out">{{ trans('messages.store.closed') }}</label>
-								@elseif($menu_row->is_visible==0)
-								<label class="sold-out">{{ trans('messages.store.sold_out') }}</label>
-								@elseif($menu_row->menu->menu_closed==0)
-								<label class="sold-out">
-									@if($menu_row->menu->menu_closed_status=='Available')
-									{{ trans('admin_messages.available') }}
-									@endif
-									@if($menu_row->menu->menu_closed_status=='Un Available')
-									{{ trans('messages.store.unavailable') }}
-									@endif
-									@if($menu_row->menu->menu_closed_status=='Closed')
-									{{ trans('messages.store.closed') }}
-									@endif
-								</label>
-								@endif
-								<div class="pro-img" style="background-image: url('{{env('IMG_CLOUD_URL')}}{{$menu_row->menu_item_image}}');"></div>
-								<div class="pro-info">
-									<h2 class="text-truncate">{{$menu_row->name}}</h2>
-									<p><span>{!! $store->currency->code !!}</span>
-										@if($menu_row->offer_price!=0)
-										<strike>{{$menu_row->price}}</strike> {{$menu_row->offer_price}}
-										@else
-										{{$menu_row->price}}
+<div id="site-content" role="main" ng-controller="stores_detail" ng-init="order_data = {{json_encode($order_detail_data)}};store_id={{$store->id}};other_store='{{$other_store}}'">
+	<div id="store-detail-section" class="container-fluid">
+		<div class="row">
+			<div class="store-container col-xs-12 col-lg-9 col-md-8 col-sm-8">
+				<div class="detail-banner" style="background-image: url('{{env('IMG_CLOUD_URL')}}{{$store->store_image}}');">
+					<div class="container">
+						<div class="banner-content product">
+							<div class="product-info">
+								<input type="hidden" value="1" name="check_detail_page" id="check_detail_page">
+								<input type="hidden" id="session_order_data" value="{{json_encode(session('order_data'))}}">
+								<h2>
+									<a href="#">
+										@if($store)
+										<span>{{$store->name}}</span>
+										@if($store->user_address)
+										@if($store->user_address->city !='' && $store->user_address->city !=null)
+										- <span>{{$store->user_address->city}}</span>
 										@endif
+										@endif
+										@endif
+									</a>
+								</h2>
+								@if(isset($store_category))
+								<div class="pro-category">
+									<p class="text-truncate">
+										@for($i=0;$i<$store->price_rating;$i++)
+										{!! $store->currency->original_symbol !!}
+										@endfor
 									</p>
+									@foreach($store_category as $row)
+									<p class="text-truncate">
+										<span>•</span>
+										{{$row->category_name}}
+									</p>
+									@endforeach
 								</div>
-								<div class="quantity d-flex align-items-center mb-md-0">
+								@endif
+								@if(isset($store))
+								<div class="product-rating">
 
-									<span class="count_item w-100" ng-bind="getProductCount({{$menu_row->id}})"></span>
+									@if($store->review->store_rating_count)
+										<span>
+											<i class="icon icon-star mr-1"></i>
+											{{$store->review->store_rating}} <span>({{$store->review->store_rating_count}})</span>
+										</span>
+									@endif
 
-									<div class="count_item-div w-100">
-										<input class="add_item_count count_item w-100" type="text" value="1" />
-										<span class="input-validator">Please input number between 1 and 20</span>
-									</div>									
-									
-									<button class="value-changer" data-val="remove">
-										<i class="icon icon-remove"></i>
-									</button>									
-									<button class="value-changer" data-val="add">
-										<i class="icon icon-add"></i>
-									</button>			
+								@if($store->status==0)
+													<span>{{ trans('messages.store.currently_unavailable') }} </span>
+													@elseif(isset($store->store_time->closed)!=0)
+													<span>{{ $store->convert_mintime }} – {{ $store->convert_maxtime }} <span>{{trans('messages.store.min')}}</span></span>
+													@else
+								<span>{{ $store->store_next_opening }} </span>
+								@endif
+								</div>
+								@endif
 
-									<button 
-										class="btn btn-theme btn-add-cart w-100"											
-										type="submit" 											
-										data-val="@{{menu_item.is_visible}}"											
-										ng-disabled="{{$menu_row->is_visible != 0 && $menu_category1->menu_closed ? 'false' : 'true'}}"
-									>
-										{{ trans('admin_messages.add') }} 
-									</button>									
-								</div>								
-								<h2 class="added-cart-count" ng-bind="getProductCount({{$menu_row->id}}, 'in basket')"></h2>
 							</div>
-							@endif
-							@endforeach
-							@endif
-							{{--end of menu item--}}
 						</div>
 					</div>
-					@endforeach
-					@endif
-					@endforeach
-					@endif
-					{{--end of menu item list--}}
 				</div>
+				<div class="detail-menu" ng-init="menu_category={{json_encode($menu_category)}}" ng-cloak>
+					<div class="container">
+						<div class="d-block d-md-flex align-items-center clearfix my-4 my-md-0">
+							@if(count($store_menu)>1)
+							<div class="category-select select mb-3 mb-md-0 py-3">
+								<select id="menu_changes">
+									@foreach($store_menu as $menu)
+									<option value="{{$menu->id}}">{{$menu->name}}</option>
+									@endforeach
+								</select>
+							</div>
+							@endif
 
-				<div 
-					class="checkout mb-5 position-sticky col-12 col-md-5 col-lg-4 p-0 float-right"  id="calculation_form" 
-					ng-class="!order_data ? 'disabled':''">
+							<div class="menu-list">
+								<ul class="text-truncate" >
+									<li ng-repeat="list_of_menu in menu_category" ng-if="$index<7">
+										<a href="#@{{list_of_menu.id}}">
+											@{{list_of_menu.name}}
+										</a>
+									</li>
+								</ul>
+							</div>
+
+							<div class="more-list ml-auto" ng-show="menu_category.length > 7">
+								<a href="#" class="more-btn text-truncate text-right">{{ trans('messages.store.more') }}</a>
+								<ul class="more-option">
+
+									<li  ng-repeat="list_of_menu in menu_category" ng-if="$index>6">
+										<a href="#@{{list_of_menu.id}}">
+											@{{list_of_menu.name}}
+										</a>
+									</li>
+								</ul>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+				
+				<div class="detail-content">
+					<div class="container">
+						<div class="clearfix">
+							<div class="detail-products">
+								@if($store_menu)
+								@foreach($store_menu as $menu_category1)
+								@if($menu_category1->menu_category)
+								@foreach($menu_category1->menu_category as $category_row)
+								<div class="popular mb-4 mb-md-5" id="{{$category_row->id}}">
+									
+									<h1>{{$category_row->name}}</h1>
+									<div class="pro-row clearfix">
+										@if($category_row->menu_item)
+										@foreach($category_row->menu_item as $menu_row)
+										@if($menu_row->status==1)
+										<div 
+											class="pro-item" 
+											data-id="{{$menu_row->id}}" 
+											data-name="{{$menu_row->name}}" 
+											data-price="{{ ($menu_row->offer_price!=0) ? $menu_row->offer_price : $menu_row->price }}"								
+											ng-class="checkIsInCart({{$menu_row->id}}) ? 'added-cart' : ''"
+										>
+											@if($store_time_data==0)
+											<label class="sold-out">{{ trans('messages.store.closed') }}</label>
+											@elseif($menu_row->is_visible==0)
+											<label class="sold-out">{{ trans('messages.store.sold_out') }}</label>
+											@elseif($menu_row->menu->menu_closed==0)
+											<label class="sold-out">
+												@if($menu_row->menu->menu_closed_status=='Available')
+												{{ trans('admin_messages.available') }}
+												@endif
+												@if($menu_row->menu->menu_closed_status=='Un Available')
+												{{ trans('messages.store.unavailable') }}
+												@endif
+												@if($menu_row->menu->menu_closed_status=='Closed')
+												{{ trans('messages.store.closed') }}
+												@endif
+											</label>
+											@endif
+											<div class="pro-img" style="background-image: url('{{env('IMG_CLOUD_URL')}}{{$menu_row->menu_item_image}}');"></div>
+											<div class="pro-info">
+												<h2 class="text-truncate">{{$menu_row->name}}</h2>
+												<p><span>{!! $store->currency->code !!}</span>
+													@if($menu_row->offer_price!=0)
+													<strike>{{$menu_row->price}}</strike> {{$menu_row->offer_price}}
+													@else
+													{{$menu_row->price}}
+													@endif
+												</p>
+											</div>
+											<div class="quantity d-flex align-items-center mb-md-0">
+
+												<span class="count_item w-100" ng-bind="getProductCount({{$menu_row->id}})"></span>
+
+												<div class="count_item-div w-100">
+													<input class="add_item_count count_item w-100" type="text" value="1" />
+													<span class="input-validator">Please input number between 1 and 20</span>
+												</div>									
+												
+												<button class="value-changer" data-val="remove">
+													<i class="icon icon-remove"></i>
+												</button>									
+												<button class="value-changer" data-val="add">
+													<i class="icon icon-add"></i>
+												</button>			
+
+												<button 
+													class="btn btn-theme btn-add-cart w-100"											
+													type="submit" 											
+													data-val="@{{menu_item.is_visible}}"											
+													ng-disabled="{{$menu_row->is_visible != 0 && $menu_category1->menu_closed ? 'false' : 'true'}}"
+												>
+													{{ trans('admin_messages.add') }} 
+												</button>									
+											</div>								
+											<h2 class="added-cart-count" ng-bind="getProductCount({{$menu_row->id}}, 'in basket')"></h2>
+										</div>
+										@endif
+										@endforeach
+										@endif
+										{{--end of menu item--}}
+									</div>
+								</div>
+								@endforeach
+								@endif
+								@endforeach
+								@endif
+								{{--end of menu item list--}}
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="checkout-container position-sticky col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<div class="checkout" id="calculation_form" ng-class="!order_data ? 'disabled':''">
 					<form name="order_checkout">
 						<button ng-disabled="!order_data" class="btn btn-theme w-100" id="checkout" type="submit">{{ trans('admin_messages.checkout') }}
 						</button>
@@ -281,7 +287,6 @@
 	<div class="detail-popup" ng-cloak>
 		<div class="detail-pop-in mx-auto">
 			<div class="pop-img" style="background-image: url('@{{menu_item.menu_item_image}}');">
-
 				<i class="icon icon-close-2"></i>
 			</div>
 			<div class="pro-content">
@@ -290,68 +295,67 @@
 						<i class="icon icon-approved-signal"></i>
 						Halal
 					</span> -->
-					<input type="hidden" id="menu_item_id" value="@{{menu_item.id}}">
-					<div class="special-inst mt-3">
-						<h4>{{ trans('messages.store.special_instructions') }}</h4>
-						<input class="p-2 w-100" type="text" ng-model="add_notes" placeholder="{{ trans('messages.store.add_note_extra_sauce_no_onions') }}"/>
-					</div>
+				<input type="hidden" id="menu_item_id" value="@{{menu_item.id}}">
+				<div class="special-inst mt-3">
+					<h4>{{ trans('messages.store.special_instructions') }}</h4>
+					<input class="p-2 w-100" type="text" ng-model="add_notes" placeholder="{{ trans('messages.store.add_note_extra_sauce_no_onions') }}"/>
 				</div>
-				<div class="pro-cart d-block d-md-flex align-items-center">
-					<div class="quantity d-flex align-items-center col-12 col-md-5 mb-3 mb-md-0 justify-content-center justify-content-md-start">
-						<button class="value-changer" data-val="remove">
-							<i class="icon icon-remove"></i>
-						</button>
-						<span class="mx-3 count_item" ng-model="item_count">@{{item_count}}</span>
-						<button class="value-changer" data-val="add">
-							<i class="icon icon-add"></i>
-						</button>
-					</div>
+			</div>
+			<div class="pro-cart d-block d-md-flex align-items-center">
+				<div class="quantity d-flex align-items-center col-12 col-md-5 mb-3 mb-md-0 justify-content-center justify-content-md-start">
+					<button class="value-changer" data-val="remove">
+						<i class="icon icon-remove"></i>
+					</button>
+					<span class="mx-3 count_item" ng-model="item_count">@{{item_count}}</span>
+					<button class="value-changer" data-val="add">
+						<i class="icon icon-add"></i>
+					</button>
+				</div>
 
-					<span style="display:none;">
-						@{{ (menu_item.offer_price>0) ? menu_item.offer_price : menu_item.price}}
-					</span>
+				<span style="display:none;">
+					@{{ (menu_item.offer_price>0) ? menu_item.offer_price : menu_item.price}}
+				</span>
 
-					<div class="cart-btn col-12 col-md-7" ng-init="individual_price = individual_price">
-						@if($store_time_data==0)
-						<button class="btn btn-theme w-100 disabled" type="submit">
+				<div class="cart-btn col-12 col-md-7" ng-init="individual_price = individual_price">
+					@if($store_time_data==0)
+					<button class="btn btn-theme w-100 disabled" type="submit">
+						{{ trans('messages.store.closed') }}
+					</button>
+					@elseif($store->status==0)
+					<button class="btn btn-theme w-100 disabled" type="submit">
+						{{ trans('messages.store.currently_unavailable') }}
+					</button>
+					@else
+					<button 
+						ng-if="menu_item.is_visible == 0" disabled="disabled" class="btn btn-theme w-100">
+						{{ trans('messages.store.item_is_sold_out') }}
+					</button>						
+					<button 
+						class="btn btn-theme w-100" 
+						ng-if="menu_item.is_visible != 0 && menu_item.menu_item_status!=0" type="submit" 
+						id="cart_sumbit" 
+						ng-click="order_store_session()" 
+						data-val="@{{menu_item.is_visible}}">
+						{{ trans('admin_messages.add') }} <span class ="count_item">@{{item_count}}</span> <span>{{ trans('messages.store.to_cart') }} </span>
+						<span class="span_close">(<span>{!!$store->currency->code!!}</span>
+						<span ng-hide="menu_item" class="ml-2" id="menu_item_price"></span> <span>@{{ menu_item.price }}</span> )</span>
+					</button>
+					<button class="btn btn-theme w-100" disabled="disabled" ng-if=" menu_item.is_visible != 0 && menu_item.menu_item_status==0" >
+						{{ trans('messages.store.item_is') }} <span ng-if="menu_item.menu_closed_status=='Available'">{{ trans('admin_messages.available') }}</span>
+						<span ng-if="menu_item.menu_closed_status=='Un Available'">
+							{{ trans('messages.store.unavailable') }}
+						</span>
+						<span ng-if="menu_item.menu_closed_status=='Closed'">
 							{{ trans('messages.store.closed') }}
-						</button>
-						@elseif($store->status==0)
-						<button class="btn btn-theme w-100 disabled" type="submit">
-							{{ trans('messages.store.currently_unavailable') }}
-						</button>
-						@else
-						<button 
-							ng-if="menu_item.is_visible == 0" disabled="disabled" class="btn btn-theme w-100">
-							{{ trans('messages.store.item_is_sold_out') }}
-						</button>						
-						<button 
-							class="btn btn-theme w-100" 
-							ng-if="menu_item.is_visible != 0 && menu_item.menu_item_status!=0" type="submit" 
-							id="cart_sumbit" 
-							ng-click="order_store_session()" 
-							data-val="@{{menu_item.is_visible}}">
-							{{ trans('admin_messages.add') }} <span class ="count_item">@{{item_count}}</span> <span>{{ trans('messages.store.to_cart') }} </span>
-							<span class="span_close">(<span>{!!$store->currency->code!!}</span>
-							<span ng-hide="menu_item" class="ml-2" id="menu_item_price"></span> <span>@{{ menu_item.price }}</span> )</span>
-						</button>
-						<button class="btn btn-theme w-100" disabled="disabled" ng-if=" menu_item.is_visible != 0 && menu_item.menu_item_status==0" >
-							{{ trans('messages.store.item_is') }} <span ng-if="menu_item.menu_closed_status=='Available'">{{ trans('admin_messages.available') }}</span>
-							<span ng-if="menu_item.menu_closed_status=='Un Available'">
-								{{ trans('messages.store.unavailable') }}
-							</span>
-							<span ng-if="menu_item.menu_closed_status=='Closed'">
-								{{ trans('messages.store.closed') }}
-							</span>
-						</button>
-						@endif
-					</div>
+						</span>
+					</button>
+					@endif
 				</div>
 			</div>
 		</div>
+	</div>
 
-
-	</main>
+</div>
 	@stop
 	@push('scripts')
 	<script type="text/javascript">
@@ -360,36 +364,41 @@
 				var a = $('header').outerHeight();
 				var b = $('.detail-menu').outerHeight();
 				var menu_top = $('.detail-banner').position().top + $('.detail-banner').outerHeight();
-				if ($(window).scrollTop() >= (menu_top - a)) {
-					$('.detail-menu').css({"top":a + "px"});
-					$('.detail-menu').addClass('active');
+				if ($(window).scrollTop() >= (menu_top + a)) {
+					// $('.detail-menu').css({"top":a + "px"});
+					$('.detail-menu').css({"top": 0});
+					$('.detail-menu').addClass('active');					
 					$('.detail-content').css({"margin-top":b + "px"});
-					$('.checkout').css({"top":a + b + 20 + "px"});
-					$('header').addClass('no-shadow');
+					// $('.checkout').css({"top":a + b + 20 + "px"});
+					// $('header').addClass('no-shadow');
 				} else {
 					$('.detail-menu').css({"top":"inherit"});
 					$('.detail-menu').removeClass('active');
 					$('.detail-content').css({"margin-top":"0px"});
-					$('header').removeClass('no-shadow');
+					// $('header').removeClass('no-shadow');
 				}
 			}
 			category_menu();
 			$(window).scroll(function() {
 				category_menu();
 			});
+
+			$('header').css('position', 'relative');
+			$('#site-content').css('margin-top', '0');
+
 		});
 
 		$(document).on('click','.menu-list li a',function(e) {
 
-e.preventDefault(); // prevent hard jump, the default behavior
-var target = $(this).attr("href"); // Set the target as variable
-var top = $(target).offset().top - ($('header').outerHeight() + $('.detail-menu').outerHeight() + 10);
-// perform animated scrolling by getting top-position of target-element and set it as scroll target
-$('html, body').stop().animate({
-	scrollTop: top
-}, 600, function() {
-// location.hash = target; //attach the hash (#jumptarget) to the pageurl
-});
-});
+			e.preventDefault(); // prevent hard jump, the default behavior
+			var target = $(this).attr("href"); // Set the target as variable
+			var top = $(target).offset().top - ($('header').outerHeight() + $('.detail-menu').outerHeight() + 10);
+			// perform animated scrolling by getting top-position of target-element and set it as scroll target
+			$('html, body').stop().animate({
+				scrollTop: top
+			}, 600, function() {
+			// location.hash = target; //attach the hash (#jumptarget) to the pageurl
+			});
+		});
 </script>
 @endpush
