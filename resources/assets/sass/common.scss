@@ -2522,38 +2522,67 @@ select {
 
       }
 
-      .pro-info {
-        position: relative;      
-        padding: 30px 15px;
+      .pro-info-container {
+        display: flex;
+        flex-direction: column;
         width: 100%;
-        background: #fff;
 
-        h2 {
-          font-size: 16px;
-          line-height: 24px;
-          font-family: $site-font;
-          margin-bottom: 10px;
-          color: $driver-theme;
-          font-weight: bold;
-          background: $white;
+        @media screen and (max-width: 767px) {
+          flex-direction: row;
+          flex-wrap: nowrap;
         }
 
-        p {
-          margin-bottom: 0;
-          font-weight: bold;
-        }
+        .pro-info {
+          position: relative;      
+          padding: 30px 15px;
+          width: 100%;
+          background: #fff;
+  
+          @media screen and (max-width: 767px) {
+            flex: 100%;          
+            padding-right: 0;
+          }
 
-        .icon-tree-leaf {
-          font-size: 20px;
-        }
-      }
+          h2 {
+            font-size: 16px;
+            line-height: 24px;
+            font-family: $site-font;
+            margin-bottom: 10px;
+            color: $driver-theme;
+            font-weight: bold;
+            background: $white;
 
-      .pro-img {
-        background: no-repeat center / cover;
-        width: 200px;
-        height: 200px;
-        flex: 0 0 auto;
-      }
+            @media screen and (max-width: 767px) {              
+              white-space: pre-wrap !important;
+            }
+          }
+  
+          p {
+            margin-bottom: 0;
+            font-weight: bold;
+          }
+  
+          .icon-tree-leaf {
+            font-size: 20px;
+          }
+        }
+  
+        .pro-img {
+          background: no-repeat center / cover;
+          width: 200px;
+          height: 200px;
+          flex: 0 0 auto;
+          align-self: center;
+
+          @media screen and (max-width: 767px) {
+            flex: 100px;
+            width: 100px;
+            height: 100px;
+            min-width: 100px;
+          }
+
+        }
+      }      
 
       .quantity {
         flex: 100%;

@@ -48,10 +48,10 @@
 									@endif
 
 								@if($store->status==0)
-													<span>{{ trans('messages.store.currently_unavailable') }} </span>
-													@elseif(isset($store->store_time->closed)!=0)
-													<span>{{ $store->convert_mintime }} – {{ $store->convert_maxtime }} <span>{{trans('messages.store.min')}}</span></span>
-													@else
+								<span>{{ trans('messages.store.currently_unavailable') }} </span>
+								@elseif(isset($store->store_time->closed)!=0)
+								<span>{{ $store->convert_mintime }} – {{ $store->convert_maxtime }} <span>{{trans('messages.store.min')}}</span></span>
+								@else
 								<span>{{ $store->store_next_opening }} </span>
 								@endif
 								</div>
@@ -140,17 +140,19 @@
 												@endif
 											</label>
 											@endif
-											<div class="pro-img" style="background-image: url('{{env('IMG_CLOUD_URL')}}{{$menu_row->menu_item_image}}');"></div>
-											<div class="pro-info">
-												<h2 class="text-truncate">{{$menu_row->name}}</h2>
-												<p><span>{!! $store->currency->code !!}</span>
-													@if($menu_row->offer_price!=0)
-													<strike>{{$menu_row->price}}</strike> {{$menu_row->offer_price}}
-													@else
-													{{$menu_row->price}}
-													@endif
-												</p>
-											</div>
+											<div class="pro-info-container">
+												<div class="pro-img" style="background-image: url('{{env('IMG_CLOUD_URL')}}{{$menu_row->menu_item_image}}');"></div>
+												<div class="pro-info">
+													<h2 class="text-truncate">{{$menu_row->name}}</h2>
+													<p><span>{!! $store->currency->code !!}</span>
+														@if($menu_row->offer_price!=0)
+														<strike>{{$menu_row->price}}</strike> {{$menu_row->offer_price}}
+														@else
+														{{$menu_row->price}}
+														@endif
+													</p>
+												</div>
+											</div>											
 											<div class="quantity d-flex align-items-center mb-md-0">
 
 												<span class="count_item w-100" ng-bind="getProductCount({{$menu_row->id}})"></span>
