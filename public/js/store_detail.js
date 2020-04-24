@@ -31,8 +31,14 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
     var url_category = getUrls('category_details');
     $http.post(url_category, {
       id: category_id,
-    }).then(function (response) {
+    }).then(function (response) {      
       $scope.menu_category = response.data.menu_category;
+      setTimeout(function() {
+        $scope.checkMenuList();
+        setTimeout(function() {
+          $scope.checkPopular();
+        },10)        
+      },10)
     });
   });
 
@@ -201,6 +207,58 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
       $(this).parent().children('.input-validator').removeClass('error');
     }
   });
+
+  $scope.menuListCount = 999;
+  $scope.selectedMoreOption = "";
+  
+  $(window).resize(function() {
+    $scope.checkMenuList();
+  });
+
+  $(document).ready(function() {
+    $scope.checkMenuList();    
+  })
+
+  $scope.checkMenuList = function() {
+    var categoryMeuWidth = $('.detail-menu .menu-list').outerWidth();
+    for(var i = $scope.menu_category.length-1; i >= 0; i--) {
+      var selectedOne = $scope.menu_category[i];
+      if ($('.detail-menu .menu-list a[data-target='+selectedOne.id+']').length > 0) {
+        var selectedItem = $('.detail-menu .menu-list a[data-target='+selectedOne.id+']');
+        var parentItem = selectedItem.parent();
+        var endPosition = parentItem.position().left - parentItem.parent().offset().left + parentItem.outerWidth();
+        if (endPosition > categoryMeuWidth) {
+          $scope.menuListCount = i;
+          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'hidden');
+          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'none');
+        } else {
+          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'visible');
+          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'initial');
+        }                
+      }
+    }
+    $scope.$apply();
+  }
+
+  $scope.checkPopular = function() {
+    var scrollTop = $(window).scrollTop();
+    $('.detail-products .popular').each(function() {
+      var id = $(this).attr('id');
+      if (
+        $(this).position().top < scrollTop && 
+        scrollTop < $(this).position().top + $(this).outerHeight()
+      ) {						
+        $('.detail-menu .menu-list a[data-target='+id+']').addClass('active');
+      } else {
+        $('.detail-menu .menu-list a[data-target='+id+']').removeClass('active');
+      }
+    })
+  }
+
+
+  $scope.$watch('menu_category', function() {
+    $scope.checkMenuList();
+  })
 
   //checkout page
 

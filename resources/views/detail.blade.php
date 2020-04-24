@@ -63,7 +63,7 @@
 				</div>
 				<div class="detail-menu" ng-init="menu_category={{json_encode($menu_category)}}" ng-cloak>
 					<div class="container">
-						<div class="d-block d-md-flex align-items-center clearfix my-4 my-md-0">
+						<div class="detail-menu-container d-block d-md-flex align-items-center clearfix my-4 my-md-0">
 							@if(count($store_menu)>1)
 							<div class="category-select select mb-3 mb-md-0 py-3">
 								<select id="menu_changes">
@@ -72,30 +72,29 @@
 									@endforeach
 								</select>
 							</div>
-							@endif
-
-							<div class="menu-list">
-								<ul class="text-truncate" >
-									<li ng-repeat="list_of_menu in menu_category" ng-if="$index<7">
-										<a href="#@{{list_of_menu.id}}" data-target="@{{list_of_menu.id}}">
-											@{{list_of_menu.name}}
-										</a>
-									</li>
-								</ul>
-							</div>
+							@endif							
+							<ul class="menu-list">								
+								<li ng-repeat="list_of_menu in menu_category">
+									<a href="#@{{list_of_menu.id}}" data-target="@{{list_of_menu.id}}">
+										@{{list_of_menu.name}}
+									</a>
+								</li>								
+							</ul>
 					
-							<div class="more-list ml-auto" ng-show="menu_category.length > 7">
-								<a href="#" class="more-btn text-truncate text-right">{{ trans('messages.store.more') }}</a>
+							<div class="more-list ml-auto" ng-show="menu_category.length > menuListCount">
+								<a 
+									href="#" 
+									class="more-btn text-truncate text-right"
+									ng-bind="selectedMoreOption.length == 0 ? '{{ trans('messages.store.more') }}' : selectedMoreOption"
+								></a>
 								<ul class="more-option">
-
-									<li ng-repeat="list_of_menu in menu_category" ng-if="$index>=7">
+									<li ng-repeat="list_of_menu in menu_category" ng-if="$index>=menuListCount">
 										<a href="#@{{list_of_menu.id}}">
 											@{{list_of_menu.name}}
 										</a>
 									</li>
 								</ul>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -382,30 +381,13 @@
 			}
 			category_menu();
 
-			function check_popular() {
-				var scrollTop = $(window).scrollTop();
-				$('.detail-products .popular').each(function() {
-					var id = $(this).attr('id');
-					if (
-						$(this).position().top < scrollTop && 
-						scrollTop < $(this).position().top + $(this).outerHeight()
-					) {						
-						$('.detail-menu .menu-list a[data-target='+id+']').addClass('active');
-					} else {
-						$('.detail-menu .menu-list a[data-target='+id+']').removeClass('active');
-					}
-				})
-			}
-
-			check_popular();
 			$(window).scroll(function() {
 				category_menu();
-				check_popular();
-			});
-			
+			});			
 			
 			$('header').css('position', 'relative');
 			$('#site-content').css('margin-top', '0');
+
 		});
 
 		$(document).on('click','.menu-list li a',function(e) {
