@@ -2382,14 +2382,27 @@ select {
     .more-list {
       flex: 0 0 140px;
       position: relative;
-  
+      display: flex;
+      margin-left: 14px;
+      justify-content: flex-end;
+
       .more-btn {
-        display: block;
+        display: inline-flex;
         color: $heading-color;
-        padding: 25px 0;
+        padding: 10px;
   
         &:hover {
           color: $theme-color;
+        }
+
+        &.active {
+          background-color: $theme-color;
+          color: white;
+          border-radius: 25px;
+
+          &:hover {
+            color: #262626;
+          }
         }
       }
   

@@ -63,7 +63,7 @@
 				</div>
 				<div class="detail-menu" ng-init="menu_category={{json_encode($menu_category)}}" ng-cloak>
 					<div class="container">
-						<div class="detail-menu-container d-block d-md-flex align-items-center clearfix my-4 my-md-0">
+						<div class="detail-menu-container d-block d-md-flex align-items-center clearfix my-4 my-md-0 pt-2 pb-2">
 							@if(count($store_menu)>1)
 							<div class="category-select select mb-3 mb-md-0 py-3">
 								<select id="menu_changes">
@@ -75,21 +75,20 @@
 							@endif							
 							<ul class="menu-list">								
 								<li ng-repeat="list_of_menu in menu_category">
-									<a href="#@{{list_of_menu.id}}" data-target="@{{list_of_menu.id}}">
-										@{{list_of_menu.name}}
-									</a>
+									<a href="#@{{list_of_menu.id}}" data-target="@{{list_of_menu.id}}">@{{list_of_menu.name}}</a>
 								</li>								
 							</ul>
 					
-							<div class="more-list ml-auto" ng-show="menu_category.length > menuListCount">
+							<div class="more-list" ng-show="menu_category.length > menuListCount">
 								<a 
 									href="#" 
 									class="more-btn text-truncate text-right"
+									ng-class="selectedMoreOption.length > 0 ? 'active' : ''"
 									ng-bind="selectedMoreOption.length == 0 ? '{{ trans('messages.store.more') }}' : selectedMoreOption"
 								></a>
 								<ul class="more-option">
 									<li ng-repeat="list_of_menu in menu_category" ng-if="$index>=menuListCount">
-										<a href="#@{{list_of_menu.id}}">
+										<a href="#@{{list_of_menu.id}}" ng-click="clickMoreOptionItem(list_of_menu.name)">
 											@{{list_of_menu.name}}
 										</a>
 									</li>
