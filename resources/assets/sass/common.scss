@@ -2338,7 +2338,6 @@ select {
   &.active {
     @include border-top();
     position: fixed;
-    width: 100%;
     background: $white;
     z-index: 9;
     box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.1);

@@ -368,13 +368,15 @@
 					// $('.detail-menu').css({"top":a + "px"});
 					$('.detail-menu').css({"top": 0});
 					$('.detail-menu').addClass('active');					
-					$('.detail-content').css({"margin-top":b + "px"});
+					$('.detail-content').css({"margin-top":b + "px"});					
+					$('.detail-menu').css({'width': $('.store-container').width()+'px'});
 					// $('.checkout').css({"top":a + b + 20 + "px"});
 					// $('header').addClass('no-shadow');
 				} else {
 					$('.detail-menu').css({"top":"inherit"});
 					$('.detail-menu').removeClass('active');
 					$('.detail-content').css({"margin-top":"0px"});
+					$('.detail-menu').css({'width': '100%'});
 					// $('header').removeClass('no-shadow');
 				}
 			}
