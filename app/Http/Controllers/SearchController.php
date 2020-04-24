@@ -108,7 +108,7 @@ class SearchController extends Controller {
 		session()->put('address1', request()->address1);
 		session()->put('state', request()->state);
 		session()->put('country', request()->country);
-		session()->put('location', $this->view_data['show_location']);
+		session()->put('location', $this->view_data['location']);
 		session()->put('postal_code', $this->view_data['postal_code']);
 		session()->put('latitude', $this->view_data['latitude']);
 		session()->put('longitude', $this->view_data['longitude']);
