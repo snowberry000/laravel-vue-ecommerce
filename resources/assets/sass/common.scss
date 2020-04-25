@@ -2380,28 +2380,57 @@ select {
     }
   
     .more-list {
-      flex: 0 0 140px;
+      flex: 0 0 160px;
       position: relative;
       display: flex;
       margin-left: 14px;
       justify-content: flex-end;
+      max-width: 160px;
 
       .more-btn {
-        display: inline-flex;
+        display: inline-block;
         color: $heading-color;
-        padding: 10px;
-  
+        padding: 6px 30px 6px 15px;
+        position: relative;
+
+        &:after {
+          content: "";
+          position: absolute;
+          width: 22px;
+          height: 18px;
+          mask-image: url("data:image/svg+xml; utf8, <svg xmlns='http://www.w3.org/2000/svg' height='24' width='24' viewBox='0 0 24 24'><path d='M4.88398 7.11612L3.11621 8.88389L12.0001 17.7678L20.884 8.88389L19.1162 7.11612L12.0001 14.2322L4.88398 7.11612Z'></path></svg>");
+          mask-repeat: no-repeat;
+          mask-size: 18px 18px;
+          mask-position: center center;
+          right: 7px;
+          top: 50%;
+          transform: translateY(-50%);
+          background-color: #262626;
+        }
+
         &:hover {
           color: $theme-color;
+
+          &:after {
+            background-color: $theme-color;  
+          }
         }
 
         &.active {
           background-color: $theme-color;
           color: white;
-          border-radius: 25px;
+          border-radius: 20px;
 
-          &:hover {
+          &:after { 
+            background-color: white;
+          }
+
+          &:hover { 
             color: #262626;
+
+            &:after { 
+              background-color: #262626;
+            }
           }
         }
       }

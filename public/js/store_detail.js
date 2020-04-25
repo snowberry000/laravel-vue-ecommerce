@@ -32,8 +32,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
     $http.post(url_category, {
       id: category_id,
     }).then(function (response) {      
-      $scope.menu_category = response.data.menu_category;
-      $scope.menuListCount = 999;
+      $scope.menu_category = response.data.menu_category;      
       $scope.selectedMoreOption = "";
       setTimeout(function() {
         $scope.checkMenuList();
@@ -226,6 +225,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
   })
 
   $scope.checkMenuList = function() {
+    $scope.menuListCount = -1;
     var categoryMeuWidth = $('.detail-menu .menu-list').outerWidth();
     for(var i = $scope.menu_category.length-1; i >= 0; i--) {
       var selectedOne = $scope.menu_category[i];
@@ -233,19 +233,16 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
         var selectedItem = $('.detail-menu .menu-list a[data-target='+selectedOne.id+']');
         var parentItem = selectedItem.parent();
         var endPosition = parentItem.position().left - parentItem.parent().offset().left + parentItem.outerWidth();
+        if ($scope.menuListCount > 0)
+          categoryMeuWidth -= 174;
+
         if (endPosition > categoryMeuWidth) {
           $scope.menuListCount = i;
           $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'hidden');
           $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'none');
         } else {
-          if (i == $scope.menuListCount-1 && endPosition > categoryMeuWidth-154) {
-            $scope.menuListCount = i;
-            $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'hidden');
-            $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'none');  
-          } else {
-            $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'visible');
-            $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'initial');
-          }          
+          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'visible');
+          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'initial');
         }                
       }
     }
