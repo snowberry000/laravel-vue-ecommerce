@@ -2618,6 +2618,8 @@ select {
             color: $driver-theme;
             font-weight: bold;
             background: $white;
+            max-height: 48px;
+            overflow-y: hidden;
 
             @media screen and (max-width: 767px) {              
               white-space: pre-wrap !important;
