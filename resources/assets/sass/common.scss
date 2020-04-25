@@ -1657,9 +1657,9 @@ footer {
 
 .main-menu {
   .navbar-toggler {
-    position: fixed;
-    top: 18px;
-    left: 2px;
+    position: absolute;
+    top: -36px;
+    left: 0;
     z-index: 99;
     min-width: inherit;
   }
@@ -2351,6 +2351,10 @@ select {
       flex: 0 0 140px;  
       margin-right: 14px;
 
+      @media screen and (max-width: 767px) {
+        margin-right: 0;
+      }
+
       ul {
         li {
           display: block;
@@ -2362,7 +2366,11 @@ select {
       max-width: 100%;
       flex: 0 1 100%;
       overflow: hidden;
-      display: flex;              
+      display: flex;  
+      
+      @media screen and (max-width: 767px) {        
+        display: none !important;
+      }
 
       li {
         a {
@@ -2387,11 +2395,25 @@ select {
       justify-content: flex-end;
       max-width: 160px;
 
+      @media screen and (max-width: 767px) {
+        flex: 0 0 100%;
+        margin-left: 0;
+        max-width: 100%;
+        justify-content: center;
+      }
+
       .more-btn {
         display: inline-block;
         color: $heading-color;
         padding: 6px 30px 6px 15px;
         position: relative;
+
+        @media screen and (max-width: 767px) {
+          display: flex;
+          flex: 100%;
+          justify-content: center;
+          align-items: center;
+        }
 
         &:after {
           content: "";
@@ -2433,6 +2455,7 @@ select {
             }
           }
         }
+
       }
   
       .more-option {
@@ -2447,7 +2470,11 @@ select {
         @include border-default();
         z-index: 99;
         @extend custom-scroll;
-  
+        
+        @media screen and (max-width: 767px) {
+          width: 100%;
+        }
+
         li {
           display: block;
         }
@@ -7835,9 +7862,9 @@ br {
 
   .detail-menu {
     &.active {
-      position: static;
-      top: inherit !important;
-      box-shadow: none !important;
+      // position: static;
+      // top: inherit !important;
+      // box-shadow: none !important;
       @include border-bottom();
     }
   }

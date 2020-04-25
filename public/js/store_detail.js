@@ -225,25 +225,30 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
   })
 
   $scope.checkMenuList = function() {
-    $scope.menuListCount = -1;
-    var categoryMeuWidth = $('.detail-menu .menu-list').outerWidth();
-    for(var i = $scope.menu_category.length-1; i >= 0; i--) {
-      var selectedOne = $scope.menu_category[i];
-      if ($('.detail-menu .menu-list a[data-target='+selectedOne.id+']').length > 0) {
-        var selectedItem = $('.detail-menu .menu-list a[data-target='+selectedOne.id+']');
-        var parentItem = selectedItem.parent();
-        var endPosition = parentItem.position().left - parentItem.parent().offset().left + parentItem.outerWidth();
-        if ($scope.menuListCount > 0)
-          categoryMeuWidth -= 174;
+    if ($( window ).width() < 768) {
+      $scope.menuListCount = 0;        
+    } else {
+      $scope.menuListCount = -1;
+      var categoryMeuWidth = $('.detail-menu-container').outerWidth() - 154;
+      for(var i = $scope.menu_category.length-1; i >= 0; i--) {
+        var selectedOne = $scope.menu_category[i];
+        if ($('.detail-menu .menu-list a[data-target='+selectedOne.id+']').length > 0) {
+          var selectedItem = $('.detail-menu .menu-list a[data-target='+selectedOne.id+']');
+          var parentItem = selectedItem.parent();
+          var endPosition = parentItem.position().left - parentItem.parent().offset().left + parentItem.outerWidth();
+          var realCategoryMenuWIdth = categoryMeuWidth;
+          if ($scope.menuListCount > 0)
+            realCategoryMenuWIdth -= 174;
 
-        if (endPosition > categoryMeuWidth) {
-          $scope.menuListCount = i;
-          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'hidden');
-          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'none');
-        } else {
-          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'visible');
-          $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'initial');
-        }                
+          if (endPosition > realCategoryMenuWIdth) {
+            $scope.menuListCount = i;
+            $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'hidden');
+            $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'none');
+          } else {
+            $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('visibility', 'visible');
+            $('.detail-menu .menu-list a[data-target='+selectedOne.id+']').css('pointer-events', 'initial');
+          }
+        }
       }
     }
     $scope.$apply();
