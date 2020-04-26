@@ -77,7 +77,7 @@
 				<div class="tab-pane fade active" id="weekly" role="tabpanel" aria-labelledby="weekly-tab">
 					<div class="d-md-flex align-items-center justify-content-between">
 						<div class="net-pay col-md-4">
-							<h2>${{$last_seven_total_payouts}}</h2>
+							<h2>£{{$last_seven_total_payouts}}</h2>
 							<p>{{trans('messages.store_dashboard.net_payout')}}</p>
 						</div>
 
@@ -105,7 +105,7 @@
 				<div class="tab-pane fade active " id="monthly" role="tabpanel" aria-labelledby="monthly-tab">
 					<div class="d-md-flex align-items-center justify-content-between">
 						<div class="net-pay col-md-4">
-							<h2>${{$last_thirty_total_payouts}}</h2>
+							<h2>£{{$last_thirty_total_payouts}}</h2>
 							<p>{{trans('messages.store_dashboard.net_payout')}}</p>
 						</div>
 						<div class="net-chart col-md-8 mt-5 mt-md-0">
