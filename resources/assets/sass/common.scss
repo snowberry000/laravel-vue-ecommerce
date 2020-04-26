@@ -1842,6 +1842,7 @@ footer {
 
   .product-info {
     padding: 10px 0;
+    position: relative;
 
     h2 {
       font-size: 16px;
@@ -1865,6 +1866,18 @@ footer {
         padding: 4px 8px;
         margin-right: 4px;
       }
+    }
+
+    .store-status {      
+      display: inline-block;
+      position: absolute;
+      @include border-radius(30px);
+      background: white;
+      padding: 8px 24px;
+      right: 1em;
+      top: -0.5em;
+      transform: translateY(-100%);
+      line-height: 1.2;
     }
   }
 

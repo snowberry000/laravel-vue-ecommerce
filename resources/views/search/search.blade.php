@@ -179,13 +179,13 @@
 								<span ng-show="store.store_rating > 0">
 									@{{store.store_rating }}
 									<i class="icon icon-star mr-1"></i>(@{{store.average_rating }})
-								</span>
-								<span ng-if="store.status==0 && store.store_closed!=0">
-									{{ trans('messages.store.currently_unavailable') }}
-								</span>
-								<span ng-if="store.store_closed!=0 && store.status!=0 "> @{{store.min_time}}–@{{store.max_time}} {{trans('messages.store.min')}}</span>
-								<span ng-if="store.store_closed==0"> @{{store.store_next_time}}</span>
+								</span>								
 							</div>
+							<span class="store-status text-center" ng-if="store.status==0 && store.store_closed!=0">{{ trans('messages.store.currently_unavailable') }}</span>
+							<span class="store-status text-center" ng-if="store.store_closed!=0 && store.status!=0 "> 
+								<b>@{{store.min_time}}–@{{store.max_time}}</b> <br />{{trans('messages.store.min')}}
+							</span>
+							<span class="store-status text-center" ng-if="store.store_closed==0"> @{{store.store_next_time}}</span>
 						</div>
 					</a>
 				</div>
