@@ -34,10 +34,10 @@
 
 
 							<select id="phone_code" name="country_code" class="form-control">
-						                    @foreach ($country as $key => $country)
-						                        <option value="{{ $country->phone_code }}" {{ $country->phone_code == @session::get('phone_code') ? 'selected' : '' }} >{{ $country->name }}</option>
-						                    @endforeach
-						                </select>
+								@foreach ($country as $key => $country)
+									<option value="{{ $country->phone_code }}" {{ $country->phone_code == @session::get('phone_code') ? 'selected' : '' }} >{{ $country->name }}</option>									
+								@endforeach
+							</select>
 
 						</div>
 						<input type="number" name="phone_number" id="phone_number" data-error-placement="container" data-error-container=".phone_error" placeholder=""/>

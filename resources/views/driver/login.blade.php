@@ -26,10 +26,10 @@
 									<div class="select mob-select col-md-3">
 										<span class="phone_code">+{{ @session::get('phone_code') }}</span>
 										 <select id="phone_code" name="country" class="form-control">
-						                    @foreach ($country as $key => $country)
-						                        <option value="{{ $country->phone_code }}" {{ $country->phone_code == 1 ? 'selected' : '' }} >{{ $country->name }}</option>
-						                    @endforeach
-						                </select>
+											@foreach ($country as $key => $country)												
+												<option value="{{ $country->phone_code }}" {{ $country->phone_code == @session::get('phone_code') ? 'selected' : '' }} >{{ $country->name }}</option>
+											@endforeach
+										</select>
 									</div>
 									{!! Form::text('phone_number','',['placeholder' => trans('messages.profile.phone_number'),'class' =>'flex-grow-1','data-error-placement'=>'container','data-error-container'=>'.mobile-number-error'])!!}
 								</div>

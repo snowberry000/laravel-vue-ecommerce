@@ -42,17 +42,17 @@
 						<div class="form-group">
 							<div class="d-flex w-100">
 
-									<div class="select mob-select col-md-3">
+								<div class="select mob-select col-md-3">
 									<span class="phone_code">+{{ @session::get('phone_code') }}</span>
 
 									<select id="phone_code" name="country_code" class="form-control">
-						                    @foreach ($country as $key => $country)
-						                        <option value="{{ $country->phone_code }}" {{ $country->phone_code == @session::get('phone_code') ? 'selected' : '' }} >{{ $country->name }}</option>
-						                    @endforeach
-						                </select>
+										@foreach ($country as $key => $country)
+											<option value="{{ $country->phone_code }}" {{ $country->phone_code == @session::get('phone_code') ? 'selected' : '' }} >{{ $country->name }}</option>																		
+										@endforeach
+									</select>
 
-									</div>
-									<input type="text" name="phone_number" id="phone_number" placeholder="{{trans('messages.driver.phone_number')}}" />
+								</div>
+								<input type="text" name="phone_number" id="phone_number" placeholder="{{trans('messages.driver.phone_number')}}" />
 							</div>
 							<span class="text-danger">{{ $errors->first('phone_number') }}</span>
 						</div>
