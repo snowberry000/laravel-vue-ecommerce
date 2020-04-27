@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="logo text-center mt-5">
 			<a href="{{url('/store')}}">
-				<img src="{{site_setting('store_logo','3')}}" width="120" height="">
+				<img src="{{env('IMG_CLOUD_URL')}}{{site_setting('store_logo','3')}}?w=120" width="120" height="">
 			</a>
 		</div>
 		<div class="login-form py-5 mb-5 col-md-8 col-lg-5 col-xl-4 mx-auto">

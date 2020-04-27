@@ -237,7 +237,7 @@
 										<span class="upload_text" id="file_text_1"></span>
 									</div>
 									<span class="text-danger">{{ $errors->first('banner_image') }}</span>
-									<img src="{{ $store->store_image }}" class="img-thumbnail mt-3">
+									<img src="{{env('IMG_CLOUD_URL')}}{{ $store->store_image }}" class="img-thumbnail mt-3">
 								</div>
 							</div>
 							<div ng-init="country='{{ isset($address->country)?$address->country:'' }}';postal_code='{{ isset($address->postal_code)?$address->postal_code:''}}';city='{{ isset($address->city)?$address->city:''}}';state='{{ isset($address->state)?$address->state:''}}';street='{{ isset($address->street)?$address->street:''}}';country_code='{{ isset($address->country_code)?$address->country_code:''}}';">
@@ -423,8 +423,8 @@
     		reader.onload = (e) => {
     			let imgData = e.target.result;
     			let imgName = input.files[0].name;
-    			input.setAttribute("data-title", imgName);
-    			console.log(e.target.result);
+					input.setAttribute("data-title", imgName);
+					$(input).parent().parent().find('.img-thumbnail').attr('src', imgData);
     		}
     		reader.readAsDataURL(input.files[0]);
     	}
