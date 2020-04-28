@@ -54,13 +54,14 @@ class Category extends Model {
 		// dump($category);
 
 		if ($category) {
-			$size = get_image_size('category_image_size')['width'] . 'x' . get_image_size('category_image_size')['height'];
-			$name = explode('.', $category->name);
-			$file_name = $name[0] . '_' . $size . '.' . @$name[1];
-			return url(Storage::url('images/category_image/' . $file_name));
+			// $size = get_image_size('category_image_size')['width'] . 'x' . get_image_size('category_image_size')['height'];
+			// $name = explode('.', $category->name);
+			// $file_name = $name[0] . '_' . $size . '.' . @$name[1];
+			// return url(Storage::url('images/category_image/' . $file_name));
+			return env('AWS_BUCKET_CATEGORY_IMG_DIR') . '/' . $category->name;
 		} else {
 
-			return url('images/category/food-general.jpg');
+			return 'images/category/food-general.jpg';
 		}
 
 	}
@@ -84,11 +85,13 @@ class Category extends Model {
 
 		$menu_image = File::where('source_id', $this->attributes['id'])->where('type', 7)->first();
 		if ($menu_image) {
-			$size = get_image_size('category_image_size')['width'] . 'x' . get_image_size('category_image_size')['height'];
-			$name = explode('.', $menu_image->name);
-			$file_name = $name[0] . '_' . $size . '.' . @$name[1];
+			// $size = get_image_size('category_image_size')['width'] . 'x' . get_image_size('category_image_size')['height'];
+			// $name = explode('.', $menu_image->name);
+			// $file_name = $name[0] . '_' . $size . '.' . @$name[1];
 			// if(get_current_root()=='')
-			return url(Storage::url('images/category_image/' . $file_name));
+			// return url(Storage::url('images/category_image/' . $file_name));
+			return env('AWS_BUCKET_CATEGORY_IMG_DIR') . '/' . $menu_image->name;
+
 			/*else
 				return url(Storage::url('images/category_image/' .$menu_image->name));*/
 		} else {
@@ -101,12 +104,12 @@ class Category extends Model {
 		$file = File::where('type', 19)->where('source_id', $this->attributes['id'])->first();
 
 		if ($file) {
-			$size = get_image_size('dietary_icon_size')['width'] . 'x' . get_image_size('dietary_icon_size')['height'];
-			$name = explode('.', $file->name);
-			$file_name = $name[0] . '_' . $size . '.' . @$name[1];
-			return url(Storage::url('images/category_image/' . $file_name));
+			// $size = get_image_size('dietary_icon_size')['width'] . 'x' . get_image_size('dietary_icon_size')['height'];
+			// $name = explode('.', $file->name);
+			// $file_name = $name[0] . '_' . $size . '.' . @$name[1];
+			// return url(Storage::url('images/category_image/' . $file_name));
+			return env('AWS_BUCKET_CATEGORY_IMG_DIR') . '/' . $file->name;
 		} else {
-
 			return url('images/diet_default.png');
 		}
 

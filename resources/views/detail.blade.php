@@ -193,6 +193,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="checkout-container position-sticky col-lg-3 col-md-4 col-sm-4 col-xs-12">
 				<div class="checkout" id="calculation_form" ng-class="!order_data ? 'disabled':''">
 					<form name="order_checkout">
@@ -240,18 +241,70 @@
 						</div>
 					</div>
 					<div ng-show="order_data.total_item_count>0" id="subtotal5" >
-						<div class="checkout-total d-flex align-items-center" ng-init="total_count_order = {{count(session('order_data'))-1}}">
-							<div class="col-7">
-								<h3>{{ trans('messages.profile_orders.subtotal') }}
-									<span id="total_item_count" class="d-inline-block">
-										(@{{ order_data.total_item_count }} {{ trans('messages.store.items') }})
-									</span>
-								</h3>
+						<div class="checkout-total">
+							<div class="sub-total d-flex align-items-center" ng-init="total_count_order = {{count(session('order_data'))-1}}">
+								<div class="col-7">
+									<h3>{{ trans('messages.profile_orders.subtotal') }}
+										<span id="total_item_count" class="d-inline-block">
+											(@{{ order_data.total_item_count }} {{ trans('messages.store.items') }})
+										</span>
+									</h3>
+								</div>
+								<div class="col-5 text-right">
+									<h3><span>{!! $store->currency->code !!}</span>
+										<span id="total_item_price">@{{ order_data.subtotal | number : 2}}</span>
+									</h3>
+								</div>
 							</div>
-							<div class="col-5 text-right">
-								<h3><span>{!! $store->currency->code !!}</span>
-									<span id="total_item_price">@{{ order_data.subtotal | number : 2}}</span>
-								</h3>
+							
+							<div class="d-flex align-items-center" >
+								<div class="col-7">
+									<p>{{ trans('messages.profile_orders.tax') }}</p>
+								</div>
+								<div class="col-5 text-right" >
+									<p><span class="currency1">{!!$store->currency->code!!}</span> <span id="tax_amoun">@{{order_data.tax | number : 2 }}</span></p>
+								</div>
+							</div>
+
+							<div class="d-flex align-items-center">
+								<div class="col-7">
+									<p>{{ trans('messages.profile_orders.booking_fee') }}</p>
+								</div>
+								<div class="col-5 text-right">
+									<p><span class="currency1">{!!$store->currency->code!!}</span> <span id="booking_fee_amoun">@{{order_data.booking_fee | number : 2 }}</span></p>
+								</div>
+							</div>
+							<div class="d-flex align-items-center">
+								<div class="col-7">
+									<p>{{ trans('messages.profile_orders.delivery_fee') }}</p>
+								</div>
+								<div class="col-5 text-right">
+									<p><span class="currency1">{!!$store->currency->code!!}</span> <span id="delivery_fee_amoun">@{{order_data.delivery_fee | number : 2 }}</span></p>
+								</div>
+							</div>
+							<div class="d-flex align-items-center" ng-show="order_data.penalty > 0">
+								<div class="col-7">
+									<p>{{ trans('admin_messages.penalty') }}</p>
+								</div>
+								<div class="col-5 text-right" >
+									<p><span class="currency1">{!!$store->currency->code!!}</span> @{{order_data.penalty}}</p>
+								</div>
+							</div>
+							<div ng-if="order_data.promo_amount > 0" class="d-flex align-items-center" >
+								<div class="col-7">
+									<p>{{ trans('messages.profile_orders.promo_amount') }}</p>
+								</div>
+								<div class="col-5 text-right" >
+									<p>-<span class="currency1">{!!$store->currency->code!!}</span> <span id="tax_amoun">@{{order_data.promo_amount | number : 2 }}</span></p>
+								</div>
+							</div>
+							<div class="d-flex align-items-center">
+								<div class="col-7">
+									<h3>{{ trans('messages.profile_orders.total') }}</h3>
+								</div>
+								<div class="col-5 text-right">
+									<h3><span class="currency1">{!!$store->currency->code!!}</span> <span id="total_price_dat">@{{order_data.total_price | number:'2'}}</span></h3>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -87,135 +87,137 @@
                 </label>
                 <input type="text" name="menu_item_name" placeholder="Item Name" ng-model="menu_item_details.menu_item_name">
               </div>
-             <div class="item-info border-0 my-3">
+              <div class="item-info border-0 my-3">
                 <label>
                   Item Description <em class="text-danger">*</em>
                 </label>
                 <textarea class="form-control" placeholder="Description" name="menu_item_desc" ng-model="menu_item_details.menu_item_desc"> @{{menu_item_details.menu_item_desc}}</textarea>
               </div>
 
-            <div class="row my-3">
-              <div class="col-md-4">
-                <label>Price<em class="text-danger">*</em></label>
-                <input type="text" name="menu_item_price" ng-model="menu_item_details.menu_item_price">
-                <!-- <div class="select mt-3"><em class="text-danger">*</em>
-                  {!!Form::select('item_type', ['0'=>'Veg','1' =>'Non-veg'], '', ['class' => '','placeholder' =>'select type','ng-model'=>'menu_item_details.menu_item_type'])!!}
-                </div> -->
-              </div>
-              <div class="col-md-4 my-3 mt-md-0">
-                <label>Tax % <em class="text-danger">*</em></label>
-                <input type="text" name="menu_item_tax" ng-model="menu_item_details.menu_item_tax">
-              </div>
-              <div class="col-md-4">
-               <label>Status<em class="text-danger">*</em></label>
-               {!!Form::select('item_status', ['1'=>'Active','0' =>'Inactive'], '', ['class' => '','placeholder' =>'select status','ng-model'=>'menu_item_details.menu_item_status'])!!}
-             </div>
-           </div>
-
-           <div class="mt-3">
-            <div class="file-input">
-              <input type="file" name="item_image" ng-model="menu_item_details.item_image"  demo-file-model="myFile"  class="form-control" id ="myFileField">
-            </div>
-            <span class="rec-info d-block mt-2">
-              (Recommended size: 1350*310)
-            </span>
-            <div class="mt-3">
-              <img ng-show="menu_item_details.item_image" ng-src="@{{menu_item_details.item_image}}" with="100">
-            </div>
-          </div>
-          <div class="mt-3">
-            <div class="panel" ng-init="menu_item_translations = {{json_encode(old('menu_item_translations') ?: array())}}; item_remove_translations =  []; errors = {{json_encode($errors->getMessages())}};" ng-cloak>
-
-
-
-              <div class="panel-body">
-                <input type="hidden" name="item_remove_translations" ng-value="item_remove_translations.toString()">
-
-
-                <div class="card" ng-repeat="translation in menu_item_translations">
-
-                  <div class="col-sm-12 static_remove">
-                    <h4 class="box-title text-center">Translations</h4>
-                    <button class="btn btn-danger btn-xs" ng-hide="menu_item_translations.length <  {{count($language) - 1}}" ng-click="menu_item_translations.splice($index, 1); item_remove_translations.push(translation.id)">
-                      Remove
-                    </button>
-                  </div>
-
-                  <input type="hidden" name="menu_item_translations[@{{$index}}][id]" value="@{{translation.id}}">
-
-
-                  <div class="card-body">
-                    <div class="row" >
-                      <label for="input_language_@{{$index}}" class="col-sm-3 col-form-label">Language<em class="text-danger">*</em></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-
-                          <select name="menu_item_translations[@{{$index}}][locale]" class="form-control" id="input_language_@{{$index}}" ng-model="translation.locale" >
-                            <option value='' ng-if="translation.locale == ''">Select Language</option>
-                            @foreach(@$language as $key => $value)
-
-                            <option value="{{$key}}" ng-if="(('{{$key}}' | checkKeyValueUsedInStack : 'locale': menu_item_translations) || '{{$key}}' == translation.locale) && '{{$key}}' != 'en'">{{$value}}</option>
-                            @endforeach
-                          </select>                      
-
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <label for="input_name_@{{$index}}" class="col-sm-3 col-form-label">Name<em class="required text-danger">*</em></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          {!! Form::text('menu_item_translations[@{{$index}}][name]', '@{{translation.name}}', ['class' => 'form-control', 'id' => 'input_name_@{{$index}}', 'placeholder' => 'Item Name','ng-model' => 'translation.name']) !!}
-
-                        </div>
-
-                      </div>
-                    </div>
-
-
-
-                    <div class="row">
-                      <label for="input_content_@{{$index}}" class="col-sm-3 col-form-label">Description<em class="required text-danger">*</em></label>
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          {!! Form::textarea('menu_item_translations[@{{$index}}][description]', '@{{translation.description}}', ['class' => 'form-control', 'id' => 'input_description_@{{$index}}', 'placeholder' => 'description','ng-model' => 'translation.description']) !!}
-
-                        </div>
-
-                      </div>
-                    </div>
-
-                  </div>
-                  <legend ng-if="$index+1 < menu_item_translations.length"></legend>
+              <div class="row my-3">
+                <div class="col-md-4">
+                  <label>Price<em class="text-danger">*</em></label>
+                  <input type="text" name="menu_item_price" ng-model="menu_item_details.menu_item_price">
+                  <!-- <div class="select mt-3"><em class="text-danger">*</em>
+                    {!!Form::select('item_type', ['0'=>'Veg','1' =>'Non-veg'], '', ['class' => '','placeholder' =>'select type','ng-model'=>'menu_item_details.menu_item_type'])!!}
+                  </div> -->
+                </div>
+                <div class="col-md-4 my-3 mt-md-0">
+                  <label>Tax % <em class="text-danger">*</em></label>
+                  <input type="text" name="menu_item_tax" ng-model="menu_item_details.menu_item_tax">
+                </div>
+                <div class="col-md-4">
+                  <label>Status<em class="text-danger">*</em></label>
+                  {!!Form::select('item_status', ['1'=>'Active','0' =>'Inactive'], '', ['class' => '','placeholder' =>'select status','ng-model'=>'menu_item_details.menu_item_status'])!!}
                 </div>
               </div>
-              <div class="">
-                <div class="row" ng-show="menu_item_translations.length <  {{count(@$language) - 1}}">
-                  <div class="col-sm-12">
-                    <button type="button" class="btn btn-info" ng-click="menu_item_translations.push({locale:''});" >
-                      <!-- <i class="fa fa-plus"></i> -->
-                      Add Translation
-                    </button>
-                  </div>
-                </div>                    
+
+              <div class="mt-3">
+                <div class="file-input">
+                  <input 
+                    type="file" 
+                    name="item_image" 
+                    ng-model="menu_item_details.item_image" 
+                    demo-file-model="myFile" 
+                    class="form-control" 
+                    id ="myFileField"
+                    prefix="{{env('IMG_CLOUD_URL')}}"
+                  >
+                </div>
+                <span class="rec-info d-block mt-2">
+                  (Recommended size: 1350*310)
+                </span>
+                <div class="mt-3">
+                  <img 
+                    ng-show="menu_item_details.item_image && menu_item_details.item_image.length!=null" 
+                    ng-src="@{{menu_item_details.item_image}}"
+                    style="max-width: 100%"
+                  >
+                </div>
               </div>
+              <div class="mt-3">
+                <div class="panel" ng-init="menu_item_translations = {{json_encode(old('menu_item_translations') ?: array())}}; item_remove_translations =  []; errors = {{json_encode($errors->getMessages())}};" ng-cloak>
+                  <div class="panel-body">
+                    <input type="hidden" name="item_remove_translations" ng-value="item_remove_translations.toString()">
+                    <div class="card" ng-repeat="translation in menu_item_translations">
 
-            </div> 
+                      <div class="col-sm-12 static_remove">
+                        <h4 class="box-title text-center">Translations</h4>
+                        <button class="btn btn-danger btn-xs" ng-hide="menu_item_translations.length <  {{count($language) - 1}}" ng-click="menu_item_translations.splice($index, 1); item_remove_translations.push(translation.id)">
+                          Remove
+                        </button>
+                      </div>
 
+                      <input type="hidden" name="menu_item_translations[@{{$index}}][id]" value="@{{translation.id}}">
+
+                      <div class="card-body">
+                        <div class="row" >
+                          <label for="input_language_@{{$index}}" class="col-sm-3 col-form-label">Language<em class="text-danger">*</em></label>
+                          <div class="col-sm-8">
+                            <div class="form-group">
+
+                              <select name="menu_item_translations[@{{$index}}][locale]" class="form-control" id="input_language_@{{$index}}" ng-model="translation.locale" >
+                                <option value='' ng-if="translation.locale == ''">Select Language</option>
+                                @foreach(@$language as $key => $value)
+
+                                <option value="{{$key}}" ng-if="(('{{$key}}' | checkKeyValueUsedInStack : 'locale': menu_item_translations) || '{{$key}}' == translation.locale) && '{{$key}}' != 'en'">{{$value}}</option>
+                                @endforeach
+                              </select>                      
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <label for="input_name_@{{$index}}" class="col-sm-3 col-form-label">Name<em class="required text-danger">*</em></label>
+                          <div class="col-sm-8">
+                            <div class="form-group">
+                              {!! Form::text('menu_item_translations[@{{$index}}][name]', '@{{translation.name}}', ['class' => 'form-control', 'id' => 'input_name_@{{$index}}', 'placeholder' => 'Item Name','ng-model' => 'translation.name']) !!}
+
+                            </div>
+
+                          </div>
+                        </div>
+
+
+
+                        <div class="row">
+                          <label for="input_content_@{{$index}}" class="col-sm-3 col-form-label">Description<em class="required text-danger">*</em></label>
+                          <div class="col-sm-8">
+                            <div class="form-group">
+                              {!! Form::textarea('menu_item_translations[@{{$index}}][description]', '@{{translation.description}}', ['class' => 'form-control', 'id' => 'input_description_@{{$index}}', 'placeholder' => 'description','ng-model' => 'translation.description']) !!}
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                      <legend ng-if="$index+1 < menu_item_translations.length"></legend>
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="row" ng-show="menu_item_translations.length <  {{count(@$language) - 1}}">
+                      <div class="col-sm-12">
+                        <button type="button" class="btn btn-info" ng-click="menu_item_translations.push({locale:''});" >
+                          <!-- <i class="fa fa-plus"></i> -->
+                          Add Translation
+                        </button>
+                      </div>
+                    </div>                    
+                  </div>
+
+                </div> 
+              </div>
+            </form>
           </div>
-
-
-        </form>
-
-      </div>
-      <div class="w-100 text-right mt-auto pt-4">
-        <button type="button" class="btn btn-rose w-100 text-uppercase" ng-click="update_item()">Submit Changes</button>
+          <div class="w-100 text-right mt-auto pt-4">
+            <button type="button" class="btn btn-rose w-100 text-uppercase" ng-click="update_item()">Submit Changes</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 </div>
 
 <!-- Add category model !-->

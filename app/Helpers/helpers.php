@@ -272,7 +272,7 @@ if (!function_exists('getEmptyUserImageUrl')) {
 	 * @return if key found, return particular value of key. Otherwise return full array.
 	 */
 	function getEmptyUserImageUrl() {
-		return url('images/user.png');
+		return 'images/user.png';
 	}
 }
 
@@ -289,7 +289,7 @@ if (!function_exists('getEmptyStoreImage')) {
 	 * @return if key found, return particular value of key. Otherwise return full array.
 	 */
 	function getEmptyStoreImage() {
-		return url('images/default-store.jpg');
+		return 'images/default-store.jpg';
 	}
 }
 

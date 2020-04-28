@@ -134,8 +134,8 @@
 											<div class="col-md-6 mt-2 mt-md-0">
 												<div class="menu_img_rest">
 													<img 	
-														class="img-fluid " 														
-														ng-show="menu_item_details.item_image && menu_item_details.item_image.length!=null " 
+														class="img-fluid" 														
+														ng-show="menu_item_details.item_image && menu_item_details.item_image.length!=null" 
 														ng-src="@{{menu_item_details.item_image}}">
 												</div>
 											</div>

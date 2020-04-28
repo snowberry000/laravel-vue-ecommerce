@@ -14,12 +14,12 @@
           @csrf
           <input type="hidden" name="action" class="form_type" value="edit">
           <div class="row">
-                        <label for="input_language" class="col-sm-2 col-form-label">Language<em class="text-danger">*</em></label>
-                        <div class="col-sm-6">
-                        <div class="form-group">
-                          {!! Form::select('language', $language, 'en', ['class' => 'form-control', 'id' => 'input_language', 'disabled' =>'disabled']) !!}
-                          </div>
-                        </div>
+            <label for="input_language" class="col-sm-2 col-form-label">Language<em class="text-danger">*</em></label>
+            <div class="col-sm-6">
+            <div class="form-group">
+              {!! Form::select('language', $language, 'en', ['class' => 'form-control', 'id' => 'input_language', 'disabled' =>'disabled']) !!}
+              </div>
+            </div>
           </div>
           <div class="row">
             <label class="col-sm-2 col-form-label">@lang('admin_messages.name')<span class="required text-danger">*</span></label>
@@ -48,7 +48,7 @@
             <div class="fileinput fileinput-new" data-provides="fileinput">
               <div class="fileinput-new thumbnail">
                 @if(@$category->category_image!='')
-                <img src="{{$category->category_image}}" alt="...">
+                <img src="{{env('IMG_CLOUD_URL')}}{{$category->category_image}}" alt="...">
                 @endif
               </div>
               <div class="fileinput-preview fileinput-exists thumbnail"></div>
