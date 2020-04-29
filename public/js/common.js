@@ -701,31 +701,33 @@ app.controller('home_page', ['$scope', '$http', '$timeout', function ($scope, $h
 
       var place = data;
       for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
-        if (componentForm[addressType]) {
-          var val = place.address_components[i][componentForm[addressType]];
-          if (addressType == 'postal_code') $scope.postal_code = val;
-          if (addressType == 'locality') $scope.city = val;
+        for (var j = 0; j < place.address_components[i].types.length; j++) {
+          var addressType = place.address_components[i].types[j];
+          if (componentForm[addressType]) {
+            var val = place.address_components[i][componentForm[addressType]];
+            if (addressType == 'postal_code') $scope.postal_code = val;
+            if (addressType == 'locality') $scope.city = val;
 
-          if (addressType == 'sublocality_level_1' && $scope.locality == '') 
-            $scope.locality = val;
-          else if (addressType == 'sublocality' && $scope.locality == '') 
-            $scope.locality = val;
-          else if (addressType == 'locality' && $scope.locality == '') 
-            $scope.locality = val;
-          else if(addressType == 'administrative_area_level_1' && $scope.locality == '') 
-            $scope.locality = val;
-          else if(addressType  == 'country' && $scope.locality == '') 
-            $scope.locality = place.address_components[i]['long_name'];
+            if (addressType == 'sublocality_level_1' && $scope.locality == '') 
+              $scope.locality = val;
+            else if (addressType == 'sublocality' && $scope.locality == '') 
+              $scope.locality = val;
+            else if (addressType == 'locality' && $scope.locality == '') 
+              $scope.locality = val;
+            else if(addressType == 'administrative_area_level_1' && $scope.locality == '') 
+              $scope.locality = val;
+            else if(addressType  == 'country' && $scope.locality == '') 
+              $scope.locality = place.address_components[i]['long_name'];
 
-          if(addressType       == 'street_number')
-            $scope.street_address = val;
-          if(addressType       == 'route')
-            $scope.street_address = $scope.street_address+' '+val;
-          if(addressType       == 'country')
-            $scope.country = val;
-          if(addressType       == 'administrative_area_level_1')
-            $scope.state = val;
+            if(addressType       == 'street_number')
+              $scope.street_address = val;
+            if(addressType       == 'route')
+              $scope.street_address = $scope.street_address+' '+val;
+            if(addressType       == 'country')
+              $scope.country = val;
+            if(addressType       == 'administrative_area_level_1')
+              $scope.state = val;
+          }
         }
       }
 
@@ -752,7 +754,7 @@ app.controller('home_page', ['$scope', '$http', '$timeout', function ($scope, $h
       });
     }
 
-    $('#head_location_val').keyup(function () {      
+    $('#head_location_val').keyup(function () {    
       $scope.is_auto_complete = '';
       $('.home-banner-content .search_form_home .error-msg').addClass('show');
       $('.home-banner-content .search_form_home .error-msg').text(' Please select a valid address');

@@ -2,7 +2,7 @@
 
 @section('main')
 <main id="site-content" role="main" ng-controller="stores_search" ng-init="postal_code='{{session('postal_code')}}';city='{{session('locality')}}';latitude='{{session('latitude')}}';longitude='{{session('longitude')}}';location='{{session('location')}}';search_key='';schedule_status= '{{session('schedule_data') ? trans('messages.store.'.strtolower(session('schedule_data')['status'])): trans('messages.store.asap')}}';schedule_time_value={{json_encode(time_data('schedule_time'))}}" class="search_page">
-	<div class="search-top pt-4 pt-lg-5" >
+	<!-- <div class="search-top pt-4 pt-lg-5" >
 		<div class="container">
 			<div class="d-flex align-items-center">
 				<div class="categories-menu d-block d-md-none text-nowrap">
@@ -62,7 +62,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="header-search d-block d-lg-none">
 		<div class="container">
@@ -132,7 +132,7 @@
 
 	<div class="search-result pt-4 pt-md-5 pb-3" ng-cloak>
 		<div class="container">			
-			<h1 ng-hide="search_key">{{ isset($request_cat) ? $request_cat : trans('messages.store.item')  }} {{trans('messages.store.delivery_in')}}  @{{locality}}</h1>
+			<h1 ng-hide="search_key">{{ isset($request_cat) ? $request_cat : trans('messages.store.item')  }} {{trans('messages.store.delivery_in')}}  @{{postal_code}}</h1>
 			<h1 ng-show="search_key">{{trans('messages.store.results_for')}} @{{search_key}}</h1>
 			<div class="whole-product my-4 my-md-5 row clearfix">
 				<div class="product float-left col-lg-4 col-md-6 col-12" ng-repeat="store in store_data.category">
