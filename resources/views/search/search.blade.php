@@ -132,7 +132,7 @@
 
 	<div class="search-result pt-4 pt-md-5 pb-3" ng-cloak>
 		<div class="container">			
-			<h1 ng-hide="search_key">{{ isset($request_cat) ? $request_cat : trans('messages.store.item')  }} {{trans('messages.store.delivery_in')}}  @{{postal_code}}</h1>
+			<h1 ng-hide="search_key">{{ isset($request_cat) ? $request_cat : trans('messages.store.stores')  }} {{trans('messages.store.delivery_in')}} @{{postal_code}}</h1>
 			<h1 ng-show="search_key">{{trans('messages.store.results_for')}} @{{search_key}}</h1>
 			<div class="whole-product my-4 my-md-5 row clearfix">
 				<div class="product float-left col-lg-4 col-md-6 col-12" ng-repeat="store in store_data.category">

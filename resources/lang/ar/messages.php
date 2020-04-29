@@ -368,6 +368,7 @@ return [
 		'top_categories' => 'أهم الفئات',
 		'more_categories'=> 'المزيد من الفئات',
 		'no_result'	=> 'لم يتم العثور على نتائج',
+		'stores' => 'Stores',
 		'delivery_in'=>'التسليم في',
 		'item'=>'بند',
 		'min' => 'دقيقة',
