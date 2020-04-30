@@ -1536,6 +1536,12 @@ $('.more-btn').click(function (event) {
   $('.more-option').toggleClass('active');
 });
 
+window.onclick = function(event) {
+  if (!event.target.matches('.more-btn')) {
+    $('.more-option').removeClass('active');      
+  }   
+}
+
 $('.customize-btn').click(function () {
   $('.invite-input').toggle();
   $(this).toggle();
@@ -1758,4 +1764,4 @@ $('.method-btn').click(function () {
   $(".close_nav_but:not(.collapsed)").click(function () {
     header_fixed();
     $('.navbar-toggler').removeClass('close_nav_but');
-  });
+  });  

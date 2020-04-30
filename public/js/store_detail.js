@@ -279,6 +279,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
 
   $scope.clickMoreOptionItem = function(selectedOne) {
     $scope.selectedMoreOption = selectedOne;
+    $('.more-option').toggleClass('active');
   }
 
   //checkout page
