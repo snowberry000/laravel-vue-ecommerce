@@ -250,6 +250,8 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
           }
         }
       }
+      if ($scope.menuListCount === -1)
+        $scope.menuListCount = 999;
     }
     $scope.$apply();
   }
