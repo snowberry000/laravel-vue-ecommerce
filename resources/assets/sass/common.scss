@@ -1074,7 +1074,8 @@ header {
 
       input {
         border: 2px solid $theme-color;
-        @include border-radius(30px);
+        // @include border-radius(30px);
+        border-radius: 0.25rem;
         padding: 7px 15px;
       }
 
@@ -7004,7 +7005,8 @@ br {
 .pac-container {
   border: 2px solid $theme-color;
   margin-top: 10px;
-  border-radius: 10px;
+  // border-radius: 10px;
+  border-radius: 0.25rem;
   background: $white;
 }
 
