@@ -2362,9 +2362,23 @@ select {
     display: flex;
 
     .category-select {
-      flex: 0 0 140px;  
+      flex: 0 0 auto;  
       margin-right: 14px;
+      min-width: 140px;
 
+      .bootstrap-select {
+        .dropdown-menu {
+          width: 100%;
+        }
+    
+        .dropdown-item {
+          span {
+            white-space: normal;
+            width: 100%;
+          }
+        }
+      }
+    
       @media screen and (max-width: 767px) {
         margin-right: 0;
       }
@@ -6974,23 +6988,6 @@ span.resp_name {
 br {
   + br {
     display: none;
-  }
-}
-
-.category-select {
-  min-width: 140px;
-
-  .bootstrap-select {
-    .dropdown-menu {
-      width: 100%;
-    }
-
-    .dropdown-item {
-      span {
-        white-space: normal;
-        width: 100%;
-      }
-    }
   }
 }
 
