@@ -61,19 +61,19 @@
 						</div>
 					</div>
 				</div>
-				<div class="detail-menu" ng-init="menu_category={{json_encode($menu_category)}}" ng-cloak>
+				<div class="detail-menu" ng-init="menu_category=initMenuCategory({{json_encode($menu_category)}})" ng-cloak>
 					<div class="container">
 						<div class="detail-menu-container d-block d-md-flex align-items-center clearfix my-4 my-md-0 pt-2 pb-2">
 							@if(count($store_menu)>1)
 							<div class="category-select select mb-3 mb-md-0 py-3">
 								<select id="menu_changes">
-									@foreach($store_menu as $menu)
+									@foreach($store_menu as $menu)										
 									<option value="{{$menu->id}}">{{$menu->name}}</option>
 									@endforeach
 								</select>
 							</div>
-							@endif							
-							<ul class="menu-list">								
+							@endif
+							<ul class="menu-list">
 								<li ng-repeat="list_of_menu in menu_category">
 									<a href="#@{{list_of_menu.id}}" data-target="@{{list_of_menu.id}}">@{{list_of_menu.name}}</a>
 								</li>								
@@ -86,7 +86,7 @@
 									ng-class="selectedMoreOption.length > 0 ? 'active' : ''"
 									ng-bind="selectedMoreOption.length == 0 ? '{{ trans('messages.store.more') }}' : selectedMoreOption"
 								></a>
-								<ul class="more-option">
+								<ul class="more-option">									
 									<li ng-repeat="list_of_menu in menu_category" ng-if="$index>=menuListCount">
 										<a href="#@{{list_of_menu.id}}" ng-click="clickMoreOptionItem(list_of_menu.name)">
 											@{{list_of_menu.name}}
@@ -106,7 +106,10 @@
 								@foreach($store_menu as $menu_category1)
 								@if($menu_category1->menu_category)
 								@foreach($menu_category1->menu_category as $category_row)
-								<div class="popular mb-4 mb-md-5" id="{{$category_row->id}}" ng-if="menu_category.length > 0 && {{$menu_category1->id}} == menu_category[0].menu_id">
+								<div 
+									class="popular mb-4 mb-md-5" 
+									id="{{$category_row->id}}" 
+									ng-if="menu_category.length > 0 && {{$menu_category1->id}} == menu_category[0].menu_id && {{isset($category_row['menu_item'])}} == 1 && {{count($category_row->menu_item)}} > 0">
 									<h1>{{$category_row->name}}</h1>
 									<div class="pro-row clearfix">
 										@if($category_row->menu_item)

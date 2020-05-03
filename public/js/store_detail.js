@@ -4,7 +4,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
   //    	$('body').addClass('non-scroll');
   //    	$('.detail-popup').addClass('active');
   //  	});
-
+ 
   $('.detail-popup .icon-close-2').click(function () {
     $scope.item_count = 1;
     $('.detail-popup').removeClass('active');
@@ -31,15 +31,18 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
     var url_category = getUrls('category_details');
     $http.post(url_category, {
       id: category_id,
-    }).then(function (response) {      
-      $scope.menu_category = response.data.menu_category;      
+    }).then(function (response) {            
+
+      $scope.menu_category = response.data.menu_category.filter(item => (item.menu_item && item.menu_item.length > 0))      
       $scope.selectedMoreOption = "";
+
       setTimeout(function() {
         $scope.checkMenuList();
         setTimeout(function() {
-          $scope.checkPopular();          
-        }, 10)        
-      }, 10)      
+          $scope.checkPopular();
+        }, 11)        
+      }, 11)
+
     });
   });
 
@@ -105,6 +108,10 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
   //     $('.detail-popup').addClass('active');
   //   });
   // });
+
+  $scope.initMenuCategory = function(categories) {
+    return categories.filter(item => (item.menu_item && item.menu_item.length > 0));
+  }
 
   $scope.getProductCount = function(itemId, withStr = "") {    
     var count = 1;
@@ -186,8 +193,7 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
         $('select').selectpicker('refresh');
       }, 1);
 
-      $('#calculation_form').removeClass('loading');
-      $('#calculation_form').removeClass('loading');
+      $('#calculation_form').removeClass('loading');      
 
     });    
   });
@@ -217,7 +223,9 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
   });
 
   $(document).ready(function() {
-    $scope.checkMenuList();    
+    setTimeout(function() {
+      $scope.checkMenuList();
+    },100)    
   })
 
   $(window).scroll(function() {
@@ -229,7 +237,10 @@ app.controller('stores_detail', ['$scope', '$http', '$timeout', function ($scope
       $scope.menuListCount = 0;        
     } else {
       $scope.menuListCount = -1;
-      var categoryMeuWidth = $('.detail-menu-container').outerWidth() - 154;
+
+      var categoryDropdownWidth = $('.detail-menu .detail-menu-container .category-select').outerWidth() + 14;
+      var categoryMeuWidth = $('.detail-menu-container').outerWidth() - categoryDropdownWidth;
+
       for(var i = $scope.menu_category.length-1; i >= 0; i--) {
         var selectedOne = $scope.menu_category[i];
         if ($('.detail-menu .menu-list a[data-target='+selectedOne.id+']').length > 0) {
