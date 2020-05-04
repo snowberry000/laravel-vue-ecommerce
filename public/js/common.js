@@ -859,7 +859,7 @@ app.controller('home_page', ['$scope', '$http', '$timeout', function ($scope, $h
 
     $('#code_confirm_submit').click(function(){
       var code_entered   = $('#code_confirm').val();
-      var code_generated = $('#code_session').val();
+      var code_generated = $scope.code_session;
 
       if(code_entered != code_generated){
         $('#code_check').css('display','block');

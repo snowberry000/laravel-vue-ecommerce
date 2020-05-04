@@ -8,7 +8,7 @@
 	</div>
 	@endif
 </div>
-<main id="site-content" role="main" class="log-user" ng-controller="home_page">
+<main id="site-content" role="main" class="log-user" ng-controller="home_page"  ng-init="code_session='{{session('verification_code')}}'">
 	<div class="container">
 		<div class="logo text-center mt-5">
 			<a href="{{url('/')}}">
@@ -21,13 +21,8 @@
 				@csrf
 				<div class="form-group">
 					<label>{{trans('messages.driver.enter_the_digit_code_sent_to_you_at')}} {{$phone_number}}</label>
-					<!-- for live only start -->
-					<input type="text" value="" name="code_confirm" id="code_confirm" placeholder=""/>
-					<!-- for live only end -->
+					<input type="text" value="{{session('verification_code')}}" name="code_confirm" id="code_confirm" placeholder=""/>
 					<p id='code_check' style="display: none;color: red">{{trans('messages.store_dashboard.code_is_incorrect')}}</p>
-					<input type="hidden" name="code_session" id="code_session" value="">
-
-
 				</div>
 				<button class="btn btn-theme w-100 mt-3 d-flex justify-content-between align-items-center" id="code_confirm_submit" type="submit">{{trans('messages.profile.next_button')}} <i class="icon icon-right-arrow"></i></button>
 			</form>
